@@ -1,6 +1,6 @@
 # iMuseum
 
-Project realised in image synthesis course, in IMAC Engineering School, realised in November and December 2015
+Project realised in IMAC Engineering School, in November and December 2015
 
 **Collaborators :**
 
