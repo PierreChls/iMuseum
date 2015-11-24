@@ -1,2 +1,0 @@
-/Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/CMakeFiles/iMuseum.dir
-/Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac/CMakeFiles/glimac.dir

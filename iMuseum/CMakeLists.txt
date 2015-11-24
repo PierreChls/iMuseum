@@ -10,8 +10,10 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH  ${PROJECT_BINARY_DIR}/lib)
 
+find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(SDL2_mixer REQUIRED)
+find_package(GLEW REQUIRED)
 
 if(WIN32)
     set(SDL_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/third-party/include/Windows)
@@ -38,6 +40,8 @@ if(APPLE)
 else(APPLE)
     set(ALL_LIBRARIES glimac ${SDLMIXER_LIBRARY} ${SDL2_LIBRARY} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY})
 endif(APPLE)
+
+message(${SDL2_LIBRARY})
 
 # Add the glimac library
 add_subdirectory(glimac)
@@ -82,8 +86,8 @@ macro(ADD_ASSET_DIRECTORY directory)
     endif()
 endmacro()
 
-file(GLOB_RECURSE HEADER_FILES src/*.hpp) # get all headers
-file(GLOB_RECURSE SRC_FILES src/*.cpp) # get all sources files
+file(GLOB_RECURSE HEADER_FILES main/include/*.hpp) # get all headers
+file(GLOB_RECURSE SRC_FILES main/src/*.cpp) # get all sources files
 file(GLOB_RECURSE SHADER_FILES shaders/*.glsl) # get all shaders
 file(GLOB_RECURSE ASSET_FILES assets/*) # get all the assets
 
@@ -96,6 +100,7 @@ if(WIN32)
     # on windows, copy dll files to the executable directory
     file(COPY ${DLL_BINARIES} DESTINATION ${EXECUTABLE_OUTPUT_PATH})
 endif(WIN32)
+
 
 ADD_SHADER_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/shaders)
 ADD_ASSET_DIRECTORY(${CMAKE_CURRENT_SOURCE_DIR}/assets)

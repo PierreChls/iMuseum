@@ -1,3 +1,0 @@
-# Hashes of file build rules.
-a446929418fe529a30c61cae7b98d33c bin/shaders/3D.vs.glsl
-a6ffe8d18e39d452ce584e7b8d069ddc bin/shaders/tex2D.fs.glsl
