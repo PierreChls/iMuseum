@@ -5,8 +5,8 @@ Project realised in IMAC Engineering School, in November and December 2015
 **Collaborators :**
 
 - [Pierre CHARLES](https://github.com/PierreChls)
-- [Charlie DARRAUD](https://github.com/Arctic76)
-- [Romain FRANÇOIS](https://github.com/charliesrc)
+- [Charlie DARRAUD](https://github.com/charliesrc)
+- [Romain FRANÇOIS](https://github.com/Arctic76)
 
 **Supported OS (require OpenGL 3+)**
 
