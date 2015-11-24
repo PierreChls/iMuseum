@@ -1,0 +1,1 @@
+/usr/bin/c++    -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/iMuseum.dir/src/main.cpp.o  -o bin/iMuseum  lib/libglimac.a /usr/local/lib/libSDL2_mixer.dylib /usr/local/lib/libSDL2.dylib -framework AGL -framework OpenGL /usr/local/lib/libGLEW.dylib 
