@@ -1,6 +1,3 @@
 # Hashes of file build rules.
-be5c5a76f60b20988e3ad8b9e287fb3a bin/assets/.DS_Store
-8af1fe1541363f363ce605f751901045 bin/assets/models/.DS_Store
-655e89219f651dfb9f32139dfcd23d4f bin/assets/textures/.DS_Store
-d7a1611a15ac70bacbaf49bdee6ac55e bin/shaders/3D.vs.glsl
-d297dac8600f54e34703c4c693b92264 bin/shaders/tex2D.fs.glsl
+a446929418fe529a30c61cae7b98d33c bin/shaders/3D.vs.glsl
+a6ffe8d18e39d452ce584e7b8d069ddc bin/shaders/tex2D.fs.glsl

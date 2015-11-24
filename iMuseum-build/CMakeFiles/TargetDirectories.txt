@@ -1,2 +1,2 @@
-/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/CMakeFiles/iMuseum.dir
-/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac/CMakeFiles/glimac.dir
+/Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/CMakeFiles/iMuseum.dir
+/Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac/CMakeFiles/glimac.dir

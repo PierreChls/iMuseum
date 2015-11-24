@@ -1,4 +1,4 @@
-# Install script for directory: /Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac
+# Install script for directory: /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

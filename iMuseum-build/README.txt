@@ -1,3 +1,0 @@
-- Supprimer l’ensemble du contenu de ce dossier.
-- Faire le cmake depuis ce dossier : cmake ../iMuseum
-- Faire le make : make

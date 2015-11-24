@@ -26,19 +26,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/Cellar/cmake/3.1.3/bin/cmake
+CMAKE_COMMAND = /usr/local/Cellar/cmake/3.1.2/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/Cellar/cmake/3.1.3/bin/cmake -E remove -f
+RM = /usr/local/Cellar/cmake/3.1.2/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum"
+CMAKE_SOURCE_DIR = /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build"
+CMAKE_BINARY_DIR = /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build
 
 # Include any dependencies generated for this target.
 include glimac/CMakeFiles/glimac.dir/depend.make
@@ -50,18 +50,18 @@ include glimac/CMakeFiles/glimac.dir/progress.make
 include glimac/CMakeFiles/glimac.dir/flags.make
 
 glimac/CMakeFiles/glimac.dir/src/Cone.cpp.o: glimac/CMakeFiles/glimac.dir/flags.make
-glimac/CMakeFiles/glimac.dir/src/Cone.cpp.o: /Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse\ d'image/Projet/iMuseum/iMuseum/glimac/src/Cone.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/CMakeFiles" $(CMAKE_PROGRESS_1)
+glimac/CMakeFiles/glimac.dir/src/Cone.cpp.o: /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Cone.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object glimac/CMakeFiles/glimac.dir/src/Cone.cpp.o"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/Cone.cpp.o -c "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Cone.cpp"
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/Cone.cpp.o -c /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Cone.cpp
 
 glimac/CMakeFiles/glimac.dir/src/Cone.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/glimac.dir/src/Cone.cpp.i"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Cone.cpp" > CMakeFiles/glimac.dir/src/Cone.cpp.i
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Cone.cpp > CMakeFiles/glimac.dir/src/Cone.cpp.i
 
 glimac/CMakeFiles/glimac.dir/src/Cone.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/glimac.dir/src/Cone.cpp.s"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Cone.cpp" -o CMakeFiles/glimac.dir/src/Cone.cpp.s
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Cone.cpp -o CMakeFiles/glimac.dir/src/Cone.cpp.s
 
 glimac/CMakeFiles/glimac.dir/src/Cone.cpp.o.requires:
 .PHONY : glimac/CMakeFiles/glimac.dir/src/Cone.cpp.o.requires
@@ -73,18 +73,18 @@ glimac/CMakeFiles/glimac.dir/src/Cone.cpp.o.provides: glimac/CMakeFiles/glimac.d
 glimac/CMakeFiles/glimac.dir/src/Cone.cpp.o.provides.build: glimac/CMakeFiles/glimac.dir/src/Cone.cpp.o
 
 glimac/CMakeFiles/glimac.dir/src/Geometry.cpp.o: glimac/CMakeFiles/glimac.dir/flags.make
-glimac/CMakeFiles/glimac.dir/src/Geometry.cpp.o: /Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse\ d'image/Projet/iMuseum/iMuseum/glimac/src/Geometry.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/CMakeFiles" $(CMAKE_PROGRESS_2)
+glimac/CMakeFiles/glimac.dir/src/Geometry.cpp.o: /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Geometry.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object glimac/CMakeFiles/glimac.dir/src/Geometry.cpp.o"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/Geometry.cpp.o -c "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Geometry.cpp"
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/Geometry.cpp.o -c /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Geometry.cpp
 
 glimac/CMakeFiles/glimac.dir/src/Geometry.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/glimac.dir/src/Geometry.cpp.i"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Geometry.cpp" > CMakeFiles/glimac.dir/src/Geometry.cpp.i
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Geometry.cpp > CMakeFiles/glimac.dir/src/Geometry.cpp.i
 
 glimac/CMakeFiles/glimac.dir/src/Geometry.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/glimac.dir/src/Geometry.cpp.s"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Geometry.cpp" -o CMakeFiles/glimac.dir/src/Geometry.cpp.s
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Geometry.cpp -o CMakeFiles/glimac.dir/src/Geometry.cpp.s
 
 glimac/CMakeFiles/glimac.dir/src/Geometry.cpp.o.requires:
 .PHONY : glimac/CMakeFiles/glimac.dir/src/Geometry.cpp.o.requires
@@ -96,18 +96,18 @@ glimac/CMakeFiles/glimac.dir/src/Geometry.cpp.o.provides: glimac/CMakeFiles/glim
 glimac/CMakeFiles/glimac.dir/src/Geometry.cpp.o.provides.build: glimac/CMakeFiles/glimac.dir/src/Geometry.cpp.o
 
 glimac/CMakeFiles/glimac.dir/src/Image.cpp.o: glimac/CMakeFiles/glimac.dir/flags.make
-glimac/CMakeFiles/glimac.dir/src/Image.cpp.o: /Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse\ d'image/Projet/iMuseum/iMuseum/glimac/src/Image.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/CMakeFiles" $(CMAKE_PROGRESS_3)
+glimac/CMakeFiles/glimac.dir/src/Image.cpp.o: /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Image.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object glimac/CMakeFiles/glimac.dir/src/Image.cpp.o"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/Image.cpp.o -c "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Image.cpp"
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/Image.cpp.o -c /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Image.cpp
 
 glimac/CMakeFiles/glimac.dir/src/Image.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/glimac.dir/src/Image.cpp.i"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Image.cpp" > CMakeFiles/glimac.dir/src/Image.cpp.i
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Image.cpp > CMakeFiles/glimac.dir/src/Image.cpp.i
 
 glimac/CMakeFiles/glimac.dir/src/Image.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/glimac.dir/src/Image.cpp.s"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Image.cpp" -o CMakeFiles/glimac.dir/src/Image.cpp.s
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Image.cpp -o CMakeFiles/glimac.dir/src/Image.cpp.s
 
 glimac/CMakeFiles/glimac.dir/src/Image.cpp.o.requires:
 .PHONY : glimac/CMakeFiles/glimac.dir/src/Image.cpp.o.requires
@@ -119,18 +119,18 @@ glimac/CMakeFiles/glimac.dir/src/Image.cpp.o.provides: glimac/CMakeFiles/glimac.
 glimac/CMakeFiles/glimac.dir/src/Image.cpp.o.provides.build: glimac/CMakeFiles/glimac.dir/src/Image.cpp.o
 
 glimac/CMakeFiles/glimac.dir/src/Program.cpp.o: glimac/CMakeFiles/glimac.dir/flags.make
-glimac/CMakeFiles/glimac.dir/src/Program.cpp.o: /Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse\ d'image/Projet/iMuseum/iMuseum/glimac/src/Program.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/CMakeFiles" $(CMAKE_PROGRESS_4)
+glimac/CMakeFiles/glimac.dir/src/Program.cpp.o: /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Program.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object glimac/CMakeFiles/glimac.dir/src/Program.cpp.o"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/Program.cpp.o -c "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Program.cpp"
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/Program.cpp.o -c /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Program.cpp
 
 glimac/CMakeFiles/glimac.dir/src/Program.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/glimac.dir/src/Program.cpp.i"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Program.cpp" > CMakeFiles/glimac.dir/src/Program.cpp.i
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Program.cpp > CMakeFiles/glimac.dir/src/Program.cpp.i
 
 glimac/CMakeFiles/glimac.dir/src/Program.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/glimac.dir/src/Program.cpp.s"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Program.cpp" -o CMakeFiles/glimac.dir/src/Program.cpp.s
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Program.cpp -o CMakeFiles/glimac.dir/src/Program.cpp.s
 
 glimac/CMakeFiles/glimac.dir/src/Program.cpp.o.requires:
 .PHONY : glimac/CMakeFiles/glimac.dir/src/Program.cpp.o.requires
@@ -142,18 +142,18 @@ glimac/CMakeFiles/glimac.dir/src/Program.cpp.o.provides: glimac/CMakeFiles/glima
 glimac/CMakeFiles/glimac.dir/src/Program.cpp.o.provides.build: glimac/CMakeFiles/glimac.dir/src/Program.cpp.o
 
 glimac/CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.o: glimac/CMakeFiles/glimac.dir/flags.make
-glimac/CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.o: /Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse\ d'image/Projet/iMuseum/iMuseum/glimac/src/SDLWindowManager.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/CMakeFiles" $(CMAKE_PROGRESS_5)
+glimac/CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.o: /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/SDLWindowManager.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object glimac/CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.o"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.o -c "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/SDLWindowManager.cpp"
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.o -c /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/SDLWindowManager.cpp
 
 glimac/CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.i"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/SDLWindowManager.cpp" > CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.i
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/SDLWindowManager.cpp > CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.i
 
 glimac/CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.s"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/SDLWindowManager.cpp" -o CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.s
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/SDLWindowManager.cpp -o CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.s
 
 glimac/CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.o.requires:
 .PHONY : glimac/CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.o.requires
@@ -165,18 +165,18 @@ glimac/CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.o.provides: glimac/CMakeFi
 glimac/CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.o.provides.build: glimac/CMakeFiles/glimac.dir/src/SDLWindowManager.cpp.o
 
 glimac/CMakeFiles/glimac.dir/src/Shader.cpp.o: glimac/CMakeFiles/glimac.dir/flags.make
-glimac/CMakeFiles/glimac.dir/src/Shader.cpp.o: /Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse\ d'image/Projet/iMuseum/iMuseum/glimac/src/Shader.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/CMakeFiles" $(CMAKE_PROGRESS_6)
+glimac/CMakeFiles/glimac.dir/src/Shader.cpp.o: /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Shader.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object glimac/CMakeFiles/glimac.dir/src/Shader.cpp.o"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/Shader.cpp.o -c "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Shader.cpp"
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/Shader.cpp.o -c /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Shader.cpp
 
 glimac/CMakeFiles/glimac.dir/src/Shader.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/glimac.dir/src/Shader.cpp.i"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Shader.cpp" > CMakeFiles/glimac.dir/src/Shader.cpp.i
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Shader.cpp > CMakeFiles/glimac.dir/src/Shader.cpp.i
 
 glimac/CMakeFiles/glimac.dir/src/Shader.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/glimac.dir/src/Shader.cpp.s"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Shader.cpp" -o CMakeFiles/glimac.dir/src/Shader.cpp.s
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Shader.cpp -o CMakeFiles/glimac.dir/src/Shader.cpp.s
 
 glimac/CMakeFiles/glimac.dir/src/Shader.cpp.o.requires:
 .PHONY : glimac/CMakeFiles/glimac.dir/src/Shader.cpp.o.requires
@@ -188,18 +188,18 @@ glimac/CMakeFiles/glimac.dir/src/Shader.cpp.o.provides: glimac/CMakeFiles/glimac
 glimac/CMakeFiles/glimac.dir/src/Shader.cpp.o.provides.build: glimac/CMakeFiles/glimac.dir/src/Shader.cpp.o
 
 glimac/CMakeFiles/glimac.dir/src/Sphere.cpp.o: glimac/CMakeFiles/glimac.dir/flags.make
-glimac/CMakeFiles/glimac.dir/src/Sphere.cpp.o: /Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse\ d'image/Projet/iMuseum/iMuseum/glimac/src/Sphere.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/CMakeFiles" $(CMAKE_PROGRESS_7)
+glimac/CMakeFiles/glimac.dir/src/Sphere.cpp.o: /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Sphere.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/CMakeFiles $(CMAKE_PROGRESS_7)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object glimac/CMakeFiles/glimac.dir/src/Sphere.cpp.o"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/Sphere.cpp.o -c "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Sphere.cpp"
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/Sphere.cpp.o -c /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Sphere.cpp
 
 glimac/CMakeFiles/glimac.dir/src/Sphere.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/glimac.dir/src/Sphere.cpp.i"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Sphere.cpp" > CMakeFiles/glimac.dir/src/Sphere.cpp.i
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Sphere.cpp > CMakeFiles/glimac.dir/src/Sphere.cpp.i
 
 glimac/CMakeFiles/glimac.dir/src/Sphere.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/glimac.dir/src/Sphere.cpp.s"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/Sphere.cpp" -o CMakeFiles/glimac.dir/src/Sphere.cpp.s
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/Sphere.cpp -o CMakeFiles/glimac.dir/src/Sphere.cpp.s
 
 glimac/CMakeFiles/glimac.dir/src/Sphere.cpp.o.requires:
 .PHONY : glimac/CMakeFiles/glimac.dir/src/Sphere.cpp.o.requires
@@ -211,18 +211,18 @@ glimac/CMakeFiles/glimac.dir/src/Sphere.cpp.o.provides: glimac/CMakeFiles/glimac
 glimac/CMakeFiles/glimac.dir/src/Sphere.cpp.o.provides.build: glimac/CMakeFiles/glimac.dir/src/Sphere.cpp.o
 
 glimac/CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.o: glimac/CMakeFiles/glimac.dir/flags.make
-glimac/CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.o: /Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse\ d'image/Projet/iMuseum/iMuseum/glimac/src/tiny_obj_loader.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/CMakeFiles" $(CMAKE_PROGRESS_8)
+glimac/CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.o: /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/tiny_obj_loader.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/CMakeFiles $(CMAKE_PROGRESS_8)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object glimac/CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.o"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.o -c "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/tiny_obj_loader.cpp"
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.o -c /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/tiny_obj_loader.cpp
 
 glimac/CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.i"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/tiny_obj_loader.cpp" > CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.i
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/tiny_obj_loader.cpp > CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.i
 
 glimac/CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.s"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/tiny_obj_loader.cpp" -o CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.s
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/tiny_obj_loader.cpp -o CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.s
 
 glimac/CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.o.requires:
 .PHONY : glimac/CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.o.requires
@@ -234,18 +234,18 @@ glimac/CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.o.provides: glimac/CMakeFil
 glimac/CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.o.provides.build: glimac/CMakeFiles/glimac.dir/src/tiny_obj_loader.cpp.o
 
 glimac/CMakeFiles/glimac.dir/src/TrackballCamera.cpp.o: glimac/CMakeFiles/glimac.dir/flags.make
-glimac/CMakeFiles/glimac.dir/src/TrackballCamera.cpp.o: /Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse\ d'image/Projet/iMuseum/iMuseum/glimac/src/TrackballCamera.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/CMakeFiles" $(CMAKE_PROGRESS_9)
+glimac/CMakeFiles/glimac.dir/src/TrackballCamera.cpp.o: /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/TrackballCamera.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/CMakeFiles $(CMAKE_PROGRESS_9)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object glimac/CMakeFiles/glimac.dir/src/TrackballCamera.cpp.o"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/TrackballCamera.cpp.o -c "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/TrackballCamera.cpp"
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/glimac.dir/src/TrackballCamera.cpp.o -c /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/TrackballCamera.cpp
 
 glimac/CMakeFiles/glimac.dir/src/TrackballCamera.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/glimac.dir/src/TrackballCamera.cpp.i"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/TrackballCamera.cpp" > CMakeFiles/glimac.dir/src/TrackballCamera.cpp.i
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/TrackballCamera.cpp > CMakeFiles/glimac.dir/src/TrackballCamera.cpp.i
 
 glimac/CMakeFiles/glimac.dir/src/TrackballCamera.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/glimac.dir/src/TrackballCamera.cpp.s"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac/src/TrackballCamera.cpp" -o CMakeFiles/glimac.dir/src/TrackballCamera.cpp.s
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac/src/TrackballCamera.cpp -o CMakeFiles/glimac.dir/src/TrackballCamera.cpp.s
 
 glimac/CMakeFiles/glimac.dir/src/TrackballCamera.cpp.o.requires:
 .PHONY : glimac/CMakeFiles/glimac.dir/src/TrackballCamera.cpp.o.requires
@@ -283,8 +283,8 @@ lib/libglimac.a: glimac/CMakeFiles/glimac.dir/src/TrackballCamera.cpp.o
 lib/libglimac.a: glimac/CMakeFiles/glimac.dir/build.make
 lib/libglimac.a: glimac/CMakeFiles/glimac.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX static library ../lib/libglimac.a"
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && $(CMAKE_COMMAND) -P CMakeFiles/glimac.dir/cmake_clean_target.cmake
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/glimac.dir/link.txt --verbose=$(VERBOSE)
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && $(CMAKE_COMMAND) -P CMakeFiles/glimac.dir/cmake_clean_target.cmake
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/glimac.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 glimac/CMakeFiles/glimac.dir/build: lib/libglimac.a
@@ -302,10 +302,10 @@ glimac/CMakeFiles/glimac.dir/requires: glimac/CMakeFiles/glimac.dir/src/Trackbal
 .PHONY : glimac/CMakeFiles/glimac.dir/requires
 
 glimac/CMakeFiles/glimac.dir/clean:
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" && $(CMAKE_COMMAND) -P CMakeFiles/glimac.dir/cmake_clean.cmake
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac && $(CMAKE_COMMAND) -P CMakeFiles/glimac.dir/cmake_clean.cmake
 .PHONY : glimac/CMakeFiles/glimac.dir/clean
 
 glimac/CMakeFiles/glimac.dir/depend:
-	cd "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum" "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum/glimac" "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build" "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac" "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac/CMakeFiles/glimac.dir/DependInfo.cmake" --color=$(COLOR)
+	cd /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum/glimac /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac/CMakeFiles/glimac.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : glimac/CMakeFiles/glimac.dir/depend
 

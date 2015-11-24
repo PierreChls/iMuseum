@@ -1,4 +1,4 @@
-# Install script for directory: /Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum
+# Install script for directory: /Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -29,7 +29,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/glimac/cmake_install.cmake")
+  include("/Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/glimac/cmake_install.cmake")
 
 endif()
 
@@ -39,7 +39,7 @@ else()
   set(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 endif()
 
-file(WRITE "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/${CMAKE_INSTALL_MANIFEST}" "")
+file(WRITE "/Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/${CMAKE_INSTALL_MANIFEST}" "")
 foreach(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  file(APPEND "/Users/PierreCharles/Documents/IMAC/IMAC2/Synthèse d'image/Projet/iMuseum/iMuseum-build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  file(APPEND "/Users/Charlie/Desktop/IMAC2/iMuseum/iMuseum-build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 endforeach()
