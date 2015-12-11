@@ -1,4 +1,4 @@
-# iMuseum
+# iSeason
 
 Project realised in IMAC Engineering School, in November and December 2015
 
