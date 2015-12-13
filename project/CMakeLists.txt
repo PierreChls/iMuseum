@@ -38,3 +38,6 @@ ENDIF()
 
 add_subdirectory(third-party)
 add_subdirectory(template)
+
+file(COPY shaders DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

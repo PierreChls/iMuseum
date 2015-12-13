@@ -23,7 +23,7 @@
 int main(int argc, char** argv){
 
     Assimp::Importer importer;
-    std::string file = "../project/assets/models/sceneTest.FBX";
+    std::string file = "assets/models/sceneTest.FBX";
     const aiScene *scene = importer.ReadFile(file, aiProcessPreset_TargetRealtime_Fast);//aiProcessPreset_TargetRealtime_Fast has the configs you'll need
 
     if (!scene)
