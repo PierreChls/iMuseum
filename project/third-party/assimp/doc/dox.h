@@ -29,7 +29,7 @@ that it has not been implemented yet and some (most ...) formats lack proper spe
 <b>Wavefront Object</b> ( <i>*.obj</i> ) <br>
 <b>Stanford Polygon Library</b> ( <i>*.ply</i> ) <br>
 <b>AutoCAD DXF</b> ( <i>*.dxf</i> ) <br>
-<b>IFC-STEP, Industry Foundation Classes</b> ( <i>*.ifc</i> )<br>
+<b>IFC-STEP</b> ( <i>*.ifc</i> )<br>
 <b>Neutral File Format</b> ( <i>*.nff</i> ) <br>
 <b>Sense8 WorldToolkit</b> ( <i>*.nff</i> ) <br>
 <b>Valve Model</b> ( <i>*.smd,*.vta</i> ) <sup>3</sup> <br>
@@ -58,11 +58,7 @@ that it has not been implemented yet and some (most ...) formats lack proper spe
 <b>Modo Model</b> ( <i>*.lxo</i> )<br>
 <b>CharacterStudio Motion</b> ( <i>*.csm</i> )<br>
 <b>Stanford Ply</b> ( <i>*.ply</i> )<br>
-<b>TrueSpace</b> ( <i>*.cob, *.scn</i> )<sup>2</sup><br>
-<b>XGL</b> ( <i>*.xgl, *.zgl</i> )<br>
-
-
-<br>
+<b>TrueSpace</b> ( <i>*.cob, *.scn</i> )<sup>2</sup><br><br>
 </tt>
 See the @link importer_notes Importer Notes Page @endlink for informations, what a specific importer can do and what not. 
 Note that although this paper claims to be the official documentation, 
@@ -135,9 +131,9 @@ assimp-discussions</a>.
 @page install Installation
 
 
-@section install_prebuilt Using the pre-built libraries with Visual C++ 8/9/10
+@section install_prebuilt Using the pre-built libraries with Visual C++ 8/9
 
-If you develop at Visual Studio 2005, 2008 or 2010, you can simply use the pre-built linker libraries provided in the distribution.
+If you develop at Visual Studio 2005 or 2008, you can simply use the pre-built linker libraries provided in the distribution.
 Extract all files to a place of your choice. A directory called "assimp" will be created there. Add the assimp/include path
 to your include paths (Menu-&gt;Extras-&gt;Options-&gt;Projects and Solutions-&gt;VC++ Directories-&gt;Include files)
 and the assimp/lib/&lt;Compiler&gt; path to your linker paths (Menu-&gt;Extras-&gt;Options-&gt;Projects and Solutions-&gt;VC++ Directories-&gt;Library files).
@@ -158,7 +154,7 @@ Please don't forget to also read the @ref assimp_stl section on MSVC and the STL
 
 @section assimp_stl Microsoft Compilers and the C++ Standard Library 
 
-In VC8 Microsoft introduced some Standard Library debugging features. A good example are improved iterator checks and
+In VC8 and VC9 Microsoft introduced some Standard Library debugging features. A good example are improved iterator checks and
 various useful debug checks. The problem is the performance penalty that incurs with those extra checks.
 
 Most of these security enhancements are active in release builds by default, rendering assimp several times 
@@ -170,7 +166,7 @@ _SECURE_SCL=0
 @endcode
 
 in the preprocessor options (or alternatively in the source code, just before the STL is included for the first time).
-<b>assimp's VC configs enable these flags by default</b>.
+<b>assimp's vc8 and vc9 configs enable these flags by default</b>.
 
 <i>If you're linking statically against assimp:</i> Make sure your applications uses the same STl settings! 
 If you do not, there are two binary incompatible STL versions mangled together and you'll crash. 
@@ -195,15 +191,22 @@ can use a comfortable installer from <a href="http://www.boost-consulting.com/pr
 http://www.boost-consulting.com/products/free</a>. Choose the appropriate version of boost for your runtime of choice.
 
 <b>If you don't want to use boost</b>, you can build against our <i>"Boost-Workaround"</i>. It consists of very small 
-implementations of the various boost utility classes used. However, you'll loose functionality (e.g. threading) by doing this. 
+implementations of the various boost utility classes used. However, you'll lose functionality (e.g. threading) by doing this. 
 So, if you can use boost, you should use boost. Otherwise, See the @link use_noboost NoBoost-Section @endlink 
-later on this page for the details (or just skip over it and accept this as a fact).
+later on this page for the details of the workaround.
 
-Then you have to set up a project for the assimp library in your favorite IDE. If you use VC2008 or newer, you can simply load the solution or project files in the workspaces/ folder, otherwise the easiest way is to @link cmake_build generate a suitable workspace using CMake @endlink.
+Once boost is working, you have to set up a project for the assimp library in your favorite IDE. If you use VC2005 or
+VC2008, you can simply load the solution or project files in the workspaces/ folder, otherwise you have to create a new 
+package and add all the headers and source files from the include/ and code/ directories. Set the temporary output folder
+to obj/, for example, and redirect the output folder to bin/. Then build the library - it should compile and link fine.
 
-Then build the library - it should compile and link fine.
+The last step is to integrate the library into your project. This is basically the same task as described in the 
+"Using the pre-built libraries" section above: add the include/ and bin/ directories to your IDE's paths so that the compiler can find
+the library files. Alternatively you can simply add the assimp project to your project's overall solution and build it inside
+your solution.
 
-@section use_noboost Building without boost (CMake: ENABLE_BOOST_WORKAROUND)
+
+@section use_noboost Building without boost.
 
 The Boost-Workaround consists of dummy replacements for some boost utility templates. Currently there are replacements for
 
@@ -253,52 +256,6 @@ recompile assimp. To ensure you're really building against STLport see aiGetComp
 <br>
 In our testing, STLport builds tend to be a bit faster than builds against Microsoft's
 C++ Standard Library.
-
-*/
-
-
-/** 
-@page cmake_build Build using CMake
-
-
-@section cmake_intro Introduction
-
-CMake is a cross-platform build system that is supported by assimp. CMake doesn't build on its own,
-instead it generates platform-specific build files for one of the build systems available on the
-system (i.e. on linux, it will typically be used to generate gnu makefiles).
-
-<b>If you know CMake already, you can skip over this page. Building assimp with CMake works like any other CMake build. </b>
-
-
-@section cmake_howto Build using the GUI (Windows)
-
-\image html cmake1.png
-
- - Download the latest CMake from http://www.cmake.org/ and install it
- - Run CMake GUI (at the time of this writing, its called cmake-gui.exe on Windows and appears in the start menu after installation)
- - Point it to the location of the assimp source code. The UI should now look like the screenshot above
- - Also point it to the folder where you want the binaries to be placed in.
- - Lines marked in red mark settings you haven't confirmed yet, so check if everything is fine and press "Configure"
- again (if you rebuild assimp later, only changed or newly added settings will appear in red since the last build settings are cached by CMake!)
- - Press "Generate" and pick a suitable output build system 
- - Open the generated solution/project files and have fun
-
-
-@section cmake_howto_other Build without GUI (Other)
-
- - Install CMake through the package manager of your choice, or grab a copy from http://www.cmake.org/
- - Navigate to the folder where assimp's top level <i>CMakeLists.txt</i> resides
- - Use @verbatim cmake -DNAME_OF_SETTING=VALUE @endverbatim to configure the build (see the CMake file for a list of all configurable settings.
- - Use @verbatim cmake -G 'Unix Makefiles' @endverbatim to generate build files (GNU make in this case,
-   for a full list of targets see the CMake docs).
- - Press "Generate" and pick a suitable output build system (i.e. vc version)
- - Build 
-
-
-@section cmake_troubleshooting Troubleshooting 
-
- - Configure/Generate fails due to boost? Set the @verbatim ENABLE_BOOST_WORKAROUND @endverbatim flag.
- - Build problems with vc10 on Windows? Set the @verbatim VC10_STDINT_FIX @endverbatim build flag (may or may not be required)
 
 */
 
@@ -585,7 +542,7 @@ kind kind of logging might decrease import performance.
 The assimp library returns the imported data in a collection of structures. aiScene forms the root
 of the data, from here you gain access to all the nodes, meshes, materials, animations or textures
 that were read from the imported file. The aiScene is returned from a successful call to 
-Assimp::Importer::ReadFile(), aiImportFile() or aiImportFileEx() - see the @link usage Usage page @endlink
+assimp::Importer::ReadFile(), aiImportFile() or aiImportFileEx() - see the @link usage Usage page @endlink
 for further information on how to use the library.
 
 By default, all 3D data is provided in a right-handed coordinate system such as OpenGL uses. In
@@ -1409,16 +1366,15 @@ mailing list or on our forums on SF.net.
  - http://nolimitsdesigns.com/game-design/open-asset-import-library-animation-loader/ is another utility to
    simplify animation playback.
  - http://ogldev.atspace.co.uk/www/tutorial22/tutorial22.html - Tutorial "Loading models using the Open Asset Import Library", out of a series of OpenGl tutorials.
- - http://gamedev.stackexchange.com/a/26442/6021 - Excellent write-up of assimp's animation data structures and how to interpret them.
 
 */
 
 
 /**
-@page importer_notes Importer-specific Notes
+@page importer_notes Importer Notes
 
 <hr>
-@section blender Blender (.blend)
+@section blender Blender
 
 This section contains implementation notes for the Blender3D importer. 
 @subsection bl_overview Overview
@@ -1439,7 +1395,7 @@ The Blender loader does not support animations yet, but is apart from that consi
 When filing bugs on the Blender loader, always give the Blender version (or, even better, post the file caused the error).
 
 <hr>
-@section ifc IFC (.ifc, Industry Foundation Classes)
+@section ifc IFC
 
 This section contains implementation notes on the IFC-STEP importer. 
 @subsection ifc_overview Overview
@@ -1465,8 +1421,12 @@ IFC support is new and considered experimental. Please report any bugs you may e
 - The implementation knows only about IFC2X3 and applies this rule set to all models it encounters, 
   regardless of their actual version. Loading of older or newer files may fail with parsing errors.
 
+@subsection ifc_metadata Metadata
+
+IFC file properties (IfcPropertySet) are kept as per-node metadata, see aiNode::mMetaData. 
+
 <hr>
-@section ogre Ogre (.mesh.xml)
+@section ogre Ogre
 *ATTENTION*: The Ogre-Loader is currently under development, many things have changed after this documentation was written, but they are not final enough to rewrite the documentation. So things may have changed by now!
 
 This section contains implementations notes for the OgreXML importer. 
@@ -1734,3 +1694,12 @@ void xxxxImporter::InternReadFile( const std::string& pFile,
 
 @endcode
  */
+
+ 
+ /**
+ @page AnimationOverview Animation Overview
+ \section Transformations
+ This diagram shows how you can calculate your transformationmatrices for an animated character:
+ <img src="AnimationOverview.png" />
+ 
+ **/
