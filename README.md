@@ -15,6 +15,22 @@ Project realised in IMAC Engineering School, in November and December 2015
 
 -------------------------------------
 
+## How to use it
+
+#### Clone the project
+
+	git clone git@github.com:PierreChls/iSeason.git
+	
+#### Build
+
+	cd iSeason/build
+	cmake ../project
+	make
+	
+#### Run
+
+	./template/game
+
 ##Prior installation
 
 ###For Mac users, install brew, a really cool package manager
