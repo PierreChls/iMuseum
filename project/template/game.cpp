@@ -61,7 +61,7 @@ int main(int argc, char** argv){
           /*********************************
              * HERE SHOULD COME THE RENDERING CODE
              *********************************/
-
+            // GL_CLEAR_COLOR()
           // Update the display
           windowManager.swapBuffers();
   }
