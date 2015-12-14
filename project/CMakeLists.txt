@@ -1,39 +1,22 @@
 cmake_minimum_required(VERSION 2.8)
 project(iSeason)
 
+add_definitions(-std=c++11)
+
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake)
 
-IF(${CMAKE_SYSTEM_NAME} MATCHES "MacOS")
-    find_package(SDL2 REQUIRED)
-ELSE()
-    find_package(SDL REQUIRED)
-ENDIF()
-
+find_package(SDL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(OpenGL REQUIRED)
 
-#set(OPENGL_LIBRARIES /usr/lib/x86_64-linux-gnu/libGL.so.1)
-IF(NOT ${CMAKE_SYSTEM_NAME} MATCHES "MacOS")
-    set(OPENGL_LIBRARIES /usr/lib/x86_64-linux-gnu/libGL.so.1)
-ENDIF()
+# set(OPENGL_LIBRARIES /usr/lib/x86_64-linux-gnu/libGL.so.1)
 
-MESSAGE(STATUS "${CMAKE_MODULE_PATH}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+include_directories(${SDL_INCLUDE_DIR})
 
-
-IF(${CMAKE_SYSTEM_NAME} MATCHES "MacOS")
-    include_directories(${SDL2_INCLUDE_DIR})
-ELSE()
-    include_directories(${SDL_INCLUDE_DIR})
-ENDIF()
 include_directories(${OPENGL_INCLUDE_DIR} ${GLEW_INCLUDE_DIR} third-party/glimac/include third-party/glm third-party/assimp/include/)
 
 
-IF(${CMAKE_SYSTEM_NAME} MATCHES "MacOS")
-    set(ALL_LIBRARIES glimac assimp ${SDL2_LIBRARY} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY} ${ASSIMP_LIBRARY})
-ELSE()
-    set(ALL_LIBRARIES glimac assimp ${SDL_LIBRARY} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY} ${ASSIMP_LIBRARY})
-ENDIF()
+set(ALL_LIBRARIES glimac ${SDL_LIBRARY} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY} assimp)
 
 
 add_subdirectory(third-party)

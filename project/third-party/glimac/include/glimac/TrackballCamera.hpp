@@ -1,28 +1,38 @@
 #pragma once
 
-#include <cstdint>
-#include <SDL/SDL.h>
 #include "glm.hpp"
 
-namespace glimac {
 
-class TrackballCamera {
-
+class TrackballCamera
+{
 private:
-    float m_fDistance; //distance par rapport au centre de la scène
-    float m_fAngleX; // l'angle effectuée par la caméra autour de l'axe x de la scène (rotation vers le haut ou vers le bas)
-    float m_fAngleY; //l'angle effectuée par la caméra autour de l'axe y de la scène (rotation vers la gauche ou vers la droite)
+
+	float m_fDistance; // distance par rapport au centre de la scène
+	float m_fAngleX;   // angle effectué par la caméra autour de l'axe X (rotation haut bas)
+	float m_fAngleY;   // angle effectué par la caméra autour de l'axe Y (rotation gauche droite)
+
 
 public:
 
-	TrackballCamera(); //Constructeur
-   ~TrackballCamera(); //Destructeur
+	/*** METHODS ***/
 
-    void moveFront(float delta); //permettant d'avancer / reculer la caméra. Lorsque delta est positif la caméra doit avancer, sinon elle doit reculer.
-    void rotateLeft(float degrees); //permettant de tourner latéralement autour du centre de vision.
-    void rotateUp(float degrees); //permettant de tourner verticalement autour du centre de vision.
+	TrackballCamera();  // constructor
+	~TrackballCamera(); // destructor
+	void moveFront(float delta);
+	void rotateLeft(float degrees);
+	void rotateUp(float degrees);
+	
+	/*** SETTER ***/
 
-    glm::mat4 getViewMatrix() const;
+	void setDistance(float distance);
+	void setAngleX(float angleX);
+	void setAngleY(float angleY);
+
+	/*** GETTER ***/
+
+	float getDistance() const;
+	float getAngleX() const;
+	float getAngleY() const;
+	glm::mat4 getViewMatrix() const;
+	
 };
-
-}

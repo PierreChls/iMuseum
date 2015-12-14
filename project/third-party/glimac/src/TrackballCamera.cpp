@@ -1,39 +1,60 @@
-#include "glimac/TrackballCamera.hpp"
-#include <iostream>
-#include <math.h>
+#include <glimac/TrackballCamera.hpp>
 
-namespace glimac {
+	/*** METHODS ***/
 
-    TrackballCamera::TrackballCamera() {
-         m_fDistance = 5;
-         m_fAngleX = 0;
-         m_fAngleY = 0;
-    }
+	TrackballCamera::TrackballCamera(){
+		m_fDistance = 5;
+		m_fAngleX = 0;
+		m_fAngleY = 0;
+	}
+	TrackballCamera::~TrackballCamera(){}
 
-    TrackballCamera::~TrackballCamera() {
-    }
+	void TrackballCamera::moveFront(float delta){
+		float distance = getDistance();
+		setDistance(distance + delta);
+	}
+	void TrackballCamera::rotateLeft(float degrees){
+		float angleY = getAngleY();
+		setAngleY(angleY + degrees);
+	}
+	void TrackballCamera::rotateUp(float degrees){
+		float angleX = getAngleX();
+		setAngleX(angleX + degrees);
+	}
 
-    void TrackballCamera::moveFront(float delta) {
-         m_fDistance += delta;
-    }
+	/*** SETTER ***/
 
-    void TrackballCamera::rotateLeft(float degrees) {
-        m_fAngleX = degrees / 180 * M_PI;
-    }
+	void TrackballCamera::setDistance(float distance) {
+		m_fDistance = distance;
+	}
+	void TrackballCamera::setAngleX(float angleX) {
+		m_fAngleX += angleX;
+	}
+	void TrackballCamera::setAngleY(float angleY){
+		m_fAngleY += angleY;
+	}
 
-    void TrackballCamera::rotateUp(float degrees){
-        m_fAngleY = degrees / 180 * M_PI;
-    }
+	/*** GETTER ***/
 
-    glm::mat4 TrackballCamera::getViewMatrix() const{
+	float TrackballCamera::getDistance() const{
+		return m_fDistance;
+	}
+	float TrackballCamera::getAngleX() const{
+		return m_fAngleX;
+	}
+	float TrackballCamera::getAngleY() const{
+		return m_fAngleY;
+	}
+	glm::mat4 TrackballCamera::getViewMatrix() const{
+		 glm::mat4 VM;
+		 glm::mat4 Translation = glm::translate( glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -1*getDistance()));
+		 glm::mat4 RotationX   = glm::rotate   ( glm::mat4(1.0f), glm::radians(getAngleX()), glm::vec3(1,0,0));
+		 glm::mat4 RotationY   = glm::rotate   ( glm::mat4(1.0f), glm::radians(getAngleY()), glm::vec3(0,1,0));
 
-        glm::mat4 MatrixId = glm::mat4(1.0); //Matrice Identité
 
-        glm::mat4 matrixMoveFront = glm::translate( MatrixId, glm::vec3(0.0f, 0.0f, -m_fDistance) ); //Translation en z
-        glm::mat4 matrixrotateLeft = glm::rotate( MatrixId, m_fAngleX, glm::vec3(1, 0, 0) ); //Axe x
-        glm::mat4 matrixrotateUp = glm::rotate( MatrixId, m_fAngleY, glm::vec3(0, 1, 0) ); //Axe y
+		 VM =  Translation * RotationX * RotationY;
+		 return VM;
 
-        return matrixMoveFront * matrixrotateLeft * matrixrotateUp;
-    }
 
-}
+
+	}
