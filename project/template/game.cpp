@@ -110,11 +110,6 @@ int main(int argc, char** argv) {
         glBindVertexArray(0);
 
 
-
-
-
-
-
         // Update the display
         windowManager.swapBuffers();
     }
