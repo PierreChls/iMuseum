@@ -1,2 +1,2 @@
 add_subdirectory(glimac)
-add_subdirectory(assimp)
+#add_subdirectory(assimp)
