@@ -13,7 +13,6 @@ Project realised in IMAC Engineering School, in November and December 2015
 - Linux Ubuntu
 - Mac OSX
 
--------------------------------------
 
 ## How to use it
 
