@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
     SDLWindowManager windowManager(screenWidth, screenHeight, "iSeason");
 
     // Initialize glew for OpenGL3+ support
-    glewExperimental = GL_TRUE; 
+    glewExperimental = GL_TRUE;
     GLenum glewInitError = glewInit();
     if(GLEW_OK != glewInitError) {
         std::cerr << glewGetErrorString(glewInitError) << std::endl;
@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
 
     // Setup and compile our shaders
     Shader MyShader("template/shaders/model_loading.vs", "template/shaders/model_loading.fs");
-    
+
     // Load models
     Model model("assets/models/nanosuit.obj");
 
@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
 
         // Transformation matrices
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth/(float)screenHeight, 0.1f, 100.0f);
-        
+
         glm::mat4 view = glm::mat4(1.0);
         glUniformMatrix4fv(glGetUniformLocation(MyShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(MyShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
