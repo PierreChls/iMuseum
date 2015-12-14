@@ -5,20 +5,20 @@
 #include <stdlib.h>
 #include <time.h>
 
-//#include <glimac/SDLWindowManager.hpp>
+#include <glimac/SDLWindowManager.hpp>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL.h>
 //#include <glimac/Program.hpp>
 // #include <glimac/Image.hpp>
 
-#include <common.hpp>
+//#include <common.hpp>
 
 #include <assimp/Importer.hpp>         // C++ importer interface
 #include <assimp/postprocess.h>        // Post processing fla
 #include <assimp/scene.h>              // Output data structure
 #include <assimp/DefaultLogger.hpp>
 
-//using namespace glimac;
+using namespace glimac;
 
 int main(int argc, char** argv){
 
@@ -36,7 +36,7 @@ int main(int argc, char** argv){
     std::cout << scene->mNumMeshes << " meshes" << std::endl;
 
 //  // Initialize SDL and open a window
-//  SDLWindowManager windowManager(800, 600, "iMuseum");
+    SDLWindowManager windowManager(800, 600, 'iSeason');
 
 //  glewExperimental = GL_TRUE;
 //  // Initialize glew for OpenGL3+ support

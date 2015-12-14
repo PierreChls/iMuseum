@@ -1,8 +1,8 @@
 #include <cmath>
 #include <vector>
 #include <iostream>
-#include "common.hpp"
-#include "Cone.hpp"
+#include "glimac/common.hpp"
+#include "glimac/Cone.hpp"
 
 namespace glimac {
 

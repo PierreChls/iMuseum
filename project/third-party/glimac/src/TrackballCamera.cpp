@@ -1,33 +1,39 @@
-#include "TrackballCamera.hpp"
+#include "glimac/TrackballCamera.hpp"
+#include <iostream>
+#include <math.h>
 
-namespace glimac{
+namespace glimac {
 
-    TrackballCamera::TrackballCamera(float fDistance, float fAngleX, float fAngleY):
-            m_fDistance(fDistance), m_fAngleX(fAngleX), m_fAngleY(fAngleY)
-    {
+    TrackballCamera::TrackballCamera() {
+         m_fDistance = 5;
+         m_fAngleX = 0;
+         m_fAngleY = 0;
     }
 
-    void TrackballCamera::moveFront(float delta)
-    {
-        m_fDistance += delta;
-    }
-    void TrackballCamera::rotateLeft(float degrees)
-    {
-        m_fAngleY += degrees;
-    }
-    void TrackballCamera::rotateUp(float degrees)
-    {
-        m_fAngleX += degrees;
+    TrackballCamera::~TrackballCamera() {
     }
 
-
-    glm::mat4 TrackballCamera::getViewMatrix() const {
-        glm::mat4 viewMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -m_fDistance));
-
-        viewMatrix = glm::rotate(viewMatrix, glm::radians(m_fAngleX), glm::vec3(0.0f, 1.0f, 0.0f));
-        viewMatrix = glm::rotate(viewMatrix, glm::radians(m_fAngleY), glm::vec3(1.0f, 0.0f, 0.0f));
-
-        return viewMatrix;
+    void TrackballCamera::moveFront(float delta) {
+         m_fDistance += delta;
     }
+
+    void TrackballCamera::rotateLeft(float degrees) {
+        m_fAngleX = degrees / 180 * M_PI;
+    }
+
+    void TrackballCamera::rotateUp(float degrees){
+        m_fAngleY = degrees / 180 * M_PI;
+    }
+
+    glm::mat4 TrackballCamera::getViewMatrix() const{
+
+        glm::mat4 MatrixId = glm::mat4(1.0); //Matrice Identité
+
+        glm::mat4 matrixMoveFront = glm::translate( MatrixId, glm::vec3(0.0f, 0.0f, -m_fDistance) ); //Translation en z
+        glm::mat4 matrixrotateLeft = glm::rotate( MatrixId, m_fAngleX, glm::vec3(1, 0, 0) ); //Axe x
+        glm::mat4 matrixrotateUp = glm::rotate( MatrixId, m_fAngleY, glm::vec3(0, 1, 0) ); //Axe y
+
+        return matrixMoveFront * matrixrotateLeft * matrixrotateUp;
+    }
+
 }
-
