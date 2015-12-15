@@ -8,7 +8,7 @@
 
 #include "Shader.hpp"
 #include "Model.hpp"
-#include "FreeFlyCamera.hpp"
+#include "Camera.hpp"
 
 using namespace glimac;
 
@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
     // Load models
     Model model("assets/models/nanosuit.obj");
 
-    FreeFlyCamera myCamera;
+    Camera myCamera;
 
     /*********************************
      * HERE SHOULD COME THE INITIALIZATION CODE
