@@ -8,6 +8,7 @@
 
 #include "Shader.hpp"
 #include "Model.hpp"
+#include "Camera.hpp"
 
 using namespace glimac;
 
@@ -40,6 +41,8 @@ int main(int argc, char** argv) {
     // Load models
     Model model("assets/models/nanosuit.obj");
 
+    Camera myCamera;
+
     /*********************************
      * HERE SHOULD COME THE INITIALIZATION CODE
      *********************************/
@@ -64,10 +67,29 @@ int main(int argc, char** argv) {
 
         MyShader.Use();
 
+        if(windowManager.isKeyPressed(SDLK_s)) myCamera.moveFront(-0.1);
+        if(windowManager.isKeyPressed(SDLK_z)) myCamera.moveFront(0.1);
+        if(windowManager.isKeyPressed(SDLK_q)) myCamera.moveLeft(0.1);
+        if(windowManager.isKeyPressed(SDLK_d)) myCamera.moveLeft(-0.1);
+        if(windowManager.isKeyPressed(SDLK_i)) myCamera.rotateLeft(5.0);
+        if(windowManager.isKeyPressed(SDLK_k)) myCamera.rotateUp(5.0);
+
+        glm::ivec2 mousePos = glm::ivec2(0.0);
+        if(windowManager.isMouseButtonPressed(SDL_BUTTON_LEFT)){
+            mousePos = windowManager.getMousePosition();
+            float mousePosX = mousePos.x/800.0f - 0.5;
+            float mousePosY = mousePos.y/600.0f - 0.5;
+
+            myCamera.rotateLeft(-2*mousePosX);
+            myCamera.rotateUp(-2*mousePosY);
+
+        }
+
         // Transformation matrices
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth/(float)screenHeight, 0.1f, 100.0f);
 
-        glm::mat4 view = glm::mat4(1.0);
+        //glm::mat4 view = glm::mat4(1.0);
+        glm::mat4 view = myCamera.getViewMatrix();
         glUniformMatrix4fv(glGetUniformLocation(MyShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(MyShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
