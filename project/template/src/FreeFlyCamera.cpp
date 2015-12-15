@@ -1,4 +1,4 @@
-#include "glimac/FreeFlyCamera.hpp"
+#include "FreeFlyCamera.hpp"
 #include <iostream>
 
 FreeFlyCamera::FreeFlyCamera(){
@@ -28,7 +28,6 @@ void FreeFlyCamera::moveFront(float t){
 
 void FreeFlyCamera::rotateLeft(float degrees){
 	m_fPhi += glm::radians(degrees);
-	std::cout << m_fPhi << std::endl;
 	computeDirectionVectors();
 }
 
