@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
     Shader MyShader("template/shaders/model_loading.vs.glsl", "template/shaders/model_loading.fs.glsl");
 
     // Load models
-    Model model("assets/models/nanosuit.obj");
+    Model model("assets/models/nanosuit/nanosuit.obj");
 
     /*********************************
      * HERE SHOULD COME THE INITIALIZATION CODE
