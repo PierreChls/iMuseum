@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
 
     // Setup and compile our shaders
     Shader MyShader("template/shaders/model_loading.vs.glsl", "template/shaders/model_loading.fs.glsl");
-    Shader LightShader("template/shaders/light.vs.glsl", "template/shaders/light.fs.glsl");
+    Shader LightShader("template/shaders/ambiant_light.vs.glsl", "template/shaders/ambiant_light.fs.glsl");
 
     // Load models
     Model model_nanosuit("assets/models/nanosuit/nanosuit.obj");
@@ -53,10 +53,8 @@ int main(int argc, char** argv) {
      *********************************/
 
 
-    glm::vec3 pointLightPositions[] = {
-        glm::vec3(0.0f, 10.6f, -20.0f),
-        glm::vec3(0.0f, 10.6f, -10.0f)
-    };
+    // Light ambiant attributes
+    glm::vec3 lightPos(10.2f, 1.0f, 20.0f);
 
 
     // Application loop:
@@ -109,25 +107,19 @@ int main(int argc, char** argv) {
         glUniformMatrix4fv(glGetUniformLocation(LightShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(LightShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
+        GLint lightPosLoc = glGetUniformLocation(LightShader.Program, "light.position");
+        GLint lightDirLoc = glGetUniformLocation(LightShader.Program, "light.direction");
+        GLint viewPosLoc  = glGetUniformLocation(LightShader.Program, "viewPos");
+        glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
+        glUniform3f(lightDirLoc, -0.2f, -1.0f, -0.3f);
 
-        //Point light 1
-        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[0].position"), pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);     
-        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[0].ambient"), 0.05f, 0.05f, 0.05f);       
-        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[0].diffuse"), 1.0f, 1.0f, 1.0f); 
-        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[0].specular"), 0.01f, 0.01f, 0.01f);
-        glUniform1f(glGetUniformLocation(LightShader.Program, "pointLights[0].constant"), 0.5f);
-        glUniform1f(glGetUniformLocation(LightShader.Program, "pointLights[0].linear"), 0.009);
-        glUniform1f(glGetUniformLocation(LightShader.Program, "pointLights[0].quadratic"), 0.0032);      
-        // Point light 2
-        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[1].position"), pointLightPositions[1].x, pointLightPositions[1].y, pointLightPositions[1].z);     
-        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[1].ambient"), 0.05f, 0.05f, 0.05f);       
-        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[1].diffuse"), 1.0f, 1.0f, 1.0f); 
-        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[1].specular"), 0.01f, 0.01f, 0.01f); //intensity
-        glUniform1f(glGetUniformLocation(LightShader.Program, "pointLights[1].constant"), 0.01f);
-        glUniform1f(glGetUniformLocation(LightShader.Program, "pointLights[1].linear"), 0.009);
-        glUniform1f(glGetUniformLocation(LightShader.Program, "pointLights[1].quadratic"), 0.0032);  
-
-
+         // Set lights properties
+        glUniform3f(glGetUniformLocation(LightShader.Program, "light.position"),  0.2f, windowManager.getTime(), 0.2f);
+        glUniform3f(glGetUniformLocation(LightShader.Program, "light.ambient"),  0.01f, 0.01f, 0.01f);
+        glUniform3f(glGetUniformLocation(LightShader.Program, "light.diffuse"),  0.5f, 0.5f, 0.5f);
+        glUniform3f(glGetUniformLocation(LightShader.Program, "light.specular"), 1.0f, 1.0f, 1.0f);
+        // Set material properties
+        glUniform1f(glGetUniformLocation(LightShader.Program, "material.shininess"), 132.0f);
 
         // Draw the loaded model
         glm::mat4 matModel;
