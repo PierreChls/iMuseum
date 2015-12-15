@@ -3,6 +3,7 @@
 
 namespace glimac {
 
+SDLWindowManager::SDLWindowManager(){}
 SDLWindowManager::SDLWindowManager(uint32_t width, uint32_t height, const char* title) {
     if(0 != SDL_Init(SDL_INIT_VIDEO)) {
         std::cerr << SDL_GetError() << std::endl;
