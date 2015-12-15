@@ -1,85 +1,49 @@
+
 #include <glimac/SDLWindowManager.hpp>
+
 #include <GL/glew.h>
 #include <iostream>
 
-#include <assimp/Importer.hpp>         // C++ importer interface
-#include <assimp/postprocess.h>        // Post processing fla
-#include <assimp/scene.h>              // Output data structure
-#include <assimp/DefaultLogger.hpp>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+
+#include "Shader.hpp"
+#include "Model.hpp"
 
 using namespace glimac;
 
 int main(int argc, char** argv) {
+    GLuint screenWidth = 800, screenHeight = 600;
     // Initialize SDL and open a window
-    SDLWindowManager windowManager(800, 600, "GLImac");
+    SDLWindowManager windowManager(screenWidth, screenHeight, "iSeason");
 
-    glewExperimental = GL_TRUE;
     // Initialize glew for OpenGL3+ support
+    glewExperimental = GL_TRUE;
     GLenum glewInitError = glewInit();
     if(GLEW_OK != glewInitError) {
         std::cerr << glewGetErrorString(glewInitError) << std::endl;
         return EXIT_FAILURE;
     }
 
+    //Define the viewport dimensions
+    glViewport(0, 0, screenWidth, screenHeight);
+
+    // Setup some OpenGL options
+    glEnable(GL_DEPTH_TEST);
+
     std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
     std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
 
-    Assimp::Importer importer;
-    std::string file = "assets/models/cube.obj";
-    const aiScene *scene = importer.ReadFile(file, aiProcessPreset_TargetRealtime_Fast);//aiProcessPreset_TargetRealtime_Fast has the configs you'll need
 
-    if (!scene)
-    {
-        std::cout << "Error loading file: (assimp:) " << importer.GetErrorString();
-        return false;
-    }
-    aiMesh *mesh = scene->mMeshes[0]; //assuming you only want the first mesh
+    // Setup and compile our shaders
+    Shader MyShader("template/shaders/model_loading.vs", "template/shaders/model_loading.fs");
 
-    std::cout << scene->mNumMeshes << " meshes" << std::endl;
+    // Load models
+    Model model("assets/models/nanosuit.obj");
 
     /*********************************
      * HERE SHOULD COME THE INITIALIZATION CODE
      *********************************/
-
-    //Création d'un VBO
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
-
-    //Bindind du vbo sur la cible
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-    //Création d'un tableau de float pour stocker les points du VBO
-    GLfloat vertices[] = {-0.5f, -0.5f, 0.5f, -0.5f, 0.0f, 0.5f};
-    //Puis on envois les données à la CG
-    glBufferData(GL_ARRAY_BUFFER, 6*sizeof(GLfloat), vertices, GL_STATIC_DRAW);
-
-    //Débindind du vbo de la cible pour éviter de le remodifier
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-
-    //Création du VAO
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-
-    //Binding du vao (un seul à la fois)
-    glBindVertexArray(vao);
-
-    //Dire à OpenGL qu'on utilise le VAO
-    const GLuint VERTEX_ATTR_POSITION = 0;
-    glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
-
-    //Indiquer à OpenGL où trouver les sommets
-    //Bindind du vbo sur la cible
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    //Spécification du format de l'attribut de sommet position
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(GLfloat), 0);
-    //Débindind du vbo de la cible pour éviter de le remodifier
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    //Débindind du vao de la cible pour éviter de le remodifier
-    glBindVertexArray(0);
-
-
 
 
     // Application loop:
@@ -96,27 +60,33 @@ int main(int argc, char** argv) {
         /*********************************
          * HERE SHOULD COME THE RENDERING CODE
          *********************************/
+        glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //On nettoit la fenêtre
-        glClear(GL_COLOR_BUFFER_BIT);
+        MyShader.Use();
 
-        //On rebind le vao
-        glBindVertexArray(vao);
+        // Transformation matrices
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth/(float)screenHeight, 0.1f, 100.0f);
 
-        //On dessine le triangle
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glm::mat4 view = glm::mat4(1.0);
+        glUniformMatrix4fv(glGetUniformLocation(MyShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(glGetUniformLocation(MyShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
-        //Débindind du vao de la cible pour éviter de le remodifier
-        glBindVertexArray(0);
+        // Draw the loaded model
+        glm::mat4 matModel;
+        // Translate model to the center of the scene
+        matModel = glm::translate(matModel, glm::vec3(0.0f, -1.75f, -5.0f));
+        matModel = glm::scale(matModel, glm::vec3(0.2f, 0.2f, 0.2f));
+        glUniformMatrix4fv(glGetUniformLocation(MyShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
+        model.Draw(MyShader);
 
         // Update the display
         windowManager.swapBuffers();
     }
 
-    //On libère le GPU des ressources VBO et VAO
-    glDeleteBuffers(1, &vbo);
-    glDeleteVertexArrays(1, &vao);
+    //glDeleteBuffers(1, &vbo);
+    //glDeleteVertexArrays(1, &vao);
 
 
     return EXIT_SUCCESS;
