@@ -12,6 +12,9 @@
 
 using namespace glimac;
 
+GLfloat deltaTime = 0.0f;
+GLfloat lastFrame = 0.0f;
+
 int main(int argc, char** argv) {
     GLuint screenWidth = 800, screenHeight = 600;
     // Initialize SDL and open a window
@@ -37,6 +40,7 @@ int main(int argc, char** argv) {
 
     // Setup and compile our shaders
     Shader MyShader("template/shaders/model_loading.vs.glsl", "template/shaders/model_loading.fs.glsl");
+    Shader LightShader("template/shaders/light.vs.glsl", "template/shaders/light.fs.glsl");
 
     // Load models
     Model model_nanosuit("assets/models/nanosuit/nanosuit.obj");
@@ -49,18 +53,20 @@ int main(int argc, char** argv) {
      *********************************/
 
 
-    std::vector<glm::vec3> AxesRotation;
-    std::vector<glm::vec3> Translations;
-    for (int i = 0; i < 32; ++i)
-    {
-        AxesRotation.push_back(glm::sphericalRand(1.0f));
-        Translations.push_back(glm::sphericalRand(2.0f));
-    }
+    glm::vec3 pointLightPositions[] = {
+        glm::vec3(0.0f, 10.6f, -20.0f),
+        glm::vec3(0.0f, 10.6f, -10.0f)
+    };
 
 
     // Application loop:
     bool done = false;
     while(!done) {
+
+        GLfloat currentFrame = windowManager.getTime();
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+
         // Event loop:
         SDL_Event e;
         while(windowManager.pollEvent(e)) {
@@ -75,7 +81,7 @@ int main(int argc, char** argv) {
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        MyShader.Use();
+        LightShader.Use();
 
         if(windowManager.isKeyPressed(SDLK_s)) myCamera.moveFront(-0.1);
         if(windowManager.isKeyPressed(SDLK_z)) myCamera.moveFront(0.1);
@@ -100,24 +106,44 @@ int main(int argc, char** argv) {
 
         //glm::mat4 view = glm::mat4(1.0);
         glm::mat4 view = myCamera.getViewMatrix();
-        glUniformMatrix4fv(glGetUniformLocation(MyShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-        glUniformMatrix4fv(glGetUniformLocation(MyShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(glGetUniformLocation(LightShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(glGetUniformLocation(LightShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+
+
+        //Point light 1
+        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[0].position"), pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);     
+        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[0].ambient"), 0.05f, 0.05f, 0.05f);       
+        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[0].diffuse"), 1.0f, 1.0f, 1.0f); 
+        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[0].specular"), 0.01f, 0.01f, 0.01f);
+        glUniform1f(glGetUniformLocation(LightShader.Program, "pointLights[0].constant"), 0.5f);
+        glUniform1f(glGetUniformLocation(LightShader.Program, "pointLights[0].linear"), 0.009);
+        glUniform1f(glGetUniformLocation(LightShader.Program, "pointLights[0].quadratic"), 0.0032);      
+        // Point light 2
+        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[1].position"), pointLightPositions[1].x, pointLightPositions[1].y, pointLightPositions[1].z);     
+        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[1].ambient"), 0.05f, 0.05f, 0.05f);       
+        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[1].diffuse"), 1.0f, 1.0f, 1.0f); 
+        glUniform3f(glGetUniformLocation(LightShader.Program, "pointLights[1].specular"), 0.01f, 0.01f, 0.01f); //intensity
+        glUniform1f(glGetUniformLocation(LightShader.Program, "pointLights[1].constant"), 0.01f);
+        glUniform1f(glGetUniformLocation(LightShader.Program, "pointLights[1].linear"), 0.009);
+        glUniform1f(glGetUniformLocation(LightShader.Program, "pointLights[1].quadratic"), 0.0032);  
+
+
 
         // Draw the loaded model
         glm::mat4 matModel;
         // Translate model to the center of the scene
         matModel = glm::translate(matModel, glm::vec3(0.0f, -1.75f, -5.0f));
         matModel = glm::scale(matModel, glm::vec3(0.2f, 0.2f, 0.2f));
-        glUniformMatrix4fv(glGetUniformLocation(MyShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+        glUniformMatrix4fv(glGetUniformLocation(LightShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
-        model_nanosuit.Draw(MyShader);
+        model_nanosuit.Draw(LightShader);
 
         matModel = glm::rotate(matModel, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
         matModel = glm::translate(matModel, glm::vec3(-0.0f, 2.75f, 1.0f));
         matModel = glm::scale(matModel, glm::vec3(6.0f, 6.0f, 6.0f));
-        glUniformMatrix4fv(glGetUniformLocation(MyShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+        glUniformMatrix4fv(glGetUniformLocation(LightShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
-        model_house.Draw(MyShader);
+        model_house.Draw(LightShader);
 
         // Update the display
         windowManager.swapBuffers();
