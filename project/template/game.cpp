@@ -49,6 +49,15 @@ int main(int argc, char** argv) {
      *********************************/
 
 
+    std::vector<glm::vec3> AxesRotation;
+    std::vector<glm::vec3> Translations;
+    for (int i = 0; i < 32; ++i)
+    {
+        AxesRotation.push_back(glm::sphericalRand(1.0f));
+        Translations.push_back(glm::sphericalRand(2.0f));
+    }
+
+
     // Application loop:
     bool done = false;
     while(!done) {
@@ -102,6 +111,12 @@ int main(int argc, char** argv) {
         glUniformMatrix4fv(glGetUniformLocation(MyShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
         model_nanosuit.Draw(MyShader);
+
+        matModel = glm::rotate(matModel, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        matModel = glm::translate(matModel, glm::vec3(-0.0f, 2.75f, 1.0f));
+        matModel = glm::scale(matModel, glm::vec3(6.0f, 6.0f, 6.0f));
+        glUniformMatrix4fv(glGetUniformLocation(MyShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+
         model_house.Draw(MyShader);
 
         // Update the display
