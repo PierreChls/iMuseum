@@ -1,4 +1,3 @@
-
 #include <glimac/SDLWindowManager.hpp>
 
 #include <GL/glew.h>
@@ -36,7 +35,7 @@ int main(int argc, char** argv) {
 
 
     // Setup and compile our shaders
-    Shader MyShader("template/shaders/model_loading.vs", "template/shaders/model_loading.fs");
+    Shader MyShader("template/shaders/model_loading.vs.glsl", "template/shaders/model_loading.fs.glsl");
 
     // Load models
     Model model("assets/models/nanosuit.obj");
