@@ -39,7 +39,8 @@ int main(int argc, char** argv) {
     Shader MyShader("template/shaders/model_loading.vs.glsl", "template/shaders/model_loading.fs.glsl");
 
     // Load models
-    Model model("assets/models/nanosuit/nanosuit.obj");
+    Model model_nanosuit("assets/models/nanosuit/nanosuit.obj");
+    Model model_house("assets/models/house/fw43_lowpoly_n1.3ds");
 
     Camera myCamera;
 
@@ -100,7 +101,8 @@ int main(int argc, char** argv) {
         matModel = glm::scale(matModel, glm::vec3(0.2f, 0.2f, 0.2f));
         glUniformMatrix4fv(glGetUniformLocation(MyShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
-        model.Draw(MyShader);
+        model_nanosuit.Draw(MyShader);
+        model_house.Draw(MyShader);
 
         // Update the display
         windowManager.swapBuffers();
