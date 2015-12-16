@@ -12,10 +12,11 @@ void Scene::loadScene(string path_season)
   int nbModel, nbShader, i;
 
   string word, line;
-  string pathShader_vs, pathShader_fs;
-  string path_model;
+  string name_shader, pathShader_vs, pathShader_fs;
+  string name_model, path_model;
 
-  ifstream file(path_season); //Ouverture avec le constructeur ou fichier.open("hamlet.txt");
+  ifstream file(path_season);
+
   if(file){
     
     //INIT : First line
@@ -31,9 +32,10 @@ void Scene::loadScene(string path_season)
     {
       getline(file, line); 
       stringstream iss(line);
-      while(iss >> pathShader_vs >> pathShader_fs)
+      while(iss >> name_shader >> pathShader_vs >> pathShader_fs)
       {
-        cout << pathShader_vs << " " << pathShader_fs << endl; 
+        cout << name_shader << " " << pathShader_vs << " " << pathShader_fs << endl;
+        this->shaders[name_shader] = Shader( (char*)pathShader_vs.c_str() , (char*)pathShader_fs.c_str() );
       }
     }
 
@@ -42,13 +44,13 @@ void Scene::loadScene(string path_season)
     {
       getline(file, line); 
       stringstream iss(line);
-      while(iss >> path_model)
+      while(iss >> name_model >> path_model)
       {
-        cout << path_model << endl; 
+        cout << name_model << " " << path_model << endl; 
+        this->models[name_model] = Model( (char*)path_model.c_str() );
       }
     }
-    /*getline(file, line);
-    cout << line << endl;*/
+
     file.close();
   }
   else{
