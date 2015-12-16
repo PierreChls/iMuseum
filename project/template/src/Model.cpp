@@ -2,6 +2,8 @@
 
 using namespace std;
 
+Model::Model(){}
+
 Model::Model(string path){
     this->loadModel(path);
 }
