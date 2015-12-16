@@ -8,21 +8,21 @@
 using namespace glimac;
 
 int main(int argc, char** argv) {
-    
-    Scene SceneTest(800,600);
-          SceneTest.init();
 
+    Scene Scene;
+    //SceneTest.init();
+    Scene = Scene.loadScene("assets/seasons/summer.txt");
     // Setup and compile our shaders
-    Shader MyShader("template/shaders/model_loading.vs.glsl", "template/shaders/model_loading.fs.glsl");
+    //Shader MyShader("template/shaders/model_loading.vs.glsl", "template/shaders/model_loading.fs.glsl");
 
     // Load models
-    Model model("assets/models/nanosuit.obj");
+    //Model model("assets/models/nanosuit.obj");
 
     /*********************************
      * HERE SHOULD COME THE INITIALIZATION CODE
      *********************************/
 
-     SceneTest.render();
+     //SceneTest.render();
 
     return EXIT_SUCCESS;
 }
