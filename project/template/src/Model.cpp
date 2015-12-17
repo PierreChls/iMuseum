@@ -2,15 +2,18 @@
 
 using namespace std;
 
-Model::Model(string path){
+Model::Model(){}
+
+Model::Model(string path, string shader_name){
+    this->shader_name = shader_name;
     this->loadModel(path);
 }
 
 void Model::Draw(Shader shader){
     // Loop through each mesh and draw it
-	for(GLuint i = 0; i < this->meshes.size(); i++){
+    for(GLuint i = 0; i < this->meshes.size(); i++){
         this->meshes[i].Draw(shader);
-	}
+    }
 }
 
 void Model::loadModel(string path)
@@ -171,4 +174,5 @@ GLint Model::TextureFromFile(const char* path, string directory)
     glBindTexture(GL_TEXTURE_2D, 0);
 
     return textureID;
+
 }
