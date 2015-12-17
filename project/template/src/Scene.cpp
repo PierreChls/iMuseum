@@ -74,7 +74,7 @@ void Scene::loadScene(string path_season)
         cout << name_light << endl; 
 
         Light PointLight(glm::vec3( (float)position_x , (float)position_y, (float)position_z),             //position
-                         glm::vec3( (float)ambient_1, (float)ambient_3, (float)ambient_3),                 //ambient
+                         glm::vec3( (float)ambient_1, (float)ambient_2, (float)ambient_3),                 //ambient
                          glm::vec3( (float)diffuse_1 , (float)diffuse_2 , (float)diffuse_3),               //diffuse
                          glm::vec3( (float)specular_1, (float)specular_2, (float)specular_3),              //specular
                          (float)constant,
