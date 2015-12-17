@@ -14,7 +14,6 @@
 using namespace glimac;
 
 int main(int argc, char** argv) {
-    
     GLuint screenWidth = 800, screenHeight = 600;
     // Initialize SDL and open a window
     SDLWindowManager windowManager(screenWidth, screenHeight, "iSeason");
@@ -62,7 +61,6 @@ int main(int argc, char** argv) {
 
         // Update the display
         windowManager.swapBuffers();
-
     }
 
     return EXIT_SUCCESS;

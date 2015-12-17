@@ -14,6 +14,7 @@
 using namespace std;
 using namespace glimac;
 
+
 class Scene
 {
     public:
@@ -34,3 +35,4 @@ class Scene
 
     private:
 };
+

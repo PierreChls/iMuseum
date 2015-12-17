@@ -3,6 +3,7 @@
 using namespace std;
 using namespace glimac;
 
+
 Scene::Scene(string path_season)
 {
   this->loadScene(path_season);
@@ -33,7 +34,7 @@ void Scene::loadScene(string path_season)
     stringstream iss(line);
     while(iss >> word >> nbShader >> word >> nbModel >> word >> nbLight)
     {
-      cout << "Nb Shaders : " << nbShader << " | Nb Models : " << nbModel << " | Nb Lights : " << nbLight << endl << endl; 
+      cout << "Nb Shaders : " << nbShader << " | Nb Models : " << nbModel << " | Nb Lights : " << nbLight << endl << endl;
     }
 
     //SHADERS
@@ -43,6 +44,7 @@ void Scene::loadScene(string path_season)
       stringstream iss(line);
       while(iss >> name_shader >> pathShader_vs >> pathShader_fs)
       {
+
         cout << name_shader << " " << pathShader_vs << " " << pathShader_fs << endl ;
         this->shaders[name_shader] = Shader( (char*)pathShader_vs.c_str() , (char*)pathShader_fs.c_str() );
       }
