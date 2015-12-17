@@ -97,8 +97,8 @@ int main(int argc, char** argv) {
         // Transformation matrices
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth/(float)screenHeight, 0.1f, 100.0f);
 
-        glm::mat4 view = glm::mat4(1.0);
-        //glm::mat4 view = myCamera.getViewMatrix();
+        //glm::mat4 view = glm::mat4(1.0);
+        glm::mat4 view = myCamera.getViewMatrix();
         glUniformMatrix4fv(glGetUniformLocation(Scene.shaders["LIGHT"].Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(Scene.shaders["LIGHT"].Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
@@ -132,7 +132,7 @@ int main(int argc, char** argv) {
         matModel = glm::scale(matModel, glm::vec3(6.0f, 6.0f, 6.0f));
         glUniformMatrix4fv(glGetUniformLocation(Scene.shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
-        //model_house.Draw(Scene.shaders["LIGHT"]);
+        Scene.models["HOUSE"].Draw(Scene.shaders[ Scene.models["HOUSE"].shader_name]);
 
         // Update the display
         windowManager.swapBuffers();
