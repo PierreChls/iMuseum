@@ -5,12 +5,15 @@
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
-//#include "Camera.hpp"
 #include "Scene.hpp"
 #include "Model.hpp"
 #include "Shader.hpp"
+#include "Camera.hpp"
 
 using namespace glimac;
+
+GLfloat deltaTime = 0.0f;
+GLfloat lastFrame = 0.0f;
 
 int main(int argc, char** argv) {
 
@@ -37,7 +40,8 @@ int main(int argc, char** argv) {
 
     Scene Scene("assets/seasons/summer.txt");
 
-    //Camera myCamera;
+
+    Camera myCamera;
 
     /*********************************
      * HERE SHOULD COME THE INITIALIZATION CODE
@@ -52,9 +56,9 @@ int main(int argc, char** argv) {
     bool done = false;
     while(!done) {
 
-        /*GLfloat currentFrame = windowManager.getTime();
+        GLfloat currentFrame = windowManager.getTime();
         deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;*/
+        lastFrame = currentFrame;
 
         // Event loop:
         SDL_Event e;
@@ -70,9 +74,10 @@ int main(int argc, char** argv) {
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
         Scene.shaders["LIGHT"].Use();
 
-        /*if(windowManager.isKeyPressed(SDLK_s)) myCamera.moveFront(-0.1);
+        if(windowManager.isKeyPressed(SDLK_s)) myCamera.moveFront(-0.1);
         if(windowManager.isKeyPressed(SDLK_z)) myCamera.moveFront(0.1);
         if(windowManager.isKeyPressed(SDLK_q)) myCamera.moveLeft(0.1);
         if(windowManager.isKeyPressed(SDLK_d)) myCamera.moveLeft(-0.1);
@@ -87,8 +92,7 @@ int main(int argc, char** argv) {
 
             myCamera.rotateLeft(-2*mousePosX);
             myCamera.rotateUp(-2*mousePosY);
-
-        }*/
+        }
 
         // Transformation matrices
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth/(float)screenHeight, 0.1f, 100.0f);
@@ -101,6 +105,7 @@ int main(int argc, char** argv) {
         GLint lightPosLoc = glGetUniformLocation(Scene.shaders["LIGHT"].Program, "light.position");
         GLint lightDirLoc = glGetUniformLocation(Scene.shaders["LIGHT"].Program, "light.direction");
         GLint viewPosLoc  = glGetUniformLocation(Scene.shaders["LIGHT"].Program, "viewPos");
+
         glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
         glUniform3f(lightDirLoc, -0.2f, -1.0f, -0.3f);
 
@@ -117,6 +122,7 @@ int main(int argc, char** argv) {
         // Translate model to the center of the scene
         matModel = glm::translate(matModel, glm::vec3(0.0f, -1.75f, -5.0f));
         matModel = glm::scale(matModel, glm::vec3(0.2f, 0.2f, 0.2f));
+
         glUniformMatrix4fv(glGetUniformLocation(Scene.shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
         Scene.models["NANOSUIT"].Draw( Scene.shaders[ Scene.models["NANOSUIT"].shader_name ] );
