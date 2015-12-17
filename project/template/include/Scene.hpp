@@ -3,6 +3,7 @@
 #include "Model.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
+#include "Light.hpp"
 #include <map>
 #include <string>
 #include <fstream>
@@ -18,6 +19,7 @@ class Scene
     public:
       map<string, Shader> shaders;
       map<string, Model> models;
+      map<string, Light> lights;
       Camera camera;
 
       GLfloat deltaTime;

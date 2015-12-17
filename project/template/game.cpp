@@ -10,10 +10,11 @@
 #include "Shader.hpp"
 #include "Camera.hpp"
 #include "Light.hpp"
+
 using namespace glimac;
 
 int main(int argc, char** argv) {
-
+    
     GLuint screenWidth = 800, screenHeight = 600;
     // Initialize SDL and open a window
     SDLWindowManager windowManager(screenWidth, screenHeight, "iSeason");
@@ -33,13 +34,14 @@ int main(int argc, char** argv) {
     glEnable(GL_DEPTH_TEST);
 
     std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
-    std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
+    std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl << std::endl;
 
     Scene Scene("assets/seasons/summer.txt");
 
     /*********************************
      * HERE SHOULD COME THE INITIALIZATION CODE
-     *********************************/
+     *********************************/                                //quadratic
+
 
     // Application loop:
     bool done = false;

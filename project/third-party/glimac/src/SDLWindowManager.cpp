@@ -12,12 +12,15 @@ SDLWindowManager::SDLWindowManager(uint32_t width, uint32_t height, const char* 
 
     //antialiasing
     if (SDL_GL_SetAttribute( SDL_GL_MULTISAMPLEBUFFERS, 1 ) == -1)
-        std::cerr << "impossible d'initialiser SDL_GL_MULTISAMPLEBUFFERS à 1" ;
+        std::cerr << "Impossible d'initialiser SDL_GL_MULTISAMPLEBUFFERS à 1" ;
     else{
         if (SDL_GL_SetAttribute( SDL_GL_MULTISAMPLESAMPLES, 6 ) == -1)
-            std::cerr << "impossible d'initialiser SDL_GL_MULTISAMPLESAMPLES sur 6 buffers";
-        else
-            std::cout << "anti aliasing démarré" << std::endl;
+            std::cerr << "Impossible d'initialiser SDL_GL_MULTISAMPLESAMPLES sur 6 buffers";
+        else{
+            std::cout << "" << std::endl;
+            std::cout << "Initialisation SDL" << std::endl;
+            std::cout << "Anti aliasing démarré" << std::endl;
+        }
     }
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);                                               

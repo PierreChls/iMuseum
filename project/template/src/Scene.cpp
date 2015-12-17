@@ -10,11 +10,19 @@ Scene::Scene(string path_season)
 
 void Scene::loadScene(string path_season)
 {
-  int nbModel, nbShader, i;
+  int nbModel, nbShader, nbLight, i;
 
   string word, line;
+  
+  //Valeurs du txt pour les shaders
   string name_shader, pathShader_vs, pathShader_fs;
+  
+  //Valeurs du txt pour les models
   string name_model, path_model, model_shader_name;
+
+  //Valeurs du txt pour les lights
+  string name_light;
+  float position_x, position_y, position_z, ambient_1, ambient_2, ambient_3, diffuse_1, diffuse_2, diffuse_3, specular_1, specular_2, specular_3, constant, linear, quadratic;
 
   ifstream file(path_season);
 
@@ -23,9 +31,9 @@ void Scene::loadScene(string path_season)
     //INIT : First line
     getline(file, line);
     stringstream iss(line);
-    while(iss >> word >> nbShader >> word >> nbModel)
+    while(iss >> word >> nbShader >> word >> nbModel >> word >> nbLight)
     {
-      cout << nbShader << " " << nbModel << endl; 
+      cout << "Nb Shaders : " << nbShader << " | Nb Models : " << nbModel << " | Nb Lights : " << nbLight << endl << endl; 
     }
 
     //SHADERS
@@ -35,10 +43,11 @@ void Scene::loadScene(string path_season)
       stringstream iss(line);
       while(iss >> name_shader >> pathShader_vs >> pathShader_fs)
       {
-        cout << name_shader << " " << pathShader_vs << " " << pathShader_fs << endl;
+        cout << name_shader << " " << pathShader_vs << " " << pathShader_fs << endl ;
         this->shaders[name_shader] = Shader( (char*)pathShader_vs.c_str() , (char*)pathShader_fs.c_str() );
       }
     }
+    cout << "" << endl;
 
     //MODELS
     for(i = 0; i < nbModel; i++)
@@ -51,13 +60,35 @@ void Scene::loadScene(string path_season)
         this->models[name_model] = Model( (char*)path_model.c_str(), (char*)model_shader_name.c_str() );
       }
     }
+    cout << "" << endl;
+
+    //LIGHTS
+    for(i = 0; i < nbLight; i++)
+    {
+      getline(file, line); 
+      stringstream iss(line);
+      while(iss >> name_light >> position_x >> position_y >> position_z >> ambient_1 >> ambient_2 >> ambient_3 >> diffuse_1 >> diffuse_2 >> diffuse_3 >> specular_1 >> specular_2 >> specular_3 >> constant >> linear >> quadratic )
+      {
+        cout << name_light << endl; 
+
+        Light PointLight(glm::vec3( (float)position_x , (float)position_y, (float)position_z),             //position
+                         glm::vec3( (float)ambient_1, (float)ambient_3, (float)ambient_3),                 //ambient
+                         glm::vec3( (float)diffuse_1 , (float)diffuse_2 , (float)diffuse_3),               //diffuse
+                         glm::vec3( (float)specular_1, (float)specular_2, (float)specular_3),              //specular
+                         (float)constant,
+                         (float)linear,
+                         (float)quadratic);             
+
+        this->lights[name_light] = Light( PointLight );
+      }
+    }
+    cout << "" << endl;
 
     file.close();
   }
   else{
     cerr << "Problème ouverture fichier de configuration" << endl;
   }
-
   
   //INIT CAMERA
   Camera myCamera;
@@ -95,6 +126,12 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
   GLint lightPosLoc = glGetUniformLocation(this->shaders["LIGHT"].Program, "light.position");
   GLint lightDirLoc = glGetUniformLocation(this->shaders["LIGHT"].Program, "light.direction");
   GLint viewPosLoc  = glGetUniformLocation(this->shaders["LIGHT"].Program, "viewPos");
+
+
+  // Point light 1
+  this->lights["PointLight1"].sendToShader(0,this->shaders["LIGHT"]);
+  // Point light 2
+  this->lights["PointLight2"].sendToShader(1,this->shaders["LIGHT"]);
 
   //glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
   glUniform3f(lightPosLoc, 10.2f, 1.0f, 20.0f);

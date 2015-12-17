@@ -28,7 +28,6 @@ class Light
 				float constant,
 				float  linear,
 				float quadratic);
-		~Light();
 
 		//getter
 		vec3 getPosition() 		const;
