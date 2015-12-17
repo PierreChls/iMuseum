@@ -13,7 +13,7 @@ void Scene::loadScene(string path_season)
 
   string word, line;
   string name_shader, pathShader_vs, pathShader_fs;
-  string name_model, path_model;
+  string name_model, path_model, model_shader_name;
 
   ifstream file(path_season);
 
@@ -44,10 +44,10 @@ void Scene::loadScene(string path_season)
     {
       getline(file, line); 
       stringstream iss(line);
-      while(iss >> name_model >> path_model)
+      while(iss >> name_model >> path_model >> model_shader_name )
       {
-        cout << name_model << " " << path_model << endl; 
-        this->models[name_model] = Model( (char*)path_model.c_str() );
+        cout << name_model << " " << path_model << " " << model_shader_name << endl; 
+        this->models[name_model] = Model( (char*)path_model.c_str(), (char*)model_shader_name.c_str() );
       }
     }
 

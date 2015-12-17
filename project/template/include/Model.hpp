@@ -12,12 +12,15 @@ class Model
 {
     public:
         Model();
-        Model(string path);
+        Model(string path, string shader_name);
         void Draw(Shader shader);   
+        string shader_name;
+
     private:
         vector<Mesh> meshes;
         vector<Texture> textures_loaded;
         string directory;
+
 
         void loadModel(string path);
         void processNode(aiNode* node, const aiScene* scene);

@@ -119,7 +119,7 @@ int main(int argc, char** argv) {
         matModel = glm::scale(matModel, glm::vec3(0.2f, 0.2f, 0.2f));
         glUniformMatrix4fv(glGetUniformLocation(Scene.shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
-        Scene.models["NANOSUIT"].Draw(Scene.shaders["LIGHT"]);
+        Scene.models["NANOSUIT"].Draw( Scene.shaders[ Scene.models["NANOSUIT"].shader_name ] );
 
         matModel = glm::rotate(matModel, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
         matModel = glm::translate(matModel, glm::vec3(-0.0f, 2.75f, 1.0f));
