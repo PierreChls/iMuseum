@@ -115,12 +115,8 @@ int main(int argc, char** argv) {
         glUniformMatrix4fv(glGetUniformLocation(Scene.shaders["LIGHT"].Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(Scene.shaders["LIGHT"].Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
-        GLint lightPosLoc = glGetUniformLocation(Scene.shaders["LIGHT"].Program, "light.position");
-        GLint lightDirLoc = glGetUniformLocation(Scene.shaders["LIGHT"].Program, "light.direction");
-        GLint viewPosLoc  = glGetUniformLocation(Scene.shaders["LIGHT"].Program, "viewPos");
 
-        glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
-        glUniform3f(lightDirLoc, -0.2f, -1.0f, -0.3f);
+        GLint viewPosLoc  = glGetUniformLocation(Scene.shaders["LIGHT"].Program, "viewPos");
         // Point light 1
         PointLight_1.sendToShader(0,Scene.shaders["LIGHT"]);
         // Point light 2
