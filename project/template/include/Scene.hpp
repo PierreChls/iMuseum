@@ -27,6 +27,7 @@ class Scene
       void loadScene(string path_season);
       void render(SDLWindowManager* windowManager, float screenWidth, float screenHeight);
       void drawModels();
+      void moveCamera(SDLWindowManager* windowManager);
 
 
     private:
