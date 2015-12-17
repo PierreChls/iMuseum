@@ -1,0 +1,2 @@
+/home/romain/Bureau/iSeason/build/template/CMakeFiles/game.dir
+/home/romain/Bureau/iSeason/build/third-party/glimac/CMakeFiles/glimac.dir

@@ -1,0 +1,4 @@
+nbShader: 1 nbModel: 2
+LIGHT template/shaders/ambiant_light.vs.glsl template/shaders/ambiant_light.fs.glsl
+NANOSUIT assets/models/nanosuit/nanosuit.obj LIGHT
+HOUSE assets/models/house/fw43_lowpoly_n1.3ds LIGHT
