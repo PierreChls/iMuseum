@@ -67,4 +67,3 @@ vec3 CalcPointLight(PointLight light, Material mat, vec3 normal, vec3 fragPos, v
     specular *= attenuation;
     return (ambient + diffuse + 0.05*specular);
 }
-

@@ -166,6 +166,8 @@ void Scene::drawModels()
   matModel = glm::translate(matModel, glm::vec3(-0.0f, 2.75f, 1.0f));
   matModel = glm::scale(matModel, glm::vec3(6.0f, 6.0f, 6.0f));
   glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+
+  this->models["HOUSE"].Draw( this->shaders[ this->models["HOUSE"].shader_name ] );
 }
 
 void Scene::moveCamera(SDLWindowManager* windowManager)
