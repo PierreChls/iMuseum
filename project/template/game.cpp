@@ -9,7 +9,7 @@
 #include "Model.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
-
+#include "Light.hpp"
 using namespace glimac;
 
 GLfloat deltaTime = 0.0f;
@@ -49,8 +49,21 @@ int main(int argc, char** argv) {
 
 
     // Light ambiant attributes
-    glm::vec3 lightPos(10.2f, 1.0f, 20.0f);
+     Light PointLight_1(glm::vec3(2.3f , -1.6f, -3.0f),             //position
+                        glm::vec3(0.05f, 0.05f, 0.05f),             //ambient
+                        glm::vec3(1.0f , 1.0f , 1.0f),              //diffuse
+                        glm::vec3(1.0f, 1.0f, 1.0f),                //specular
+                        1.0f,                                       //constant
+                        0.009f,                                     //linear
+                        0.0032);                                    //quadratic
 
+     Light PointLight_2(glm::vec3(-1.7f, 0.9f , 1.0f),              //position
+                        glm::vec3(0.05f, 0.05f, 0.05f),             //ambient
+                        glm::vec3(0.8f , 0.8f , 0.8),              //diffuse
+                        glm::vec3(1.0f , 1.0f , 1.0f),              //specular
+                        1.0f,                                       //constant
+                        0.009f,                                     //linear
+                        0.0032);                                    //quadratic
 
     // Application loop:
     bool done = false;
@@ -77,12 +90,12 @@ int main(int argc, char** argv) {
 
         Scene.shaders["LIGHT"].Use();
 
-        if(windowManager.isKeyPressed(SDLK_s)) myCamera.moveFront(-0.1);
-        if(windowManager.isKeyPressed(SDLK_z)) myCamera.moveFront(0.1);
-        if(windowManager.isKeyPressed(SDLK_q)) myCamera.moveLeft(0.1);
-        if(windowManager.isKeyPressed(SDLK_d)) myCamera.moveLeft(-0.1);
-        if(windowManager.isKeyPressed(SDLK_i)) myCamera.rotateLeft(5.0);
-        if(windowManager.isKeyPressed(SDLK_k)) myCamera.rotateUp(5.0);
+        if(windowManager.isKeyPressed(SDLK_s)) myCamera.moveFront(-0.001);
+        if(windowManager.isKeyPressed(SDLK_z)) myCamera.moveFront(0.001);
+        if(windowManager.isKeyPressed(SDLK_q)) myCamera.moveLeft(0.001);
+        if(windowManager.isKeyPressed(SDLK_d)) myCamera.moveLeft(-0.001);
+        if(windowManager.isKeyPressed(SDLK_i)) myCamera.rotateLeft(0.50);
+        if(windowManager.isKeyPressed(SDLK_k)) myCamera.rotateUp(0.50);
 
         glm::ivec2 mousePos = glm::ivec2(0.0);
         if(windowManager.isMouseButtonPressed(SDL_BUTTON_LEFT)){
@@ -108,12 +121,10 @@ int main(int argc, char** argv) {
 
         glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
         glUniform3f(lightDirLoc, -0.2f, -1.0f, -0.3f);
-
-         // Set lights properties
-        glUniform3f(glGetUniformLocation(Scene.shaders["LIGHT"].Program, "light.position"),  0.2f, windowManager.getTime(), 0.2f);
-        glUniform3f(glGetUniformLocation(Scene.shaders["LIGHT"].Program, "light.ambient"),  0.01f, 0.01f, 0.01f);
-        glUniform3f(glGetUniformLocation(Scene.shaders["LIGHT"].Program, "light.diffuse"),  5.0f, 5.0f, 5.0f);
-        glUniform3f(glGetUniformLocation(Scene.shaders["LIGHT"].Program, "light.specular"), 1.0f, 1.0f, 1.0f);
+        // Point light 1
+        PointLight_1.sendToShader(0,Scene.shaders["LIGHT"]);
+        // Point light 2
+        PointLight_2.sendToShader(1,Scene.shaders["LIGHT"]);
         // Set material properties
         glUniform1f(glGetUniformLocation(Scene.shaders["LIGHT"].Program, "material.shininess"), 132.0f);
 
