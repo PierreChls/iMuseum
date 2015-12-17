@@ -1,0 +1,3 @@
+nbShader: 1 nbModel: 1
+LIGHT template/shaders/ambiant_light.vs.glsl template/shaders/ambiant_light.fs.glsl
+NANOSUIT assets/models/nanosuit/nanosuit.obj LIGHT

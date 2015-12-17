@@ -2,7 +2,10 @@
 
 using namespace std;
 
-Model::Model(string path){
+Model::Model(){}
+
+Model::Model(string path, string shader_name){
+    this->shader_name = shader_name;
     this->loadModel(path);
 }
 
