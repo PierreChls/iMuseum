@@ -3,6 +3,7 @@
 #include "Model.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
+#include "Skybox.hpp"
 #include "Light.hpp"
 #include <map>
 #include <string>
@@ -21,9 +22,10 @@ class Scene
       map<string, Model> models;
       map<string, Light> lights;
       Camera camera;
+      Skybox skybox;
 
       GLfloat deltaTime;
-	  GLfloat lastFrame;
+	    GLfloat lastFrame;
 
       Scene(string path_season);
       void loadScene(string path_season);

@@ -94,6 +94,9 @@ void Scene::loadScene(string path_season)
   Camera myCamera;
   this->camera = myCamera;
 
+  Skybox mySkybox;
+  this->skybox = mySkybox;
+
   //INIT FRAMES
   this->deltaTime = 0.0f;
   this->lastFrame = 0.0f;
@@ -145,8 +148,27 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
   glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.specular"), 1.0f, 1.0f, 1.0f);
   // Set material properties
   glUniform1f(glGetUniformLocation(this->shaders["LIGHT"].Program, "material.shininess"), 132.0f);
+  
 
   drawModels();
+
+  glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
+  this->skybox.skyboxShader.Use();  
+  view = this->camera.getViewMatrix(); 
+  glm::mat4 matModel;
+  // Translate model to the center of the scene
+  matModel = glm::scale(matModel, glm::vec3(0.9f, 0.9f, 0.9f));
+  glUniformMatrix4fv(glGetUniformLocation(this->skybox.skyboxShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+  glUniformMatrix4fv(glGetUniformLocation(this->skybox.skyboxShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+  glUniformMatrix4fv(glGetUniformLocation(this->skybox.skyboxShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+  // skybox cube
+  glBindVertexArray(this->skybox.skyboxVAO);
+  glBindTexture(GL_TEXTURE_CUBE_MAP, this->skybox.SkyboxTexture);
+  glDrawArrays(GL_TRIANGLES, 0, 36);
+  glBindVertexArray(0);
+  glDepthFunc(GL_LESS);
+
+  
 
 }
 
