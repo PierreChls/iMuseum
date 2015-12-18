@@ -157,10 +157,10 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
   view = this->camera.getViewMatrix(); 
   glm::mat4 matModel;
   // Translate model to the center of the scene
-  matModel = glm::scale(matModel, glm::vec3(0.9f, 0.9f, 0.9f));
+  matModel = glm::scale(matModel, glm::vec3(40.0f, 40.0f, 40.0f));
+  glUniformMatrix4fv(glGetUniformLocation(this->skybox.skyboxShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
   glUniformMatrix4fv(glGetUniformLocation(this->skybox.skyboxShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
   glUniformMatrix4fv(glGetUniformLocation(this->skybox.skyboxShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-  glUniformMatrix4fv(glGetUniformLocation(this->skybox.skyboxShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
   // skybox cube
   glBindVertexArray(this->skybox.skyboxVAO);
   glBindTexture(GL_TEXTURE_CUBE_MAP, this->skybox.SkyboxTexture);
