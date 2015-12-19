@@ -23,15 +23,13 @@ public:
 	Skybox();
 
 	Shader skyboxShader;
-	GLfloat skyboxVertices[108];
-	vector<const GLchar*> faces;
 	GLuint SkyboxTexture;
 	GLuint skyboxVAO, skyboxVBO;
 
+private:
+	GLfloat skyboxVertices[108];
+	vector<const GLchar*> faces;
+
 	GLuint loadTexture(GLchar* path);
 	GLuint loadCubemap(vector<const GLchar*> faces);
-
-
-private:
-
 };
