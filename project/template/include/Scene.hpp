@@ -15,6 +15,7 @@
 using namespace std;
 using namespace glimac;
 
+
 class Scene
 {
     public:
@@ -37,3 +38,4 @@ class Scene
       void drawSkybox(float screenWidth, float screenHeight);
       void moveCamera(SDLWindowManager* windowManager);
 };
+

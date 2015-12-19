@@ -65,7 +65,6 @@ int main(int argc, char** argv) {
 
         // Update the display
         windowManager.swapBuffers();
-
     }
 
     return EXIT_SUCCESS;
