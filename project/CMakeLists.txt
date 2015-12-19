@@ -9,7 +9,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake)
 
 find_package(SDL2)
 if(SDL2_FOUND)
-	MESSAGE('SDL2 FOUND')
+	MESSAGE('SDL2 Found, continue...\n')
 	find_package(OpenGL REQUIRED)
 	find_package(GLEW REQUIRED)
 	include_directories(${SDL2_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR} ${GLEW_INCLUDE_DIR} third-party/glimac/include/ third-party/glm/ third-party/assimp/)

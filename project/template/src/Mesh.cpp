@@ -57,7 +57,8 @@ void Mesh::Draw(Shader shader){
         number = ss.str(); 
 
         // Uniform variable that will be passed to the shader
-        glUniform1f(glGetUniformLocation(shader.Program, ("material." + name + number).c_str()), i);
+        glUniform1i(glGetUniformLocation(shader.Program, ("material." + name + number).c_str()), i);
+        //std::cout << ("material." + name + number).c_str() << std::endl;
         glBindTexture(GL_TEXTURE_2D, this->textures[i].id);
     }
     glActiveTexture(GL_TEXTURE0);

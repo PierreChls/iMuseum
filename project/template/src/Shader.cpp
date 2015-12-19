@@ -2,6 +2,8 @@
 
 using namespace std;
 
+Shader::Shader(){}
+
 Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath){
 
     /**** Load vertex and fragment shader from source *****/

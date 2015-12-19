@@ -11,9 +11,8 @@ class SDLWindowManager {
 	SDL_GLContext m_Context;
 public:
     SDLWindowManager(uint32_t width, uint32_t height, const char* title);
-
     ~SDLWindowManager();
-
+    SDLWindowManager();
     bool pollEvent(SDL_Event& e);
 
     bool isKeyPressed(SDL_Keycode key) const;
