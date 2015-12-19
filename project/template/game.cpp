@@ -1,11 +1,15 @@
 #include <glimac/SDLWindowManager.hpp>
+#include <glimac/Image.hpp>
+#include <glimac/FilePath.hpp>
 
 #include <GL/glew.h>
 #include <iostream>
+#include <vector>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include "Scene.hpp"
+#include "Skybox.hpp"
 #include "Model.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
@@ -13,9 +17,11 @@
 
 using namespace glimac;
 
+
 int main(int argc, char** argv) {
-    GLuint screenWidth = 800, screenHeight = 600;
+    
     // Initialize SDL and open a window
+    GLuint screenWidth = 800, screenHeight = 600;
     SDLWindowManager windowManager(screenWidth, screenHeight, "iSeason");
 
     // Initialize glew for OpenGL3+ support
@@ -35,14 +41,12 @@ int main(int argc, char** argv) {
     std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
     std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl << std::endl;
 
-    Scene Scene("assets/seasons/summer.txt");
-
-    /*********************************
-     * HERE SHOULD COME THE INITIALIZATION CODE
-     *********************************/                                //quadratic
+    
+    //Initialize scene
+    Scene Scene("assets/seasons/summer.txt");                              //quadratic
 
 
-    // Application loop:
+    //Application loop:
     bool done = false;
     while(!done) {
 

@@ -96,6 +96,9 @@ void Scene::loadScene(string path_season)
   Camera myCamera;
   this->camera = myCamera;
 
+  Skybox mySkybox;
+  this->skybox = mySkybox;
+
   //INIT FRAMES
   this->deltaTime = 0.0f;
   this->lastFrame = 0.0f;
@@ -106,15 +109,18 @@ void Scene::loadScene(string path_season)
 void Scene::render(SDLWindowManager* windowManager, float screenWidth, float screenHeight)
 {
 
-
   moveCamera(windowManager);
 
+  initShaders(screenWidth, screenHeight);
 
-  /*********************************
-  * HERE SHOULD COME THE RENDERING CODE
-  *********************************/
+  drawModels();
 
+  drawSkybox(screenWidth, screenHeight);
 
+}
+
+void Scene::initShaders(float screenWidth, float screenHeight)
+{
   this->shaders["LIGHT"].Use();
 
   // Transformation matrices
@@ -147,9 +153,7 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
   glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.specular"), 1.0f, 1.0f, 1.0f);
   // Set material properties
   glUniform1f(glGetUniformLocation(this->shaders["LIGHT"].Program, "material.shininess"), 132.0f);
-
-  drawModels();
-
+  
 }
 
 void Scene::drawModels()
@@ -170,6 +174,31 @@ void Scene::drawModels()
   glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
   this->models["HOUSE"].Draw( this->shaders[ this->models["HOUSE"].shader_name ] );
+}
+
+void Scene::drawSkybox(float screenWidth, float screenHeight)
+{ 
+  
+  // Transformation matrices
+  glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth/(float)screenHeight, 0.1f, 100.0f);
+
+
+  glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
+  this->skybox.skyboxShader.Use();  
+  glm::mat4 view = this->camera.getViewMatrix(); 
+  glm::mat4 matModel;
+  // Translate model to the center of the scene
+  matModel = glm::scale(matModel, glm::vec3(40.0f, 40.0f, 40.0f));
+  glUniformMatrix4fv(glGetUniformLocation(this->skybox.skyboxShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+  glUniformMatrix4fv(glGetUniformLocation(this->skybox.skyboxShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+  glUniformMatrix4fv(glGetUniformLocation(this->skybox.skyboxShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+  // skybox cube
+  glBindVertexArray(this->skybox.skyboxVAO);
+  glBindTexture(GL_TEXTURE_CUBE_MAP, this->skybox.SkyboxTexture);
+  glDrawArrays(GL_TRIANGLES, 0, 36);
+  glBindVertexArray(0);
+  glDepthFunc(GL_LESS);
+
 }
 
 void Scene::moveCamera(SDLWindowManager* windowManager)
