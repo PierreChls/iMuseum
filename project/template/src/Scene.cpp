@@ -14,10 +14,10 @@ void Scene::loadScene(string path_season)
   int nbModel, nbShader, nbLight, i;
 
   string word, line;
-  
+
   //Valeurs du txt pour les shaders
   string name_shader, pathShader_vs, pathShader_fs;
-  
+
   //Valeurs du txt pour les models
   string name_model, path_model, model_shader_name;
 
@@ -28,7 +28,7 @@ void Scene::loadScene(string path_season)
   ifstream file(path_season);
 
   if(file){
-    
+
     //INIT : First line
     getline(file, line);
     stringstream iss(line);
@@ -40,7 +40,7 @@ void Scene::loadScene(string path_season)
     //SHADERS
     for(i = 0; i < nbShader; i++)
     {
-      getline(file, line); 
+      getline(file, line);
       stringstream iss(line);
       while(iss >> name_shader >> pathShader_vs >> pathShader_fs)
       {
@@ -54,24 +54,26 @@ void Scene::loadScene(string path_season)
     //MODELS
     for(i = 0; i < nbModel; i++)
     {
-      getline(file, line); 
+      getline(file, line);
       stringstream iss(line);
       while(iss >> name_model >> path_model >> model_shader_name )
       {
-        cout << name_model << " " << path_model << " " << model_shader_name << endl; 
+        cout << name_model << " " << path_model << " " << model_shader_name << endl;
         this->models[name_model] = Model( (char*)path_model.c_str(), (char*)model_shader_name.c_str() );
       }
     }
     cout << "" << endl;
 
     //LIGHTS
-    /*for(i = 0; i < nbLight; i++)
+    for(i = 0; i < 2; i++)
     {
-      getline(file, line); 
+      getline(file, line);
       stringstream iss(line);
+      cout << "TEST A " << endl;
       while(iss >> name_light >> position_x >> position_y >> position_z >> ambient_1 >> ambient_2 >> ambient_3 >> diffuse_1 >> diffuse_2 >> diffuse_3 >> specular_1 >> specular_2 >> specular_3 >> constant >> linear >> quadratic )
       {
-        cout << name_light << endl; 
+        cout << "TEST B" << endl; // LE TEST B ne s'affiche jamais, on ne rentre jamais dedans !!
+
 
         Light PointLight(glm::vec3( (float)position_x , (float)position_y, (float)position_z),             //position
                          glm::vec3( (float)ambient_1, (float)ambient_2, (float)ambient_3),                 //ambient
@@ -79,11 +81,11 @@ void Scene::loadScene(string path_season)
                          glm::vec3( (float)specular_1, (float)specular_2, (float)specular_3),              //specular
                          (float)constant,
                          (float)linear,
-                         (float)quadratic);             
+                         (float)quadratic);
 
         this->lights[name_light] = Light( PointLight );
-      }
-    }*/
+      } // END WHILE
+    }
     cout << "" << endl;
 
     file.close();
@@ -91,7 +93,7 @@ void Scene::loadScene(string path_season)
   else{
     cerr << "Problème ouverture fichier de configuration" << endl;
   }
-  
+
   //INIT CAMERA
   Camera myCamera;
   this->camera = myCamera;
@@ -114,6 +116,39 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
   /******* SANS LUMIERE ROMAIN *******/
   /***********************************/
 
+  // this->shaders["LIGHT"].Use();
+  //
+  // // Transformation matrices
+  // glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth/(float)screenHeight, 0.1f, 100.0f);
+  //
+  // //glm::mat4 view = glm::mat4(1.0);
+  // glm::mat4 view = this->camera.getViewMatrix();
+  // glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+  // glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+  //
+  // GLint lightPosLoc = glGetUniformLocation(this->shaders["LIGHT"].Program, "light.position");
+  // GLint lightDirLoc = glGetUniformLocation(this->shaders["LIGHT"].Program, "light.direction");
+  // GLint viewPosLoc  = glGetUniformLocation(this->shaders["LIGHT"].Program, "viewPos");
+  //
+  // //glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
+  // glUniform3f(lightPosLoc, 10.2f, 1.0f, 20.0f);
+  // glUniform3f(lightDirLoc, -0.2f, -1.0f, -0.3f);
+  //
+  // // Set lights properties
+  // //glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.position"),  0.2f, windowManager.getTime(), 0.2f);
+  // glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.position"),  0.2f, 0.2f, 0.2f);
+  // glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.ambient"),  0.01f, 0.01f, 0.01f);
+  // glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.diffuse"),  5.0f, 5.0f, 5.0f);
+  // glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.specular"), 1.0f, 1.0f, 1.0f);
+  // // Set material properties
+  // glUniform1f(glGetUniformLocation(this->shaders["LIGHT"].Program, "material.shininess"), 32.0f);
+
+
+  /***********************************/
+  /******* AVEC LUMIERE ROMAIN *******/
+  /***********************************/
+
+
   this->shaders["LIGHT"].Use();
 
   // Transformation matrices
@@ -124,43 +159,10 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
   glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
   glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
-  GLint lightPosLoc = glGetUniformLocation(this->shaders["LIGHT"].Program, "light.position");
-  GLint lightDirLoc = glGetUniformLocation(this->shaders["LIGHT"].Program, "light.direction");
+  //GLint lightPosLoc = glGetUniformLocation(this->shaders["LIGHT"].Program, "light.position");
+  //GLint lightDirLoc = glGetUniformLocation(this->shaders["LIGHT"].Program, "light.direction");
   GLint viewPosLoc  = glGetUniformLocation(this->shaders["LIGHT"].Program, "viewPos");
-
-  //glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
-  glUniform3f(lightPosLoc, 10.2f, 1.0f, 20.0f);
-  glUniform3f(lightDirLoc, -0.2f, -1.0f, -0.3f);
-
-  // Set lights properties
-  //glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.position"),  0.2f, windowManager.getTime(), 0.2f);
-  glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.position"),  0.2f, 0.2f, 0.2f);
-  glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.ambient"),  0.01f, 0.01f, 0.01f);
-  glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.diffuse"),  5.0f, 5.0f, 5.0f);
-  glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.specular"), 1.0f, 1.0f, 1.0f);
-  // Set material properties
-  glUniform1f(glGetUniformLocation(this->shaders["LIGHT"].Program, "material.shininess"), 132.0f);
-
-
-  /***********************************/
-  /******* AVEC LUMIERE ROMAIN *******/
-  /***********************************/
-
-
-  /*this->shaders["LIGHT"].Use();
-
-  // Transformation matrices
-  glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth/(float)screenHeight, 0.1f, 100.0f);
-
-  //glm::mat4 view = glm::mat4(1.0);
-  glm::mat4 view = this->camera.getViewMatrix();
-  glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-  glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
-
-  GLint lightPosLoc = glGetUniformLocation(this->shaders["LIGHT"].Program, "light.position");
-  GLint lightDirLoc = glGetUniformLocation(this->shaders["LIGHT"].Program, "light.direction");
-  GLint viewPosLoc  = glGetUniformLocation(this->shaders["LIGHT"].Program, "viewPos");
-
+  // IL FAUT ENVOYER LE VIEWPOSLOC au shader
 
   // Point light 1
   this->lights["PointLight1"].sendToShader(0,this->shaders["LIGHT"]);
@@ -168,24 +170,24 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
   this->lights["PointLight2"].sendToShader(1,this->shaders["LIGHT"]);
 
   //glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
-  glUniform3f(lightPosLoc, 10.2f, 1.0f, 20.0f);
-  glUniform3f(lightDirLoc, -0.2f, -1.0f, -0.3f);
+  //glUniform3f(lightPosLoc, 10.2f, 1.0f, 20.0f);
+  //glUniform3f(lightDirLoc, -0.2f, -1.0f, -0.3f);
 
   // Set lights properties
   //glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.position"),  0.2f, windowManager.getTime(), 0.2f);
-  glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.position"),  0.2f, 0.2f, 0.2f);
-  glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.ambient"),  0.01f, 0.01f, 0.01f);
-  glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.diffuse"),  5.0f, 5.0f, 5.0f);
-  glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.specular"), 1.0f, 1.0f, 1.0f);
+  // glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.position"),  0.2f, 0.2f, 0.2f);
+  // glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.ambient"),  0.01f, 0.01f, 0.01f);
+  // glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.diffuse"),  5.0f, 5.0f, 5.0f);
+  // glUniform3f(glGetUniformLocation(this->shaders["LIGHT"].Program, "light.specular"), 1.0f, 1.0f, 1.0f);
   // Set material properties
-  glUniform1f(glGetUniformLocation(this->shaders["LIGHT"].Program, "material.shininess"), 132.0f);*/
+  glUniform1f(glGetUniformLocation(this->shaders["LIGHT"].Program, "material.shininess"), 132.0f);
 
   drawModels();
 
 }
 
 void Scene::drawModels()
-{ 
+{
   // Draw the loaded model
   glm::mat4 matModel;
   // Translate model to the center of the scene
