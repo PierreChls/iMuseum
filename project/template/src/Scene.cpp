@@ -25,6 +25,9 @@ void Scene::loadScene(string path_season)
   string name_light;
   float position_x, position_y, position_z, ambient_1, ambient_2, ambient_3, diffuse_1, diffuse_2, diffuse_3, specular_1, specular_2, specular_3, constant, linear, quadratic;
 
+  //Valeurs du txt pour les checkpoints
+  string name_checkpoint;
+
   ifstream file(path_season);
 
   if(file){
@@ -94,10 +97,10 @@ void Scene::loadScene(string path_season)
     {
       getline(file, line); 
       stringstream iss(line);
-      while(iss >> position_x >> position_y >> position_z )
+      while(iss >> name_checkpoint >> position_x >> position_y >> position_z )
       {
-        cout << position_x << position_y << position_z << endl;             
-        //this->checkpoints[i] = Checkpoint(position_x, position_y, position_z);
+        cout << name_checkpoint << position_x << position_y << position_z << endl;             
+        this->checkpoints[ name_checkpoint ] = Checkpoint(position_x, position_y, position_z);
       }
     }
     cout << "" << endl;
@@ -130,6 +133,8 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
   initShaders(screenWidth, screenHeight);
 
   drawModels();
+
+  drawCheckpoints();
 
   drawSkybox(screenWidth, screenHeight);
 
@@ -190,6 +195,20 @@ void Scene::drawModels()
   glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
   this->models["HOUSE"].Draw( this->shaders[ this->models["HOUSE"].shader_name ] );
+}
+
+void Scene::drawCheckpoints()
+{ 
+  // Draw the loaded model
+  glm::mat4 matModel;
+  // Translate model to the center of the scene
+  matModel = glm::translate(matModel, glm::vec3(this->checkpoints["Checkpoint1"].position_x, this->checkpoints["Checkpoint1"].position_y, this->checkpoints["Checkpoint1"].position_z));
+  matModel = glm::scale(matModel, glm::vec3(-1.0f, -1.0f, -1.0f));
+
+  glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+
+  this->checkpoints["Checkpoint1"].model.Draw( this->shaders[ this->checkpoints["Checkpoint1"].model.shader_name ] );
+
 }
 
 void Scene::drawSkybox(float screenWidth, float screenHeight)

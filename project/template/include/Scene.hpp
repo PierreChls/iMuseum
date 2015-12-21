@@ -31,7 +31,7 @@ class Scene
       map<string, Shader> shaders;
       map<string, Model> models;
       map<string, Light> lights;
-      map<int, Checkpoint> checkpoints;
+      map<string, Checkpoint> checkpoints;
 
       Camera camera;
       Skybox skybox;
@@ -41,6 +41,7 @@ class Scene
       
       void initShaders(float screenWidth, float screenHeight);
       void drawModels();
+      void drawCheckpoints();
       void drawSkybox(float screenWidth, float screenHeight);
       void moveCamera(SDLWindowManager* windowManager);
 };
