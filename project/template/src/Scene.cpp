@@ -11,7 +11,7 @@ Scene::Scene(string path_season)
 
 void Scene::loadScene(string path_season)
 {
-  int nbModel, nbShader, nbLight, i;
+  int nbModel, nbShader, nbLight, nbCheckpoint, i;
 
   string word, line;
   
@@ -32,9 +32,10 @@ void Scene::loadScene(string path_season)
     //INIT : First line
     getline(file, line);
     stringstream iss(line);
-    while(iss >> word >> nbShader >> word >> nbModel >> word >> nbLight)
+    while(iss >> word >> nbShader >> word >> nbModel >> word >> nbLight >> word >> nbCheckpoint)
     {
       cout << "Nb Shaders : " << nbShader << " | Nb Models : " << nbModel << " | Nb Lights : " << nbLight << endl << endl;
+      this->nbCheckpoints = nbCheckpoint;
     }
 
     //SHADERS
@@ -82,6 +83,21 @@ void Scene::loadScene(string path_season)
                          (float)quadratic);             
 
         this->lights[name_light] = Light( PointLight );
+      }
+    }
+    cout << "" << endl;
+
+
+    //CHECKPOINTS
+
+    for(i = 0; i < nbCheckpoint; i++)
+    {
+      getline(file, line); 
+      stringstream iss(line);
+      while(iss >> position_x >> position_y >> position_z )
+      {
+        cout << position_x << position_y << position_z << endl;             
+        //this->checkpoints[i] = Checkpoint(position_x, position_y, position_z);
       }
     }
     cout << "" << endl;

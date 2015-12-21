@@ -5,6 +5,7 @@
 #include "Camera.hpp"
 #include "Skybox.hpp"
 #include "Light.hpp"
+#include "Checkpoint.hpp"
 #include <map>
 #include <string>
 #include <fstream>
@@ -24,9 +25,14 @@ class Scene
       void render(SDLWindowManager* windowManager, float screenWidth, float screenHeight);
 
     private:
+
+      int nbCheckpoints;
+
       map<string, Shader> shaders;
       map<string, Model> models;
       map<string, Light> lights;
+      map<int, Checkpoint> checkpoints;
+
       Camera camera;
       Skybox skybox;
 
