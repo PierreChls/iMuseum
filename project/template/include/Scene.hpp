@@ -39,9 +39,10 @@ class Scene
       GLfloat deltaTime;
       GLfloat lastFrame;
       
-      void initShaders(float screenWidth, float screenHeight);
-      void drawModels();
-      void drawCheckpoints();
+      void initShaders(string shader_name, float screenWidth, float screenHeight);
+      void initLights(string shader_name);
+      void drawModels(string shader_name);
+      void drawCheckpoints(string shader_name);
       void drawSkybox(float screenWidth, float screenHeight);
       void moveCamera(SDLWindowManager* windowManager);
 };
