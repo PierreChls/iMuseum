@@ -136,8 +136,9 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
         initLights(it_shaders->first);
         drawModels(it_shaders->first);
         drawCheckpoints(it_shaders->first);
-        drawSkybox(screenWidth, screenHeight);
   }
+  
+  drawSkybox(screenWidth, screenHeight);
 
 
 }
@@ -191,83 +192,54 @@ void Scene::initLights(string shader_name)
 
 void Scene::drawModels(string shader_name)
 { 
-  
-  // Draw the loaded model
   glm::mat4 matModel;
-  // Translate model to the center of the scene
-  matModel = glm::translate(matModel, glm::vec3(0.0f, -1.75f, -5.0f));
+  
+  /*matModel = glm::mat4(1.0f);
+  matModel = glm::rotate(matModel, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+  matModel = glm::translate(matModel, glm::vec3(0.0f, 0.0f, -5.0f));
   matModel = glm::scale(matModel, glm::vec3(0.2f, 0.2f, 0.2f));
-
   glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
-  this->models["NANOSUIT"].Draw( this->shaders[ this->models["NANOSUIT"].shader_name ] );
+  this->models["NANOSUIT"].Draw( this->shaders[ this->models["NANOSUIT"].shader_name ] );*/
 
+  /*matModel = glm::mat4(1.0f);
   matModel = glm::rotate(matModel, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-  matModel = glm::translate(matModel, glm::vec3(-0.0f, 2.75f, 1.0f));
-  matModel = glm::scale(matModel, glm::vec3(6.0f, 6.0f, 6.0f));
+  matModel = glm::translate(matModel, glm::vec3(0.0f, 5.75f, 0.0f));
+  matModel = glm::scale(matModel, glm::vec3(1.2f, 1.2f, 1.2f));
   glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
-  this->models["HOUSE"].Draw( this->shaders[ this->models["HOUSE"].shader_name ] );
+  this->models["HOUSE"].Draw( this->shaders[ this->models["HOUSE"].shader_name ] );*/
 
-  /*map<string, Model>::iterator it_models;
+  map<string, Model>::iterator it_models;
   for(it_models = this->models.begin(); it_models != this->models.end(); it_models++)
   {
         if( shader_name == "LIGHT")
         {
-          
           if(it_models->first == "NANOSUIT")
           {
-             // Draw the loaded model
-            glm::mat4 matModel;
-            // Translate model to the center of the scene
-            matModel = glm::translate(matModel, glm::vec3(0.0f, -1.75f, -5.0f));
+            matModel = glm::mat4(1.0f);
+            matModel = glm::rotate(matModel, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+            matModel = glm::translate(matModel, glm::vec3(0.0f, 0.0f, -5.0f));
             matModel = glm::scale(matModel, glm::vec3(0.2f, 0.2f, 0.2f));
-
             glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
             this->models["NANOSUIT"].Draw( this->shaders[ this->models["NANOSUIT"].shader_name ] );
-            glBindVertexArray(0);
+
           }
 
-          if(it_models->first == "HOUSE"){
-            glm::mat4 matModel;
+          if(it_models->first == "HOUSE")
+          {
+            matModel = glm::mat4(1.0f);
             matModel = glm::rotate(matModel, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-  matModel = glm::translate(matModel, glm::vec3(-0.0f, 2.75f, 1.0f));
-  matModel = glm::scale(matModel, glm::vec3(6.0f, 6.0f, 6.0f));
-  glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+            matModel = glm::translate(matModel, glm::vec3(0.0f, 5.75f, 0.0f));
+            matModel = glm::scale(matModel, glm::vec3(1.2f, 1.2f, 1.2f));
+            glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
-  this->models["HOUSE"].Draw( this->shaders[ this->models["HOUSE"].shader_name ] );
-          }*/
+            this->models["HOUSE"].Draw( this->shaders[ this->models["HOUSE"].shader_name ] );
+          }
 
-
-          // Draw the loaded model
-          /*glm::mat4 matModel;
-          // Translate model to the center of the scene
-          matModel = glm::translate(matModel, glm::vec3(0.0f, -1.75f, -5.0f));
-          matModel = glm::scale(matModel, glm::vec3(0.2f, 0.2f, 0.2f));
-
-          glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
-          
-          this->models[ it_models->first ].Draw( this->shaders[ this->models[ it_models->first ].shader_name ] );*/
-        //}
-  //}
-
-  // Draw the loaded model
-  /*glm::mat4 matModel;
-  // Translate model to the center of the scene
-  matModel = glm::translate(matModel, glm::vec3(0.0f, -1.75f, -5.0f));
-  matModel = glm::scale(matModel, glm::vec3(0.2f, 0.2f, 0.2f));
-
-  glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
-
-  this->models["NANOSUIT"].Draw( this->shaders[ this->models["NANOSUIT"].shader_name ] );
-
-  matModel = glm::rotate(matModel, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-  matModel = glm::translate(matModel, glm::vec3(-0.0f, 2.75f, 1.0f));
-  matModel = glm::scale(matModel, glm::vec3(6.0f, 6.0f, 6.0f));
-  glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
-
-  this->models["HOUSE"].Draw( this->shaders[ this->models["HOUSE"].shader_name ] );*/
+        }
+  }
 }
 
 void Scene::drawCheckpoints(string shader_name)
@@ -278,13 +250,12 @@ void Scene::drawCheckpoints(string shader_name)
   {
         if( shader_name == "LIGHT")
         {
-          // Draw the loaded model
           glm::mat4 matModel;
-          // Translate model to the center of the scene
+          matModel = glm::mat4(1.0f);
           matModel = glm::translate(matModel, glm::vec3(this->checkpoints[ it_checkpoints->first ].position_x, this->checkpoints[ it_checkpoints->first ].position_y, this->checkpoints[ it_checkpoints->first ].position_z));
-          matModel = glm::scale(matModel, glm::vec3(-1.0f, -1.0f, -1.0f));
+          matModel = glm::scale(matModel, glm::vec3(-0.1f, -0.1f, -0.1f));
           glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
-          this->checkpoints[ it_checkpoints->first ].model.Draw( this->shaders[ this->checkpoints[ it_checkpoints->first ].model.shader_name ] );
+          this->checkpoints[ it_checkpoints->first ].model.Draw( this->shaders[ shader_name ] );
         }
   }
 
