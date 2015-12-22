@@ -221,7 +221,7 @@ void Scene::drawCheckpoints(string shader_name)
   map<string, Checkpoint>::iterator it_checkpoints;
   for(it_checkpoints = this->checkpoints.begin(); it_checkpoints != this->checkpoints.end(); it_checkpoints++)
   {
-        if( shader_name == "LIGHT")
+        if( shader_name == it_checkpoints->second.model.shader_name)
         {
           glm::mat4 matModel;
           matModel = glm::mat4(1.0f);
