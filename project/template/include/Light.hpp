@@ -6,6 +6,7 @@
 #include <GL/glew.h>
 
 using namespace glm;
+using namespace std;
 
 
 class Light
@@ -27,7 +28,11 @@ class Light
 				vec3 specular,
 				float constant,
 				float  linear,
-				float quadratic);
+				float quadratic,
+				string shader_name
+			 );
+
+		string shader_name;
 
 		//getter
 		vec3 getPosition() 		const;
