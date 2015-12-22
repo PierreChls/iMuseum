@@ -20,13 +20,16 @@ void Scene::loadScene(string path_season)
   
   //Valeurs du txt pour les models
   string name_model, path_model, model_shader_name;
+  float rotate_angle, rotate_x, rotate_y, rotate_z;
+  float translate_x, translate_y, translate_z;
+  float scale;
 
   //Valeurs du txt pour les lights
-  string name_light;
+  string name_light, light_shader_name;
   float position_x, position_y, position_z, ambient_1, ambient_2, ambient_3, diffuse_1, diffuse_2, diffuse_3, specular_1, specular_2, specular_3, constant, linear, quadratic;
 
   //Valeurs du txt pour les checkpoints
-  string name_checkpoint;
+  string name_checkpoint, checkpoint_name_shader;
 
   ifstream file(path_season);
 
@@ -60,10 +63,10 @@ void Scene::loadScene(string path_season)
     {
       getline(file, line); 
       stringstream iss(line);
-      while(iss >> name_model >> path_model >> model_shader_name )
+      while(iss >> name_model >> path_model >> model_shader_name >> rotate_angle >> rotate_x >> rotate_y >> rotate_z >> translate_x >> translate_y >> translate_z >> scale)
       {
         cout << name_model << " " << path_model << " " << model_shader_name << endl; 
-        this->models[name_model] = Model( (char*)path_model.c_str(), (char*)model_shader_name.c_str() );
+        this->models[name_model] = Model( (char*)path_model.c_str(), (char*)model_shader_name.c_str(), rotate_angle, rotate_x, rotate_y, rotate_z, translate_x, translate_y, translate_z, scale);
       }
     }
     cout << "" << endl;
@@ -73,7 +76,7 @@ void Scene::loadScene(string path_season)
     {
       getline(file, line); 
       stringstream iss(line);
-      while(iss >> name_light >> position_x >> position_y >> position_z >> ambient_1 >> ambient_2 >> ambient_3 >> diffuse_1 >> diffuse_2 >> diffuse_3 >> specular_1 >> specular_2 >> specular_3 >> constant >> linear >> quadratic )
+      while(iss >> name_light >> position_x >> position_y >> position_z >> ambient_1 >> ambient_2 >> ambient_3 >> diffuse_1 >> diffuse_2 >> diffuse_3 >> specular_1 >> specular_2 >> specular_3 >> constant >> linear >> quadratic >> light_shader_name)
       {
         cout << name_light << endl; 
 
@@ -83,7 +86,8 @@ void Scene::loadScene(string path_season)
                          glm::vec3( (float)specular_1, (float)specular_2, (float)specular_3),              //specular
                          (float)constant,
                          (float)linear,
-                         (float)quadratic);             
+                         (float)quadratic,
+                         light_shader_name);             
 
         this->lights[name_light] = Light( PointLight );
       }
@@ -96,10 +100,10 @@ void Scene::loadScene(string path_season)
     {
       getline(file, line); 
       stringstream iss(line);
-      while(iss >> name_checkpoint >> position_x >> position_y >> position_z )
+      while(iss >> name_checkpoint >> rotate_angle >> rotate_x >> rotate_y >> rotate_z >> translate_x >> translate_y >> translate_z >> scale >> checkpoint_name_shader)
       {
-        cout << name_checkpoint << " " << position_x << " " << position_y << " " << position_z << endl;             
-        this->checkpoints[ name_checkpoint ] = Checkpoint(position_x, position_y, position_z);
+        cout << name_checkpoint << endl;             
+        this->checkpoints[ name_checkpoint ] = Checkpoint(checkpoint_name_shader, rotate_angle, rotate_x, rotate_y, rotate_z, translate_x, translate_y, translate_z, scale);
       }
     }
     cout << "" << endl;
@@ -182,7 +186,7 @@ void Scene::initLights(string shader_name)
   map<string, Light>::iterator it_lights;
   for(it_lights = this->lights.begin(); it_lights != this->lights.end(); it_lights++)
   {
-        if( shader_name == "LIGHT")
+        if( shader_name == it_lights->second.shader_name)
         {
           this->lights[ it_lights->first ].sendToShader(numberShader, this->shaders[ shader_name ]);
           numberShader++;
@@ -192,53 +196,22 @@ void Scene::initLights(string shader_name)
 
 void Scene::drawModels(string shader_name)
 { 
-  glm::mat4 matModel;
   
-  /*matModel = glm::mat4(1.0f);
-  matModel = glm::rotate(matModel, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-  matModel = glm::translate(matModel, glm::vec3(0.0f, 0.0f, -5.0f));
-  matModel = glm::scale(matModel, glm::vec3(0.2f, 0.2f, 0.2f));
-  glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
-
-  this->models["NANOSUIT"].Draw( this->shaders[ this->models["NANOSUIT"].shader_name ] );*/
-
-  /*matModel = glm::mat4(1.0f);
-  matModel = glm::rotate(matModel, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-  matModel = glm::translate(matModel, glm::vec3(0.0f, 5.75f, 0.0f));
-  matModel = glm::scale(matModel, glm::vec3(1.2f, 1.2f, 1.2f));
-  glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
-
-  this->models["HOUSE"].Draw( this->shaders[ this->models["HOUSE"].shader_name ] );*/
+  glm::mat4 matModel;
 
   map<string, Model>::iterator it_models;
   for(it_models = this->models.begin(); it_models != this->models.end(); it_models++)
   {
-        if( shader_name == "LIGHT")
-        {
-          if(it_models->first == "NANOSUIT")
-          {
-            matModel = glm::mat4(1.0f);
-            matModel = glm::rotate(matModel, glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-            matModel = glm::translate(matModel, glm::vec3(0.0f, 0.0f, -5.0f));
-            matModel = glm::scale(matModel, glm::vec3(0.2f, 0.2f, 0.2f));
-            glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+    if( shader_name == it_models->second.shader_name )
+    {
+      matModel = glm::mat4(1.0f);
+      matModel = glm::rotate(matModel, glm::radians( it_models->second.rotate_angle ), glm::vec3( it_models->second.rotate_x , it_models->second.rotate_y , it_models->second.rotate_z ));
+      matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , it_models->second.translate_y , it_models->second.translate_z ));
+      matModel = glm::scale(matModel, glm::vec3( it_models->second.scale , it_models->second.scale , it_models->second.scale ));
+      glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
-            this->models["NANOSUIT"].Draw( this->shaders[ this->models["NANOSUIT"].shader_name ] );
-
-          }
-
-          if(it_models->first == "HOUSE")
-          {
-            matModel = glm::mat4(1.0f);
-            matModel = glm::rotate(matModel, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-            matModel = glm::translate(matModel, glm::vec3(0.0f, 5.75f, 0.0f));
-            matModel = glm::scale(matModel, glm::vec3(1.2f, 1.2f, 1.2f));
-            glUniformMatrix4fv(glGetUniformLocation(this->shaders["LIGHT"].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
-
-            this->models["HOUSE"].Draw( this->shaders[ this->models["HOUSE"].shader_name ] );
-          }
-
-        }
+      this->models[ it_models->first ].Draw( this->shaders[ shader_name ] );
+    }
   }
 }
 
@@ -252,10 +225,11 @@ void Scene::drawCheckpoints(string shader_name)
         {
           glm::mat4 matModel;
           matModel = glm::mat4(1.0f);
-          matModel = glm::translate(matModel, glm::vec3(this->checkpoints[ it_checkpoints->first ].position_x, this->checkpoints[ it_checkpoints->first ].position_y, this->checkpoints[ it_checkpoints->first ].position_z));
-          matModel = glm::scale(matModel, glm::vec3(-0.1f, -0.1f, -0.1f));
+          matModel = glm::rotate(matModel, glm::radians( it_checkpoints->second.model.rotate_angle ), glm::vec3( it_checkpoints->second.model.rotate_x , it_checkpoints->second.model.rotate_y , it_checkpoints->second.model.rotate_z ));
+          matModel = glm::translate(matModel, glm::vec3( it_checkpoints->second.model.translate_x , it_checkpoints->second.model.translate_y , it_checkpoints->second.model.translate_z));
+          matModel = glm::scale(matModel, glm::vec3( it_checkpoints->second.model.scale , it_checkpoints->second.model.scale , it_checkpoints->second.model.scale ));
           glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
-          this->checkpoints[ it_checkpoints->first ].model.Draw( this->shaders[ shader_name ] );
+          it_checkpoints->second.model.Draw( this->shaders[ shader_name ] );
         }
   }
 

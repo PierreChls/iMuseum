@@ -18,11 +18,8 @@ class Checkpoint{
 
 public:
 	Model model;
-	float position_x;
-	float position_y;
-	float position_z;
 	Checkpoint();
-	Checkpoint(float position_x, float position_y, float position_z);
+	Checkpoint(string shader_name, float rotate_angle, float rotate_x, float rotate_y, float rotate_z, float translate_x, float translate_y, float translate_z, float scale);
 
 private:
 

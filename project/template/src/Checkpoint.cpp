@@ -5,10 +5,7 @@ using namespace glimac;
 
 Checkpoint::Checkpoint(){}
 
-Checkpoint::Checkpoint(float position_x, float position_y, float position_z)
+Checkpoint::Checkpoint(string shader_name, float rotate_angle, float rotate_x, float rotate_y, float rotate_z, float translate_x, float translate_y, float translate_z, float scale)
 {   
-    this->model = Model("assets/models/checkpoint/Arrow.fbx", "LIGHT" );
-    this->position_x = position_x;
-    this->position_y = position_y;
-    this->position_z = position_z;
+    this->model = Model("assets/models/checkpoint/Arrow.fbx", shader_name, rotate_angle, rotate_x, rotate_y, rotate_z, translate_x, translate_y, translate_z, scale );
 }

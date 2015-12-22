@@ -4,7 +4,15 @@ using namespace std;
 
 Model::Model(){}
 
-Model::Model(string path, string shader_name){
+Model::Model(string path, string shader_name, float rotate_angle, float rotate_x, float rotate_y, float rotate_z, float translate_x, float translate_y, float translate_z, float scale){
+    this->rotate_angle = rotate_angle;
+    this->rotate_x = rotate_x;
+    this->rotate_y = rotate_y;
+    this->rotate_z = rotate_z;
+    this->translate_x = translate_x;
+    this->translate_y = translate_y;
+    this->translate_z = translate_z;
+    this->scale = scale;
     this->shader_name = shader_name;
     this->loadModel(path);
 }

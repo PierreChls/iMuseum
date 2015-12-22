@@ -1,13 +1,16 @@
 #include "Light.hpp"
 
+using namespace std;
+
 Light::Light(){}
-Light::Light(glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic):
+Light::Light(glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic, string shader_name):
 	position(position),
 	ambient(ambient),
 	specular(specular),
 	constant(constant),
 	linear(linear),
-	quadratic(quadratic)
+	quadratic(quadratic),
+	shader_name(shader_name)
 	{}
 
 //getter
