@@ -8,7 +8,7 @@
 using namespace glm;
 
 
-class Light
+class PointLight
 {
 	private:
 		vec3 position;
@@ -20,14 +20,14 @@ class Light
 		float quadratic;
 
 	public:
-		Light();
-		Light(	vec3 position,
-				vec3 ambient,
-				vec3 diffuse,
-				vec3 specular,
-				float constant,
-				float  linear,
-				float quadratic);
+		PointLight();
+		PointLight(	vec3 position,
+					vec3 ambient,
+					vec3 diffuse,
+					vec3 specular,
+					float constant,
+					float  linear,
+					float quadratic);
 
 		//getter
 		vec3 getPosition() 		const;
@@ -48,6 +48,41 @@ class Light
 		void setLinear(			const float new_linear) 	  ;
 		void setQuadratic(		const float new_quadratic) ;
 
+		//shader
+
 		void sendToShader( char lightNumber, const Shader shader);
 
+};
+
+class DirLight
+{
+private:
+	vec3 direction;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+
+public:
+	DirLight();
+	DirLight( vec3 direction,
+			  vec3 ambient,
+			  vec3 diffuse,
+			  vec3 specular);
+	~DirLight();
+	
+	//getter
+	vec3 getDirection()			const;
+	vec3 getAmbient()			const;
+	vec3 getDiffuse()			const;
+	vec3 getSpecular()			const;
+
+	//setter
+
+	void setDirection( const vec3 new_direction);
+	void setAmbient ( const vec3 new_ambient);
+	void setDiffuse ( const vec3 new_diffuse);
+	void setSpecular( const vec3 new_specular);
+
+	//shader
+	void sendToShader(char lightNumber, const Shader shader);
 };

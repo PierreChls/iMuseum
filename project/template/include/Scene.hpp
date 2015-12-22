@@ -20,11 +20,11 @@ class Scene
     public:
       map<string, Shader> shaders;
       map<string, Model> models;
-      map<string, Light> lights;
+      map<string, PointLight> lights;
       Camera camera;
 
       GLfloat deltaTime;
-	  GLfloat lastFrame;
+	    GLfloat lastFrame;
 
       Scene(string path_season);
       void loadScene(string path_season);
