@@ -84,7 +84,7 @@ void PointLight::sendToShader( char lightNumber, const Shader shader){
 				temp2 = temp.c_str();
     glUniform1f(glGetUniformLocation(shader.Program, temp2), 		getConstant()	);
     //linear
-    			temp = "pointLights[" + std::to_string(lightNumber) + "].constant"; // <<< ICI
+    			temp = "pointLights[" + std::to_string(lightNumber) + "].linear"; // <<< ICI
 				temp2 = temp.c_str();
 	///ICI quand on change le .constant en .linear rendu NOIR
 				
