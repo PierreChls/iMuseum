@@ -1,4 +1,5 @@
 #include "Scene.hpp"
+#include "MousePicker.hpp"
 
 using namespace std;
 using namespace glimac;
@@ -125,12 +126,14 @@ void Scene::loadScene(string path_season)
   this->deltaTime = 0.0f;
   this->lastFrame = 0.0f;
 
+  //INIT mousePicker
+
+
 }
 
 
 void Scene::render(SDLWindowManager* windowManager, float screenWidth, float screenHeight)
 {
-
   moveCamera(windowManager);
 
   map<string, Shader>::iterator it_shaders;
@@ -270,36 +273,43 @@ void Scene::moveCamera(SDLWindowManager* windowManager)
   if(windowManager->isKeyPressed(SDLK_i)) this->camera.rotateLeft(5.0);
   if(windowManager->isKeyPressed(SDLK_k)) this->camera.rotateUp(5.0);
 
-  glm::ivec2 mousePos = glm::ivec2(0.0);
+  glm::vec2 screenDim = windowManager->getScreenDimensions();
+  MousePicker mousepicker(screenDim, this->camera, windowManager->getProjectionMatrix() );
+  glm::vec2 mousePos = glm::ivec2(0.0);
+  
   if(windowManager->isMouseButtonPressed(SDL_BUTTON_LEFT)){
     mousePos = windowManager->getMousePosition();
     float mousePosX = mousePos.x/800.0f - 0.5;
     float mousePosY = mousePos.y/600.0f - 0.5;
 
 
-    //1. 3d Normalised Device Coordinates
-    float x = (2.0f * mousePos.x) / 800.0f - 1.0f;
-    float y =  1.0f - (2.0f * mousePos.y) / 600.0f;
-    float z = 1.0f;
-    vec3 ray_nds = vec3 (x, y, z);
+    // //1. 3d Normalised Device Coordinates
+    // float x = (2.0f * mousePos.x) / 800.0f - 1.0f;
+    // float y =  1.0f - (2.0f * mousePos.y) / 600.0f;
+    // float z = 1.0f;
+    // vec3 ray_nds = vec3 (x, y, z);
 
-    //2. 4d Homogeneous Clip Coordinates
-    vec4 ray_clip = vec4 (ray_nds.x, ray_nds.y, -1.0, 1.0);
+    // //2. 4d Homogeneous Clip Coordinates
+    // vec4 ray_clip = vec4 (ray_nds.x, ray_nds.y, -1.0, 1.0);
 
-    //3. 4d Eye (Camera) Coordinates
-    glm::mat4 projection_matrix = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.1f, 100.0f);
-    vec4 ray_eye = inverse (projection_matrix) * ray_clip;
-    ray_eye = vec4 (ray_eye.x, ray_eye.y, -1.0, 0.0);
+    // //3. 4d Eye (Camera) Coordinates
+    // glm::mat4 projection_matrix = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.1f, 100.0f);
+    // vec4 ray_eye = inverse (projection_matrix) * ray_clip;
+    // ray_eye = vec4 (ray_eye.x, ray_eye.y, -1.0, 0.0);
     
-    //4. 4d World Coordinates
-    glm::mat4 view_matrix = this->camera.getViewMatrix();
-    vec3 ray_wor;
-    ray_wor.x = (inverse (view_matrix) * ray_eye).x;
-    ray_wor.y = (inverse (view_matrix) * ray_eye).y;
-    ray_wor.z = (inverse (view_matrix) * ray_eye).z;
-    ray_wor = normalize (ray_wor);
+    // //4. 4d World Coordinates
+    // glm::mat4 view_matrix = this->camera.getViewMatrix();
+    // vec3 ray_wor;
+    // ray_wor.x = (inverse (view_matrix) * ray_eye).x;
+    // ray_wor.y = (inverse (view_matrix) * ray_eye).y;
+    // ray_wor.z = (inverse (view_matrix) * ray_eye).z;
+    // ray_wor = normalize (ray_wor);
 
-    cout << ray_wor.x << " " << ray_wor.y << " " << ray_wor.z << endl;
+    // cout << "PETER : " << ray_wor.x << " " << ray_wor.y << " " << ray_wor.z << endl;
+
+    mousepicker.update(mousePos);
+    glm::vec3 currentRay = mousepicker.getCurrentRay();
+    cout << "mousepicker : " << currentRay << endl;
 
 
     this->camera.rotateLeft(-2*mousePosX);
