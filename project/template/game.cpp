@@ -14,6 +14,7 @@
 #include "Shader.hpp"
 #include "Camera.hpp"
 #include "Light.hpp"
+#include "HUD.hpp"
 
 using namespace glimac;
 
@@ -43,11 +44,12 @@ int main(int argc, char** argv) {
 
     
     //Initialize scene
-    Scene Scene("assets/seasons/summer.txt");                              //quadratic
-
+    Scene Scene("assets/seasons/summer.txt"); 
+    HUD HUD(argv[0]);
 
     //Application loop:
     bool done = false;
+
     while(!done) {
 
         // Event loop:
@@ -56,10 +58,40 @@ int main(int argc, char** argv) {
             if(e.type == SDL_QUIT) {
                 done = true; // Leave the loop after this iteration
             }
+            switch( e.type )
+            {
+                case SDL_KEYDOWN:
+                    cout << "down" << endl;
+                    if(windowManager.isKeyPressed(SDLK_ESCAPE))
+                    {
+                        HUD.close(&windowManager);
+                    }
+                break;
+            }
         }
 
         glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        while(HUD.status){
+            while(windowManager.pollEvent(e)) {
+            if(e.type == SDL_QUIT) {
+                done = true; // Leave the loop after this iteration
+            }
+            switch( e.type )
+            {
+                case SDL_KEYDOWN:
+                    cout << "down" << endl;
+                    if(windowManager.isKeyPressed(SDLK_ESCAPE))
+                    {
+                        HUD.close(&windowManager);
+                    }
+                break;
+            }
+        }
+            HUD.draw(&windowManager, screenWidth, screenHeight);
+        }
+
 
         Scene.render(&windowManager, screenWidth, screenHeight);
 

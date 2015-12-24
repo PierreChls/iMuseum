@@ -93,12 +93,8 @@ GLuint Skybox::loadCubemap(vector<const GLchar*> faces)
     glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
     for(GLuint i = 0; i < faces.size(); i++)
     {
-        //image = SOIL_load_image(faces[i], &width, &height, 0, SOIL_LOAD_RGB);
         image = loadImage(faces[i]);
-        //width = image->getWidth();
-        //height = image->getHeight();
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,0,GL_RGBA,image->getWidth(),image->getHeight(),0,GL_RGBA,GL_FLOAT,image->getPixels());
-        //glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
     }
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -119,16 +115,10 @@ GLuint Skybox::loadTexture(GLchar* path)
     //Generate texture ID and load texture data 
     GLuint textureID;
     glGenTextures(1, &textureID);
-    int width,height;
-    //unsigned char* image = SOIL_load_image(path, &width, &height, 0, SOIL_LOAD_RGB);
     std::unique_ptr<Image> image; image = loadImage(path);
-    width = image->getWidth();
-    height = image->getHeight();
-
 
     // Assign texture to ID
     glBindTexture(GL_TEXTURE_2D, textureID);
-    //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
     glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,image->getWidth(),image->getHeight(),0,GL_RGBA,GL_FLOAT,image->getPixels());
     glGenerateMipmap(GL_TEXTURE_2D);    
 
