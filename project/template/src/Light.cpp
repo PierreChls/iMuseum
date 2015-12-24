@@ -1,5 +1,11 @@
 #include "Light.hpp"
 
+// /***** LIGHT *****/
+// Light::Light(){}
+// Light::~Light(){}
+// void Light::sendToShader( char lightNumber, Shader shader){}
+
+
 /***** POINT LIGHT *****/
 
 PointLight::PointLight(){}
@@ -11,7 +17,7 @@ PointLight::PointLight(glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse,
 	linear(linear),
 	quadratic(quadratic)
 	{}
-
+PointLight::~PointLight(){}
 //getter
 
 glm::vec3 PointLight::getPosition() 		const{
@@ -161,6 +167,150 @@ void DirLight::sendToShader(char lightNumber, const Shader shader){
     glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getDiffuse().x,	getDiffuse().y,		getDiffuse().z); 
     //specular			
     			temp = "dirLights[" + std::to_string(lightNumber) + "].specular";
+				temp2 = temp.c_str();
+    glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getSpecular().x,	getSpecular().y,	getSpecular().z);
+
+}
+
+SpotLight::SpotLight(){}
+SpotLight::SpotLight(glm::vec3 position, vec3 direction, float cutOff, float outerCutOff, float constant, float linear, float quadratic, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular):
+	position(position),
+	direction(direction),
+	cutOff(cutOff),
+	outerCutOff(outerCutOff),
+	constant(constant),
+	linear(linear),
+	quadratic(quadratic),
+	ambient(ambient),
+	diffuse(diffuse),
+	specular(specular)
+	{}
+
+SpotLight::~SpotLight(){}
+
+//getter
+vec3 SpotLight::getPosition()		const{
+	return position;
+}
+vec3 SpotLight::getDirection()		const{
+	return direction;
+}
+float SpotLight::getCutOff()		const{
+	return cutOff;
+}
+float SpotLight::getOuterCutOff()	const{
+	return outerCutOff;
+}
+float SpotLight::getConstant()		const{
+	return constant;
+}
+float SpotLight::getLinear()		const{
+	return linear;
+}
+float SpotLight::getQuadratic()		const{
+	return quadratic;
+}
+vec3 SpotLight::getAmbient()		const{
+	return ambient;
+}
+vec3 SpotLight::getDiffuse()		const{
+	return diffuse;
+}
+vec3 SpotLight::getSpecular()		const{
+	return specular;
+}
+
+//setter
+
+void SpotLight::setPosition(		const glm::vec3 new_position){
+	position = new_position;
+}
+void SpotLight::setDirection(		const glm::vec3 new_direction){
+	direction = new_direction;
+}
+void SpotLight::setCutOff(			const float 	new_cutOff){
+	cutOff = new_cutOff;
+}
+void SpotLight::setOuterCutOff(		const float		new_outerCutOff){
+	outerCutOff = new_outerCutOff;
+}
+void SpotLight::setConstant(		const float		new_constant){
+	constant = new_constant;
+}
+void SpotLight::setLinear(			const float		new_linear){
+	linear = new_linear;
+}
+void SpotLight::setQuadratic(		const float 	new_quadratic){
+	quadratic = new_quadratic;
+}
+void SpotLight::setAmbient(			const glm::vec3	new_ambient){
+	ambient = new_ambient;
+}
+void SpotLight::setDiffuse(			const glm::vec3 new_diffuse){
+	diffuse = new_diffuse;
+}
+void SpotLight::setSpecular(		const glm::vec3 new_specular){
+	specular = new_specular;
+}
+
+//if flashlight
+void SpotLight::update(Camera camera){
+	position = camera.getPosition();
+	direction = camera.getDirection();
+}
+
+
+void SpotLight::sendToShader( char lightNumber, const Shader shader){
+
+	//Trick to convert char to GLchar
+
+	//position
+	std::string temp = "spotLights[" + std::to_string(lightNumber) + "].position";
+	const char* temp2 = temp.c_str();
+	glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getPosition().x, 	getPosition().y, 	getPosition().z);
+
+	//direction			
+				temp = "spotLights[" + std::to_string(lightNumber) + "].direction";
+				temp2 = temp.c_str();			
+    glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getDirection().x, 	getDirection().y, 	getDirection().z);
+
+    //cutOff			
+    			temp = "spotLights[" + std::to_string(lightNumber) + "].cutOff";
+				temp2 = temp.c_str();
+    glUniform1f(glGetUniformLocation(shader.Program, temp2), 		getCutOff()	);
+
+    //outerCutOff			
+    			temp = "spotLights[" + std::to_string(lightNumber) + "].outerCutOff";
+				temp2 = temp.c_str();
+    glUniform1f(glGetUniformLocation(shader.Program, temp2), 		getOuterCutOff()	);
+
+    //constant			
+    			temp = "spotLights[" + std::to_string(lightNumber) + "].constant";
+				temp2 = temp.c_str();
+    glUniform1f(glGetUniformLocation(shader.Program, temp2), 		getConstant()	);
+
+    //linear
+    			temp = "spotLights[" + std::to_string(lightNumber) + "].linear";
+				temp2 = temp.c_str();				
+	glUniform1f(glGetUniformLocation(shader.Program, temp2),		getLinear() 	);
+
+    //quadratic			
+    			temp = "spotLights[" + std::to_string(lightNumber) + "].quadratic";
+				temp2 = temp.c_str();
+    glUniform1f(glGetUniformLocation(shader.Program, temp2),		getQuadratic()	);  
+
+    //diffuse			
+    			temp = "spotLights[" + std::to_string(lightNumber) + "].diffuse";
+				temp2 = temp.c_str();       
+    glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getDiffuse().x,		getDiffuse().y,		getDiffuse().z); 
+
+	//ambient			
+				temp = "spotLights[" + std::to_string(lightNumber) + "].ambient";
+				temp2 = temp.c_str();
+	glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getAmbient().x, 	getAmbient().y, 	getAmbient().z);
+    
+    //specular			
+    			temp = "spotLights[" + std::to_string(lightNumber) + "].specular";
 				temp2 = temp.c_str();
     glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getSpecular().x,	getSpecular().y,	getSpecular().z);
 

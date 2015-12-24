@@ -4,11 +4,20 @@
 #include <string>
 #include "Shader.hpp"
 #include <GL/glew.h>
+#include "Camera.hpp"
 
 using namespace glm;
 
+// class Light
+// {
+// public:
+// 	Light();
+// 	~Light();
+// 	virtual void sendToShader( char lightNumber, Shader shader);
+	
+// };
 
-class PointLight
+class PointLight //: public Light
 {
 	private:
 		vec3 position;
@@ -28,7 +37,7 @@ class PointLight
 					float constant,
 					float  linear,
 					float quadratic);
-
+		~PointLight();
 		//getter
 		vec3 getPosition() 		const;
 		vec3 getAmbient() 		const;
@@ -44,17 +53,16 @@ class PointLight
 		void setAmbient(		const vec3 new_ambient)   ;
 		void setDiffuse(		const vec3 new_diffuse)   ;
 		void setSpecular(		const vec3 new_specular)  ;
-		void setConstant(		const float new_constant)  ;
-		void setLinear(			const float new_linear) 	  ;
-		void setQuadratic(		const float new_quadratic) ;
+		void setConstant(		const float new_constant) ;
+		void setLinear(			const float new_linear)   ;
+		void setQuadratic(		const float new_quadratic);
 
 		//shader
-
 		void sendToShader( char lightNumber, const Shader shader);
 
 };
 
-class DirLight
+class DirLight //: public Light
 {
 private:
 	vec3 direction;
@@ -78,11 +86,73 @@ public:
 
 	//setter
 
-	void setDirection( const vec3 new_direction);
-	void setAmbient ( const vec3 new_ambient);
-	void setDiffuse ( const vec3 new_diffuse);
-	void setSpecular( const vec3 new_specular);
+	void setDirection( 	const vec3 new_direction);
+	void setAmbient (	const vec3 new_ambient);
+	void setDiffuse ( 	const vec3 new_diffuse);
+	void setSpecular( 	const vec3 new_specular);
+
+	void update(		const vec3 direction); // a implémenter 
 
 	//shader
 	void sendToShader(char lightNumber, const Shader shader);
 };
+
+class SpotLight //: public Light
+{
+private:
+	vec3 position;
+	vec3 direction;
+	float cutOff;
+	float outerCutOff;
+
+	float constant;
+	float linear;
+	float quadratic;
+
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+
+public:
+	SpotLight();
+	SpotLight( vec3 position,
+			   vec3 direction,
+			   float cutOff,
+			   float outerCutOff,
+			   float constant,
+			   float linear,
+			   float quadratic,
+			   vec3 ambient,
+			   vec3 diffuse,
+			   vec3 specular);
+	~SpotLight();
+	
+	//getter
+
+	vec3	getPosition()		const;
+	vec3	getDirection()		const;
+	float	getCutOff()			const;
+	float	getOuterCutOff()	const;
+	float	getConstant()		const;
+	float	getLinear()			const;
+	float	getQuadratic()		const;
+	vec3	getAmbient()		const;
+	vec3	getDiffuse()		const;
+	vec3	getSpecular()		const;
+
+	//setter
+
+	void	setPosition(		const	vec3 new_position);
+	void	setDirection(		const 	vec3 new_direction);
+	void	setCutOff(			const 	float new_cutOff);
+	void	setOuterCutOff(		const 	float new_outerCutOff);
+	void	setConstant(		const 	float new_constant);
+	void	setLinear(			const 	float new_linear);
+	void	setQuadratic( 		const 	float new_quadratic);
+	void	setAmbient( 		const 	vec3 new_ambient);
+	void 	setDiffuse(			const 	vec3 new_diffuse);
+	void	setSpecular(		const 	vec3 new_specular);
+
+	void 	update(Camera camera);
+	void	sendToShader(char lightNumber, Shader shader);
+};	

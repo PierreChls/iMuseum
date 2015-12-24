@@ -11,7 +11,7 @@ Scene::Scene(string path_season)
 
 void Scene::loadScene(string path_season)
 {
-  int nbModel, nbShader, nbLight, i;
+  int nbModel, nbShader, nbPointLights, nbDirLights, nbSpotLights, i;
 
   string word, line;
 
@@ -23,7 +23,15 @@ void Scene::loadScene(string path_season)
 
   //Valeurs du txt pour les lights
   string name_light;
-  float position_x, position_y, position_z, ambient_1, ambient_2, ambient_3, diffuse_1, diffuse_2, diffuse_3, specular_1, specular_2, specular_3, constant, linear, quadratic;
+  float position_x,  position_y, position_z,
+        ambient_1,   ambient_2,  ambient_3, 
+        diffuse_1,   diffuse_2,  diffuse_3,
+        specular_1,  specular_2, specular_3, 
+        constant,
+        linear,
+        quadratic,
+        direction_x, direction_y, direction_z,
+        cutOff, outerCutOff;
 
   ifstream file(path_season);
 
@@ -32,9 +40,15 @@ void Scene::loadScene(string path_season)
     //INIT : First line
     getline(file, line);
     stringstream iss(line);
-    while(iss >> word >> nbShader >> word >> nbModel >> word >> nbLight)
+    while(iss >> word >> nbShader >> word >> nbModel >> word >> nbPointLights >> word >> nbDirLights >> word >> nbSpotLights)
     {
-      cout << "Nb Shaders : " << nbShader << " | Nb Models : " << nbModel << " | Nb Lights : " << nbLight << endl << endl;
+      cout << " Nb Shaders  : "     << nbShader      << endl
+           << " Nb Models   : "     << nbModel       << endl
+           << " LIGHTS : "          << endl
+           << "   nbPointLights : " << nbPointLights << endl
+           << "   nbDirLights   : " << nbDirLights   << endl
+           << "   nbSpotLights  : " << nbSpotLights  << endl
+           << endl;
     }
 
     //SHADERS
@@ -64,24 +78,70 @@ void Scene::loadScene(string path_season)
     }
     cout << "" << endl;
 
-    //LIGHTS
-    for(i = 0; i < nbLight; i++)
+    /***** LIGHT *****/
+
+    // PointLights
+    for(i = 0; i < nbPointLights; i++)
     {
       getline(file, line);
       stringstream iss(line);
             while(iss >> name_light >> position_x >> position_y >> position_z >> ambient_1 >> ambient_2 >> ambient_3 >> diffuse_1 >> diffuse_2 >> diffuse_3 >> specular_1 >> specular_2 >> specular_3 >> constant >> linear >> quadratic )
       {
-        PointLight pointLight(  glm::vec3( (float)position_x , (float)position_y, (float)position_z),             //position
-                                glm::vec3( (float)ambient_1, (float)ambient_2, (float)ambient_3),                 //ambient
-                                glm::vec3( (float)diffuse_1 , (float)diffuse_2 , (float)diffuse_3),               //diffuse
-                                glm::vec3( (float)specular_1, (float)specular_2, (float)specular_3),              //specular
+        PointLight pointLight(  glm::vec3( (float)position_x , (float)position_y, (float)position_z),             
+                                glm::vec3( (float)ambient_1, (float)ambient_2, (float)ambient_3),                 
+                                glm::vec3( (float)diffuse_1 , (float)diffuse_2 , (float)diffuse_3),               
+                                glm::vec3( (float)specular_1, (float)specular_2, (float)specular_3),              
                                 (float)constant,
                                 (float)linear,
                                 (float)quadratic);
 
-        this->lights[name_light] = PointLight( pointLight );
+        this->pointLights[name_light] = PointLight( pointLight );
       } // END WHILE
     } // END FOR
+
+    // DirLights
+    for(i = 0; i < nbDirLights; i++)
+    {
+      getline(file, line);
+      stringstream iss(line);
+            while(iss >> name_light >> direction_x >> direction_y >> direction_z >> ambient_1 >> ambient_2 >> ambient_3 >> diffuse_1 >> diffuse_2 >> diffuse_3 >> specular_1 >> specular_2 >> specular_3)
+      {
+        DirLight dirLight(      glm::vec3( (float)direction_x,  (float)direction_y, (float)direction_z),            
+                                glm::vec3( (float)ambient_1,    (float)ambient_2,   (float)ambient_3),                
+                                glm::vec3( (float)diffuse_1,    (float)diffuse_2,   (float)diffuse_3),               
+                                glm::vec3( (float)specular_1,   (float)specular_2,   (float)specular_3)
+                          );              
+
+        this->dirLights[name_light] = DirLight( dirLight );
+      } // END WHILE
+    } // END FOR
+
+    // SpotLights
+    for(i = 0; i < nbSpotLights; i++)
+    {
+      getline(file, line);
+      stringstream iss(line);
+            while(iss >> name_light >> position_x >> position_y >> position_z >> direction_x >> direction_y >> direction_z >> cutOff >> outerCutOff >> constant >> linear >> quadratic >> ambient_1 >> ambient_2 >> ambient_3 >> diffuse_1 >> diffuse_2 >> diffuse_3 >> specular_1 >> specular_2 >> specular_3)
+      {
+        SpotLight spotLight(  glm::vec3( (float)position_x,   (float)position_y,  (float)position_z),
+                                glm::vec3( (float)direction_x,  (float)direction_y, (float)direction_z),
+                                (float) glm::cos(glm::radians(cutOff)),
+                                (float) glm::cos(glm::radians(outerCutOff)),
+                                (float)constant,
+                                (float)linear,
+                                (float)quadratic,
+                                glm::vec3( (float)ambient_1,    (float)ambient_2,   (float)ambient_3),
+                                glm::vec3( (float)diffuse_1,    (float)diffuse_2,   (float)diffuse_3),
+                                glm::vec3( (float)specular_1,    (float)specular_2, (float)specular_3)
+                            );
+                                
+
+        this->spotLights[name_light] = SpotLight( spotLight );
+      } // END WHILE
+    } // END FOR
+
+
+
     cout << "" << endl;
 
     file.close();
@@ -106,7 +166,7 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
 
 
   moveCamera(windowManager);
-
+  this->spotLights["SpotLight"].update(this->camera);
 
   this->shaders["LIGHT"].Use();
 
@@ -121,11 +181,14 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
   // IL FAUT ENVOYER LE VIEWPOSLOC au shader
 
   // Point light 1
-  this->lights["PointLight1"].sendToShader(0,this->shaders["LIGHT"]);
+  this->pointLights["PointLight1"].sendToShader(0,this->shaders["LIGHT"]);
   // Point light 2
-  this->lights["PointLight2"].sendToShader(1,this->shaders["LIGHT"]);
-
-  glUniform1f(glGetUniformLocation(this->shaders["LIGHT"].Program, "material.shininess"), 132.0f);
+  this->pointLights["PointLight2"].sendToShader(1,this->shaders["LIGHT"]);
+  // dir light
+  this->dirLights["DirLight"].sendToShader(0,this->shaders["LIGHT"]);
+  //spotlight
+  this->spotLights["SpotLight"].sendToShader(0,this->shaders["LIGHT"]);
+  glUniform1f(glGetUniformLocation(this->shaders["LIGHT"].Program, "material.shininess"), 32.0f);
 
   drawModels();
 

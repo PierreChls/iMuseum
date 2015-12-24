@@ -1,6 +1,8 @@
-nbShader: 1 nbModel: 2 nbLight: 2
-LIGHT template/shaders/ambiant_light.vs.glsl template/shaders/ambiant_light.fs.glsl
+nbShader: 1 nbModel: 2 nbPointLights: 2 nbDirLights: 1 nbSpotLights: 1
+LIGHT template/shaders/light.vs.glsl template/shaders/light.fs.glsl
 NANOSUIT assets/models/nanosuit/nanosuit.obj LIGHT
 HOUSE assets/models/house/fw43_lowpoly_n1.3ds LIGHT
-PointLight1 10.2 1.0 20.0 0.05 0.05 0.05 4.0 4.0 4.0 1.0 1.0 1.0 1.0 0.0 0.0032
-PointLight2 -0.2 -0.3 1.0 0.05 0.05 0.05 0.8 0.8 0.8 1.0 1.0 1.0 1.0 0.0 0.0032
+PointLight1 0.0 0.0 -1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 0.07 0.017
+PointLight2 -0.2 -0.3 1.0 0.05 0.05 0.05 0.8 0.8 0.8 1.0 1.0 1.0 1.0 0.07 0.017
+DirLight -0.2 -1.0 -0.3 0.05 0.05 0.05 0.4 0.4 0.4 0.5 0.5 0.5
+SpotLight 0.0 0.0 -1.0 0.0 0.0 -1.0 12.5 15.0 1.0 0.09 0.032 0.0 0.0 0.0 1.0 0.0 0.0 1.0 1.0 1.0

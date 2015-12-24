@@ -20,7 +20,9 @@ class Scene
     public:
       map<string, Shader> shaders;
       map<string, Model> models;
-      map<string, PointLight> lights;
+      map<string, PointLight> pointLights;
+      map<string, DirLight> dirLights;
+      map<string, SpotLight> spotLights;
       Camera camera;
 
       GLfloat deltaTime;
