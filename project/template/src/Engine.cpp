@@ -7,8 +7,13 @@ Engine::Engine()
 {
   
   //INIT SCENE SUMMER
-  Scene newScene("assets/seasons/summer.txt"); 
-  this->scenes.push_back(newScene);
+  Scene Summer("assets/seasons/summer.txt"); 
+  this->scenes.push_back(Summer);
+
+  //INIT SCENE WINTER
+  //Scene Winter("assets/seasons/winter.txt"); 
+  //this->scenes.push_back(Winter);
+
 }
 
 void Engine::run(SDLWindowManager* windowManager, GLuint screenWidth, GLuint screenHeight, bool* done)
