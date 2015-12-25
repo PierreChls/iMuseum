@@ -15,6 +15,7 @@
 #include "Camera.hpp"
 #include "Light.hpp"
 #include "HUD.hpp"
+#include "Engine.hpp"
 
 using namespace glimac;
 
@@ -42,70 +43,15 @@ int main(int argc, char** argv) {
     std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
     std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl << std::endl;
 
-    
-    //Initialize scene
-    Scene Scene("assets/seasons/summer.txt"); 
-    HUD HUD;
+    Engine iSeason;
 
     //Application loop:
     bool done = false;
 
     while(!done) {
 
-        // Event loop:
-        SDL_Event e;
-        while(windowManager.pollEvent(e)) {
-            if(e.type == SDL_QUIT) {
-                done = true; // Leave the loop after this iteration
-            }
-            switch( e.type )
-            {
-                case SDL_KEYDOWN:
-                    cout << "down" << endl;
-                    if(windowManager.isKeyPressed(SDLK_ESCAPE))
-                    {
-                        HUD.close(&windowManager);
-                    }
-                break;
-            }
-        }
+        iSeason.run(&windowManager, screenWidth, screenHeight, &done);
 
-        glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
-        while(HUD.status){
-            while(windowManager.pollEvent(e)) {
-            if(e.type == SDL_QUIT) {
-                HUD.status = false; // Leave HUD loop
-                done = true; // Leave the loop after this iteration
-            }
-            switch( e.type )
-            {
-                case SDL_KEYDOWN:
-                    if(windowManager.isKeyPressed(SDLK_ESCAPE))
-                    {
-                        HUD.close(&windowManager);
-                    }
-                    switch( e.key.keysym.sym )
-                    {
-                        case SDLK_LEFT:
-                            HUD.changeSeason(false);
-                        break;
-                        case SDLK_RIGHT:
-                            HUD.changeSeason(true);
-                        break;
-                    }
-                break;
-            }
-        }
-            HUD.draw(&windowManager, screenWidth, screenHeight);
-        }
-
-
-        Scene.render(&windowManager, screenWidth, screenHeight);
-
-        // Update the display
-        windowManager.swapBuffers();
     }
 
     return EXIT_SUCCESS;
