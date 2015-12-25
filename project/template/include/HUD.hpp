@@ -5,6 +5,7 @@
 #include <glimac/Image.hpp>
 #include <string>
 #include <fstream>
+#include <map>
 #include <iostream>
 #include <GL/glew.h>
 #include "Shader.hpp"
@@ -18,17 +19,20 @@ class HUD{
 public:
 
 	bool status;
+	int nbSeason;
 
 	Shader shader;
 	std::unique_ptr<Image> HUDtexture;
+	map<string, std::unique_ptr<Image>> HUDtextures;
 
 	GLuint VBO, VAO, EBO;
-	GLuint texture;
+	GLuint Textures[5];
 	GLfloat vertices[32];
 	GLuint indices[6];
 
 	HUD();
 	HUD(string path);
+	void changeSeason(bool up);
 	void draw(SDLWindowManager* windowManager, float screenWidth, float screenHeight);
 	void close(SDLWindowManager* windowManager);
 

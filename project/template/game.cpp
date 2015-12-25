@@ -76,6 +76,7 @@ int main(int argc, char** argv) {
         while(HUD.status){
             while(windowManager.pollEvent(e)) {
             if(e.type == SDL_QUIT) {
+                HUD.status = false; // Leave HUD loop
                 done = true; // Leave the loop after this iteration
             }
             switch( e.type )
@@ -85,6 +86,15 @@ int main(int argc, char** argv) {
                     if(windowManager.isKeyPressed(SDLK_ESCAPE))
                     {
                         HUD.close(&windowManager);
+                    }
+                    switch( e.key.keysym.sym )
+                    {
+                        case SDLK_LEFT:
+                            HUD.changeSeason(false);
+                        break;
+                        case SDLK_RIGHT:
+                            HUD.changeSeason(true);
+                        break;
                     }
                 break;
             }
