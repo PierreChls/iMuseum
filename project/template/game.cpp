@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
     
     //Initialize scene
     Scene Scene("assets/seasons/summer.txt"); 
-    HUD HUD(argv[0]);
+    HUD HUD;
 
     //Application loop:
     bool done = false;
@@ -82,7 +82,6 @@ int main(int argc, char** argv) {
             switch( e.type )
             {
                 case SDL_KEYDOWN:
-                    cout << "down" << endl;
                     if(windowManager.isKeyPressed(SDLK_ESCAPE))
                     {
                         HUD.close(&windowManager);

@@ -2,9 +2,7 @@
 #include <iostream>
 #include <string>
 
-HUD::HUD(){}
-
-HUD::HUD(string path){
+HUD::HUD(){
 
 	this->status = true;
     this->nbSeason = 0;

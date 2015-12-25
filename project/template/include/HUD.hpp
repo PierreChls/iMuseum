@@ -31,7 +31,6 @@ public:
 	GLuint indices[6];
 
 	HUD();
-	HUD(string path);
 	void changeSeason(bool up);
 	void draw(SDLWindowManager* windowManager, float screenWidth, float screenHeight);
 	void close(SDLWindowManager* windowManager);
