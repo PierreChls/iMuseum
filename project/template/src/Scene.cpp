@@ -103,7 +103,7 @@ void Scene::loadScene(string path_season)
                                 (float)constant,
                                 (float)linear,
                                 (float)quadratic,
-                                light_shader_name
+                                (string)light_shader_name
                               );
 
         this->pointLights[name_light] = PointLight( pointLight );
@@ -121,7 +121,7 @@ void Scene::loadScene(string path_season)
                                 glm::vec3( (float)ambient_1,    (float)ambient_2,   (float)ambient_3),                
                                 glm::vec3( (float)diffuse_1,    (float)diffuse_2,   (float)diffuse_3),               
                                 glm::vec3( (float)specular_1,   (float)specular_2,   (float)specular_3),
-                                light_shader_name
+                                (string)light_shader_name
                           );              
 
         this->dirLights[name_light] = DirLight( dirLight );
@@ -145,8 +145,8 @@ void Scene::loadScene(string path_season)
                                 (float)quadratic,
                                 glm::vec3( (float)ambient_1,    (float)ambient_2,   (float)ambient_3),
                                 glm::vec3( (float)diffuse_1,    (float)diffuse_2,   (float)diffuse_3),
-                                glm::vec3( (float)specular_1,    (float)specular_2, (float)specular_3),
-                                light_shader_name
+                                glm::vec3( (float)specular_1,   (float)specular_2,  (float)specular_3),
+                                (string)light_shader_name
                             );
                                 
 
@@ -225,7 +225,7 @@ void Scene::initShaders(string shader_name, float screenWidth, float screenHeigh
   GLint viewPosLoc  = glGetUniformLocation(this->shaders[ shader_name ].Program, "viewPos");
 
   // Set material properties
-  glUniform1f(glGetUniformLocation(this->shaders[ shader_name ].Program, "material.shininess"), 132.0f);
+  glUniform1f(glGetUniformLocation(this->shaders[ shader_name ].Program, "material.shininess"), 32.0f);
   
 }
 
@@ -245,6 +245,7 @@ void Scene::initLights(string shader_name)
           numberShader++;
         }
   }
+  numberShader = 0;
   for(it_dirLights = this->dirLights.begin(); it_dirLights != this->dirLights.end(); it_dirLights++)
   {
         if( shader_name == it_dirLights->second.getShader())
@@ -253,12 +254,13 @@ void Scene::initLights(string shader_name)
           numberShader++;
         }
   }
+  numberShader = 0;
   for(it_spotLights = this->spotLights.begin(); it_spotLights != this->spotLights.end(); it_spotLights++)
   {
         if( shader_name == it_spotLights->second.getShader())
         {
-          this->spotLights[ it_spotLights->first ].sendToShader(numberShader, this->shaders[ shader_name ]);
           this->spotLights[ it_spotLights->first ].update(this->camera);
+          this->spotLights[ it_spotLights->first ].sendToShader(numberShader, this->shaders[ shader_name ]);
           numberShader++;
         }
   }

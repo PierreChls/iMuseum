@@ -1,7 +1,5 @@
 #include "Light.hpp"
 
-using namespace std;
-
 /***** POINT LIGHT *****/
 
 PointLight::PointLight(){}

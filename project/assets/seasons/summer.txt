@@ -1,4 +1,4 @@
-nbShader: 1 nbModel: 2 nbPointLights: 2 nbDirLights: 1 nbSpotLights: 1 nbCheckpoint: 1
+nbShader: 1 nbModel: 2 nbPointLights: 2 nbDirLights: 1 nbSpotLights: 1 nbCheckpointS: 1
 LIGHT template/shaders/light.vs.glsl template/shaders/light.fs.glsl
 NANOSUIT assets/models/nanosuit/nanosuit.obj LIGHT 0.0 1.0 0.0 0.0 0.0 0.0 -5.0 0.2
 HOUSE assets/models/house/fw43_lowpoly_n1.3ds LIGHT -90.0 1.0 0.0 0.0 0.0 5.75 0.0 1.2
@@ -6,4 +6,4 @@ PointLight1 0.0 0.0 -1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 0.07 0.017 LIGH
 PointLight2 -0.2 -0.3 1.0 0.05 0.05 0.05 0.8 0.8 0.8 1.0 1.0 1.0 1.0 0.07 0.017 LIGHT
 DirLight -0.2 -1.0 -0.3 0.05 0.05 0.05 0.4 0.4 0.4 0.5 0.5 0.5 LIGHT
 SpotLight 0.0 0.0 -1.0 0.0 0.0 -1.0 12.5 15.0 1.0 0.09 0.032 0.0 0.0 0.0 1.0 0.0 0.0 1.0 1.0 1.0 LIGHT
-Checkpoint1 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.1 LIGHT
+Checkpoint1 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.001 LIGHT
