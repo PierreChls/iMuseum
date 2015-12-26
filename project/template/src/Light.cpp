@@ -1,11 +1,5 @@
 #include "Light.hpp"
 
-// /***** LIGHT *****/
-// Light::Light(){}
-// Light::~Light(){}
-// void Light::sendToShader( char lightNumber, Shader shader){}
-
-
 /***** POINT LIGHT *****/
 
 PointLight::PointLight(){}
@@ -90,10 +84,8 @@ void PointLight::sendToShader( char lightNumber, const Shader shader){
 				temp2 = temp.c_str();
     glUniform1f(glGetUniformLocation(shader.Program, temp2), 		getConstant()	);
     //linear
-    			temp = "pointLights[" + std::to_string(lightNumber) + "].linear"; // <<< ICI
-				temp2 = temp.c_str();
-	///ICI quand on change le .constant en .linear rendu NOIR
-				
+    			temp = "pointLights[" + std::to_string(lightNumber) + "].linear";
+				temp2 = temp.c_str();				
 	glUniform1f(glGetUniformLocation(shader.Program, temp2),		getLinear() 	);
     //quadratic			
     			temp = "pointLights[" + std::to_string(lightNumber) + "].quadratic";
@@ -171,6 +163,12 @@ void DirLight::sendToShader(char lightNumber, const Shader shader){
     glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getSpecular().x,	getSpecular().y,	getSpecular().z);
 
 }
+
+void DirLight::update(const glm::vec3 deltaDir){
+	direction += deltaDir;
+}
+
+/***** SPOTLIGHT *****/
 
 SpotLight::SpotLight(){}
 SpotLight::SpotLight(glm::vec3 position, vec3 direction, float cutOff, float outerCutOff, float constant, float linear, float quadratic, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular):
