@@ -194,7 +194,7 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
 {
 
   moveCamera(windowManager);
-  this->spotLights["SpotLight"].update(this->camera);
+  //this->spotLights["SpotLight"].update(this->camera); CETTE LIGNE LA VA DANS initLIGHT
 
   map<string, Shader>::iterator it_shaders;
   for(it_shaders = this->shaders.begin(); it_shaders != this->shaders.end(); it_shaders++)
@@ -258,6 +258,7 @@ void Scene::initLights(string shader_name)
         if( shader_name == it_spotLights->second.getShader())
         {
           this->spotLights[ it_spotLights->first ].sendToShader(numberShader, this->shaders[ shader_name ]);
+          this->spotLights[ it_spotLights->first ].update(this->camera);
           numberShader++;
         }
   }
