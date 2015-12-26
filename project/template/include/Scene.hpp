@@ -30,8 +30,10 @@ class Scene
 
       map<string, Shader> shaders;
       map<string, Model> models;
-      map<string, Light> lights;
       map<string, Checkpoint> checkpoints;
+      map<string, PointLight> pointLights;
+      map<string, DirLight> dirLights;
+      map<string, SpotLight> spotLights;
 
       Camera camera;
       Skybox skybox;

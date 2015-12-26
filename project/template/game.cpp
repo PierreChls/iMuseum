@@ -40,10 +40,10 @@ int main(int argc, char** argv) {
 
     std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
     std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl << std::endl;
-
     
     //Initialize scene
-    Scene Scene("assets/seasons/summer.txt");                              //quadratic
+    Scene Scene("assets/seasons/summer.txt");
+
 
 
     //Application loop:
