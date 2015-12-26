@@ -29,7 +29,7 @@ void Engine::run(SDLWindowManager* windowManager, GLuint screenWidth, GLuint scr
         case SDL_KEYDOWN:
           if(windowManager->isKeyPressed(SDLK_ESCAPE))
           {
-            this->HUD.close(windowManager);
+            this->_HUD.close(windowManager);
           }
         break;
       }
@@ -38,13 +38,13 @@ void Engine::run(SDLWindowManager* windowManager, GLuint screenWidth, GLuint scr
     glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
           
-    while(this->HUD.status)
+    while(this->_HUD.status)
     {
       while(windowManager->pollEvent(e))
       {
         if(e.type == SDL_QUIT)
         {
-          this->HUD.status = false; // Leave HUD loop
+          this->_HUD.status = false; // Leave HUD loop
           (*done) = true; // Leave the loop after this iteration
         }
         switch( e.type )
@@ -52,21 +52,21 @@ void Engine::run(SDLWindowManager* windowManager, GLuint screenWidth, GLuint scr
           case SDL_KEYDOWN:
             if(windowManager->isKeyPressed(SDLK_ESCAPE))
             {
-              this->HUD.close(windowManager);
+              this->_HUD.close(windowManager);
             }
             switch( e.key.keysym.sym )
             {
               case SDLK_LEFT:
-                this->HUD.changeSeason(false);
+                this->_HUD.changeSeason(false);
               break;
               case SDLK_RIGHT:
-                  this->HUD.changeSeason(true);
+                  this->_HUD.changeSeason(true);
               break;
             }
           break;
         }
       }
-      this->HUD.draw(windowManager, screenWidth, screenHeight);
+      this->_HUD.draw(windowManager, screenWidth, screenHeight);
     }
     this->scenes[0].render(windowManager, screenWidth, screenHeight);
     

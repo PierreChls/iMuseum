@@ -30,7 +30,7 @@ class Engine
     public:
 
       vector<Scene> scenes;
-      HUD HUD;
+      HUD _HUD;
 
       Engine();
       void run(SDLWindowManager* windowManager, GLuint screenWidth, GLuint screenHeight, bool* done);
