@@ -49,7 +49,7 @@ void Scene::loadScene(string path_season)
     getline(file, line);
     stringstream iss(line);
 
-    while(iss >> word >> nbShader >> word >> nbModel >> word >> nbPointLights >> word >> nbDirLights >> word >> nbSpotLights)
+    while(iss >> word >> nbShader >> word >> nbModel >> word >> nbPointLights >> word >> nbDirLights >> word >> nbSpotLights >> word >> nbCheckpoint)
     {
       cout << " Nb Shaders      : "     << nbShader      << endl
            << " Nb Models       : "     << nbModel       << endl
@@ -58,8 +58,6 @@ void Scene::loadScene(string path_season)
            << "   nbDirLights   : "     << nbDirLights   << endl
            << "   nbSpotLights  : "     << nbSpotLights  << endl
            << " Nb Checkpoints  : "     << nbCheckpoint  << endl;
-
-           this->nbCheckpoints = nbCheckpoint;
     }
 
     //SHADERS
@@ -247,22 +245,22 @@ void Scene::initLights(string shader_name)
           numberShader++;
         }
   }
-  //   for(it_dirLights = this->pointLights.begin(); it_dirLights != this->pointLights.end(); it_dirLights++)
-  // {
-  //       if( shader_name == it_dirLights->second.getShader())
-  //       {
-  //         this->pointLights[ it_dirLights->first ].sendToShader(numberShader, this->shaders[ shader_name ]);
-  //         numberShader++;
-  //       }
-  // }
-  //   for(it_spotLights = this->pointLights.begin(); it_spotLights != this->pointLights.end(); it_spotLights++)
-  // {
-  //       if( shader_name == it_spotLights->second.getShader())
-  //       {
-  //         this->pointLights[ it_spotLights->first ].sendToShader(numberShader, this->shaders[ shader_name ]);
-  //         numberShader++;
-  //       }
-  // }
+  for(it_dirLights = this->dirLights.begin(); it_dirLights != this->dirLights.end(); it_dirLights++)
+  {
+        if( shader_name == it_dirLights->second.getShader())
+        {
+          this->dirLights[ it_dirLights->first ].sendToShader(numberShader, this->shaders[ shader_name ]);
+          numberShader++;
+        }
+  }
+  for(it_spotLights = this->spotLights.begin(); it_spotLights != this->spotLights.end(); it_spotLights++)
+  {
+        if( shader_name == it_spotLights->second.getShader())
+        {
+          this->spotLights[ it_spotLights->first ].sendToShader(numberShader, this->shaders[ shader_name ]);
+          numberShader++;
+        }
+  }
 
 }
 
