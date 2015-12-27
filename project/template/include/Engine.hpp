@@ -29,11 +29,13 @@ class Engine
 {
     public:
 
+      int activeSeason;
       vector<Scene> scenes;
       HUD _HUD;
 
       Engine();
       void run(SDLWindowManager* windowManager, GLuint screenWidth, GLuint screenHeight, bool* done);
+      void loadSeason(SDLWindowManager* windowManager);
 
     private:
 
