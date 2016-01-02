@@ -11,8 +11,8 @@ std::vector<Mix_Chunk*> initSoundsEffects()
 {
     std::vector<Mix_Chunk*> mix_chunk;
 
-    mix_chunk.push_back(Mix_LoadWAV("assets/sounds/change.wav"));
-    mix_chunk.push_back(Mix_LoadWAV("assets/sounds/select.wav"));
+    mix_chunk.push_back(Mix_LoadWAV("assets/sounds/soundeffetcs/change.wav"));
+    mix_chunk.push_back(Mix_LoadWAV("assets/sounds/soundeffetcs/select.wav"));
 
     return mix_chunk;
 }
@@ -25,11 +25,11 @@ Mix_Music* initAmbiantMusic(int level)
 
     Mix_Music* music;
 
-    if(level == 0) music = Mix_LoadMUS("assets/sounds/ambiance.wav");
-    if(level == 1) music = Mix_LoadMUS("assets/sounds/ambiance.wav");
-    if(level == 2) music = Mix_LoadMUS("assets/sounds/ambiance.wav");
-    if(level == 3) music = Mix_LoadMUS("assets/sounds/ambiance.wav");
-    if(level == 4) music = Mix_LoadMUS("assets/sounds/ambiance.wav");
+    if(level == 0) music = Mix_LoadMUS("assets/sounds/ambiance/ambiance.wav");
+    if(level == 1) music = Mix_LoadMUS("assets/sounds/ambiance/autumn.wav");
+    if(level == 2) music = Mix_LoadMUS("assets/sounds/ambiance/winter.wav");
+    if(level == 3) music = Mix_LoadMUS("assets/sounds/ambiance/spring.wav");
+    if(level == 4) music = Mix_LoadMUS("assets/sounds/ambiance/summer.wav");
     
     if(!music) {
     std::cout<<"Impossible charger music"<<std::endl;
