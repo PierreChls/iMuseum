@@ -1,20 +1,6 @@
 #include <glimac/SDLWindowManager.hpp>
-#include <glimac/Image.hpp>
-#include <glimac/FilePath.hpp>
-
 #include <GL/glew.h>
 #include <iostream>
-#include <vector>
-
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include "Scene.hpp"
-#include "Skybox.hpp"
-#include "Model.hpp"
-#include "Shader.hpp"
-#include "Camera.hpp"
-#include "Light.hpp"
-#include "HUD.hpp"
 #include "Engine.hpp"
 
 using namespace glimac;

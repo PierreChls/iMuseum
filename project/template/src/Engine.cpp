@@ -64,7 +64,7 @@ void Engine::run(SDLWindowManager* windowManager, GLuint screenWidth, GLuint scr
       this->_HUD.draw(windowManager, screenWidth, screenHeight);
     }
 
-    this->scenes[0].render(windowManager, screenWidth, screenHeight);
+    if(this->activeSeason !=0) this->scenes[0].render(windowManager, screenWidth, screenHeight);
     
     // Update the display
     windowManager->swapBuffers();
