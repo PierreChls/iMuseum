@@ -19,6 +19,7 @@ class HUD{
 public:
 
 	bool status;
+	bool HUD_loading;
 	int nbSeason;
 
 	Shader shader;
@@ -26,12 +27,13 @@ public:
 	map<string, std::unique_ptr<Image>> HUDtextures;
 
 	GLuint VBO, VAO, EBO;
-	GLuint Textures[5];
+	GLuint Textures[6];
 	GLfloat vertices[32];
 	GLuint indices[6];
 
 	HUD();
 	void changeSeason(bool up);
+	void loading(bool start);
 	void draw(SDLWindowManager* windowManager, float screenWidth, float screenHeight);
 	void close(SDLWindowManager* windowManager);
 

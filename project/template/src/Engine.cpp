@@ -6,6 +6,11 @@ using namespace glimac;
 Engine::Engine()
 {
   this->activeSeason = 0;
+  this->loading = false;
+
+  initMixPlayer();
+  this->bruitages = initSoundsEffects();
+  this->ambiant_music = initAmbiantMusic(0);
 }
 
 void Engine::run(SDLWindowManager* windowManager, GLuint screenWidth, GLuint screenHeight, bool* done)
@@ -49,19 +54,27 @@ void Engine::run(SDLWindowManager* windowManager, GLuint screenWidth, GLuint scr
             switch( e.key.keysym.sym )
             {
               case SDLK_LEFT:
+                Mix_PlayChannel(0, this->bruitages[0], 0);
                 this->_HUD.changeSeason(false);
               break;
               case SDLK_RIGHT:
+                Mix_PlayChannel(0, this->bruitages[0], 0);
                 this->_HUD.changeSeason(true);
               break;
               case SDLK_RETURN:
-                loadSeason(windowManager);
+                if(this->_HUD.nbSeason !=0)
+                {
+                  Mix_PlayChannel(0, this->bruitages[1], 0);
+                  loadSeason(windowManager, screenWidth, screenHeight);
+                  this->loading = true;
+                }
               break;
             }
           break;
         }
       }
-      this->_HUD.draw(windowManager, screenWidth, screenHeight);
+      if(this->loading == false) this->_HUD.draw(windowManager, screenWidth, screenHeight);
+      else this->loading = false;
     }
 
     if(this->activeSeason !=0) this->scenes[0].render(windowManager, screenWidth, screenHeight);
@@ -70,14 +83,23 @@ void Engine::run(SDLWindowManager* windowManager, GLuint screenWidth, GLuint scr
     windowManager->swapBuffers();
 }
 
-void Engine::loadSeason(SDLWindowManager* windowManager)
+void Engine::loadSeason(SDLWindowManager* windowManager, GLuint screenWidth, GLuint screenHeight)
 { 
+
   //Si l'utilisateur sélectionne une saison ET que la saison choisi n'est pas égale à celle active
   if(this->_HUD.nbSeason != 0 && this->_HUD.nbSeason != this->activeSeason)
   {
+    
+    this->_HUD.loading(true);
+    this->_HUD.draw(windowManager, screenWidth, screenHeight);
+    this->_HUD.loading(false);
+
     //Si il y a déjà une scene en cours on la supprime
     int size = this->scenes.size();
     if(size != 0) this->scenes.pop_back();
+
+    deleteAmbiantMusic(ambiant_music);
+    ambiant_music = initAmbiantMusic( this->_HUD.nbSeason );
 
     if(this->_HUD.nbSeason == 1)
     {

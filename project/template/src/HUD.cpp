@@ -5,6 +5,7 @@
 HUD::HUD(){
 
 	this->status = true;
+    this->HUD_loading = false;
     this->nbSeason = 0;
 
     this->shader = Shader("template/shaders/HUD.vs.glsl", "template/shaders/HUD.fs.glsl");
@@ -145,6 +146,23 @@ HUD::HUD(){
     glGenerateMipmap(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0); // Unbind texture when done, so we won't accidentily mess up our texture.
 
+    /*/////////////*/
+    /* HUD LOADING */
+    /*/////////////*/
+
+    glGenTextures(1, &this->Textures[5]);
+    glBindTexture(GL_TEXTURE_2D, this->Textures[5]); // All upcoming GL_TEXTURE_2D operations now have effect on this texture object
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);   // Set texture wrapping to GL_REPEAT (usually basic wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    //Load texture HUD summer
+    this->HUDtextures["LOADING"] = loadImage("assets/textures/HUD_loading.jpg");
+    if (this->HUDtextures["LOADING"] == NULL) std::cout << "Texture loading non chargé" << std::endl;
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->HUDtextures["LOADING"]->getWidth(),this->HUDtextures["LOADING"]->getHeight(), 0, GL_RGBA, GL_FLOAT, this->HUDtextures["LOADING"]->getPixels());
+    glGenerateMipmap(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 0); // Unbind texture when done, so we won't accidentily mess up our texture.
+
 }
 
 
@@ -155,8 +173,9 @@ void HUD::draw(SDLWindowManager* windowManager, float screenWidth, float screenH
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Bind Texture
-    glBindTexture(GL_TEXTURE_2D, this->Textures[ this->nbSeason ]);
-
+    if(this->HUD_loading == false) glBindTexture(GL_TEXTURE_2D, this->Textures[ this->nbSeason ]);
+    else glBindTexture(GL_TEXTURE_2D, this->Textures[ 5 ]);
+    
     this->shader.Use();
 
     // Draw container
@@ -180,6 +199,12 @@ void HUD::changeSeason(bool up)
         else if(this->nbSeason == 0) this->nbSeason = 4;
         else this->nbSeason--;
     }
+}
+
+void HUD::loading(bool start)
+{
+    if(start == true) this->HUD_loading = true;
+    else this->HUD_loading = false;
 }
 
 void HUD::close(SDLWindowManager* windowManager)
