@@ -4,9 +4,6 @@ struct Material {
     sampler2D texture_specular1;
     float shininess;
 }; 
-/* Note: because we now use a material struct again you want to change your
-mesh class to bind all the textures using material.texture_diffuseN instead of
-texture_diffuseN. */
 
 struct PointLight {
     vec3 position;
@@ -37,7 +34,7 @@ vec3 CalcPointLight(PointLight light, Material mat, vec3 normal, vec3 fragPos, v
 
 void main()
 {    
-    vec3 result;
+    vec3 result = vec3(0.0f, 0.0f, 0.0f);
     vec3 viewDir = normalize(viewPos - fragPosition);
     vec3 norm = normalize(Normal);
     
