@@ -9,7 +9,19 @@
 using namespace glm;
 using namespace std;
 
-class PointLight
+class Light
+{
+public:
+	Light();
+	~Light();
+
+	virtual void sendToShader( char lightNumber, const Shader shader);
+	virtual string getShader() const;	
+	virtual void update(Camera camera);
+};
+
+
+class PointLight :public Light
 {
 	private:
 		vec3 position;
@@ -58,7 +70,7 @@ class PointLight
 
 };
 
-class DirLight
+class DirLight :public Light
 {
 private:
 	vec3 direction;
@@ -96,7 +108,7 @@ public:
 	void sendToShader(char lightNumber, const Shader shader);
 };
 
-class SpotLight
+class SpotLight :public Light
 {
 private:
 	vec3 position;
