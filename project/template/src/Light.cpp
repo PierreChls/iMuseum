@@ -1,13 +1,5 @@
 #include "Light.hpp"
 
-Light::Light(){}
-Light::~Light(){}
-void Light::sendToShader(char lightNumber, const Shader shader){
-	std::cout << "TEST A" << std::endl;
-}
-string Light::getShader() const{}
-void Light::update(Camera camera){}
-
 /***** POINT LIGHT *****/
 
 PointLight::PointLight(){}

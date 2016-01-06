@@ -104,7 +104,7 @@ void Engine::loadSeason(SDLWindowManager* windowManager, GLuint screenWidth, GLu
     if(this->_HUD.nbSeason == 1)
     {
       //INIT SCENE AUTUMN
-      Scene Autumn("assets/seasons/autumn.conf"); 
+      Scene Autumn("assets/seasons/autumn.txt"); 
       this->scenes.push_back(Autumn);
       this->activeSeason = 1;
     }
@@ -112,7 +112,7 @@ void Engine::loadSeason(SDLWindowManager* windowManager, GLuint screenWidth, GLu
     else if(this->_HUD.nbSeason == 2)
     {
       //INIT SCENE WINTER
-      Scene Winter("assets/seasons/winter.conf"); 
+      Scene Winter("assets/seasons/winter.txt"); 
       this->scenes.push_back(Winter);
       this->activeSeason = 2;
     }
@@ -120,7 +120,7 @@ void Engine::loadSeason(SDLWindowManager* windowManager, GLuint screenWidth, GLu
     else if(this->_HUD.nbSeason == 3)
     {
       //INIT SCENE SPRING
-      Scene Spring("assets/seasons/spring.conf"); 
+      Scene Spring("assets/seasons/spring.txt"); 
       this->scenes.push_back(Spring);
       this->activeSeason = 3;
     }
@@ -128,7 +128,7 @@ void Engine::loadSeason(SDLWindowManager* windowManager, GLuint screenWidth, GLu
     else if(this->_HUD.nbSeason == 4)
     {
       //INIT SCENE SUMMER
-      Scene Summer("assets/seasons/summer.conf"); 
+      Scene Summer("assets/seasons/summer.txt"); 
       this->scenes.push_back(Summer);
       this->activeSeason = 4;
     }
