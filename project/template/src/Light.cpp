@@ -1,5 +1,10 @@
 #include "Light.hpp"
 
+//déclaration des variables static (espace global)
+int PointLight::nbLights = 0;
+int DirLight::nbLights = 0;
+int SpotLight::nbLights = 0;
+
 Light::Light(){}
 Light::~Light(){}
 void Light::sendToShader(char lightNumber, const Shader shader){
@@ -19,8 +24,11 @@ PointLight::PointLight(glm::vec3 position, glm::vec3 ambient, glm::vec3 diffuse,
 	linear(linear),
 	quadratic(quadratic),
 	shader_name(shader_name)
-	{}
+	{
+		nbLights++;
+	}
 PointLight::~PointLight(){}
+
 //getter
 
 glm::vec3 PointLight::getPosition() 		const{
@@ -47,6 +55,10 @@ float PointLight::getQuadratic() 			const{
 string  PointLight::getShader()				const{
 	return shader_name;
 }
+int PointLight::getNbLights()			 {
+	return nbLights;
+}
+
 
 //setter
 
@@ -71,6 +83,7 @@ void PointLight::setLinear(const float new_linear) 	     {
 void PointLight::setQuadratic(const float new_quadratic)  {
 	quadratic = new_quadratic;
 }
+
 void PointLight::sendToShader( char lightNumber, const Shader shader){
 
 	//Trick to convert char to GLchar
@@ -110,12 +123,14 @@ void PointLight::sendToShader( char lightNumber, const Shader shader){
 DirLight::DirLight(){}
 
 DirLight::DirLight(glm::vec3 direction, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, string shader_name):
-						direction(direction),
-						ambient(ambient),
-						diffuse(diffuse),
-						specular(specular),
-						shader_name(shader_name)
-						{}
+	direction(direction),
+	ambient(ambient),
+	diffuse(diffuse),
+	specular(specular),
+	shader_name(shader_name)
+	{
+		nbLights++;
+	}
 
 DirLight::~DirLight(){}
 
@@ -136,6 +151,9 @@ glm::vec3 DirLight::getSpecular()	const{
 }
 string  DirLight::getShader()		const{
 	return shader_name;
+}
+int DirLight::getNbLights()		 {
+	return nbLights;
 }
 
 //setter
@@ -199,7 +217,9 @@ SpotLight::SpotLight(glm::vec3 position, vec3 direction, float cutOff, float out
 	diffuse(diffuse),
 	specular(specular),
 	shader_name(shader_name)
-	{}
+	{
+		nbLights++;
+	}
 
 SpotLight::~SpotLight(){}
 
@@ -237,7 +257,9 @@ vec3 SpotLight::getSpecular()		const{
 string  SpotLight::getShader()		const{
 	return shader_name;
 }
-
+int SpotLight::getNbLights()		 {
+	return nbLights;
+}
 //setter
 
 void SpotLight::setPosition(		const glm::vec3 new_position){

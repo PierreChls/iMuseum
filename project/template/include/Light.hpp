@@ -32,6 +32,7 @@ class PointLight :public Light
 		float linear;
 		float quadratic;
 		string shader_name;
+		static int nbLights;
 
 	public:
 		PointLight();
@@ -54,6 +55,7 @@ class PointLight :public Light
 		float getLinear() 		const;
 		float getQuadratic() 	const;
 		string  getShader()		const;
+		int static getNbLights()     ;
 
 		//setter
 
@@ -78,6 +80,7 @@ private:
 	vec3 diffuse;
 	vec3 specular;
 	string shader_name;
+	static int nbLights;
 
 public:
 	DirLight();
@@ -94,13 +97,14 @@ public:
 	vec3 	getDiffuse()			const;
 	vec3 	getSpecular()			const;
 	string  getShader()				const;
+	int 	static getNbLights()				 ;
 
 	//setter
 
-	void setDirection( 	const vec3 new_direction);
-	void setAmbient (	const vec3 new_ambient);
-	void setDiffuse ( 	const vec3 new_diffuse);
-	void setSpecular( 	const vec3 new_specular);
+	void setDirection( 			const vec3 new_direction);
+	void setAmbient (			const vec3 new_ambient);
+	void setDiffuse ( 			const vec3 new_diffuse);
+	void setSpecular( 			const vec3 new_specular);
 
 	void update(		const vec3 deltaDir);
 
@@ -125,6 +129,7 @@ private:
 	vec3 specular;
 
 	string shader_name;
+	static int nbLights;
 
 public:
 	SpotLight();
@@ -154,6 +159,7 @@ public:
 	vec3	getDiffuse()		const;
 	vec3	getSpecular()		const;
 	string  getShader()			const;
+	int static getNbLights()		 ;
 
 	//setter
 

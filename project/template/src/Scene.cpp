@@ -275,7 +275,7 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
   for(it_shaders = this->shaders.begin(); it_shaders != this->shaders.end(); it_shaders++)
   {
     initShaders(it_shaders->first, screenWidth, screenHeight);
-    //initLights(it_shaders->first);
+    initLights(it_shaders->first);
     drawModels(it_shaders->first);
     drawCheckpoints(it_shaders->first);
   }
@@ -307,9 +307,9 @@ void Scene::initShaders(string shader_name, float screenWidth, float screenHeigh
 void Scene::initLights(string shader_name)
 {
   int numberShader = 0;
-  map<string, PointLight>::iterator it_pointLights;
-  map<string, DirLight>::iterator it_dirLights;
-  map<string, SpotLight>::iterator it_spotLights;
+  bool pointLightTurn = true;
+  bool dirLightTurn = false;
+  bool spotlightTurn = false;
 
   map<string, Light*>::iterator it_lights;
 
@@ -317,41 +317,39 @@ void Scene::initLights(string shader_name)
   {
     if( shader_name == it_lights->second->getShader())
     {
-      this->lights[ it_lights->first ]->update(this->camera);
-      this->lights[ it_lights->first ]->sendToShader(numberShader, this->shaders[ shader_name ]);
-          numberShader++; // TOFIX numbershader for each light reinit to 0
+      if(pointLightTurn == true){
+        if(numberShader >= PointLight::getNbLights()){
+          numberShader = 0;
+          pointLightTurn = false;
+          dirLightTurn = true;
+        }
+        else{
+          this->lights[ it_lights->first ]->sendToShader(numberShader, this->shaders[ shader_name ]);
+        }
+      }if (dirLightTurn == true){
+        if(numberShader >= DirLight::getNbLights() ){
+          numberShader = 0;
+          dirLightTurn = false;
+          spotlightTurn = true;
+        }
+        else{
+          this->lights[ it_lights->first ]->sendToShader(numberShader, this->shaders[ shader_name ]);
+        }
+      }if (spotlightTurn == true){
+        if(numberShader >= SpotLight::getNbLights()){
+          numberShader = 0;
+          spotlightTurn = false;
+        }
+        else{
+          this->lights[ it_lights->first ]->update(this->camera);
+          this->lights[ it_lights->first ]->sendToShader(numberShader, this->shaders[ shader_name ]);
         }
       }
+      numberShader++;
+    } // end if shader_name
+  } // end for
 
-  // for(it_pointLights = this->pointLights.begin(); it_pointLights != this->pointLights.end(); it_pointLights++)
-  // {
-  //       if( shader_name == it_pointLights->second.getShader())
-  //       {
-  //         this->pointLights[ it_pointLights->first ].sendToShader(numberShader, this->shaders[ shader_name ]);
-  //         numberShader++;
-  //       }
-  // }
-  // numberShader = 0;
-  // for(it_dirLights = this->dirLights.begin(); it_dirLights != this->dirLights.end(); it_dirLights++)
-  // {
-  //       if( shader_name == it_dirLights->second.getShader())
-  //       {
-  //         this->dirLights[ it_dirLights->first ].sendToShader(numberShader, this->shaders[ shader_name ]);
-  //         numberShader++;
-  //       }
-  // }
-  // numberShader = 0;
-  // for(it_spotLights = this->spotLights.begin(); it_spotLights != this->spotLights.end(); it_spotLights++)
-  // {
-  //       if( shader_name == it_spotLights->second.getShader())
-  //       {
-  //         this->spotLights[ it_spotLights->first ].update(this->camera);
-  //         this->spotLights[ it_spotLights->first ].sendToShader(numberShader, this->shaders[ shader_name ]);
-  //         numberShader++;
-  //       }
-  // }
-
-    }
+}
 
     void Scene::drawModels(string shader_name)
     { 
