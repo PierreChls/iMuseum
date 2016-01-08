@@ -9,7 +9,19 @@
 using namespace glm;
 using namespace std;
 
-class PointLight
+class Light
+{
+public:
+	Light();
+	~Light();
+
+	virtual void sendToShader( char lightNumber, const Shader shader);
+	virtual string getShader() const;	
+	virtual void update(Camera camera);
+};
+
+
+class PointLight :public Light
 {
 	private:
 		vec3 position;
@@ -20,6 +32,7 @@ class PointLight
 		float linear;
 		float quadratic;
 		string shader_name;
+		static int nbLights;
 
 	public:
 		PointLight();
@@ -42,6 +55,7 @@ class PointLight
 		float getLinear() 		const;
 		float getQuadratic() 	const;
 		string  getShader()		const;
+		int static getNbLights()     ;
 
 		//setter
 
@@ -58,7 +72,7 @@ class PointLight
 
 };
 
-class DirLight
+class DirLight :public Light
 {
 private:
 	vec3 direction;
@@ -66,6 +80,7 @@ private:
 	vec3 diffuse;
 	vec3 specular;
 	string shader_name;
+	static int nbLights;
 
 public:
 	DirLight();
@@ -82,13 +97,14 @@ public:
 	vec3 	getDiffuse()			const;
 	vec3 	getSpecular()			const;
 	string  getShader()				const;
+	int 	static getNbLights()				 ;
 
 	//setter
 
-	void setDirection( 	const vec3 new_direction);
-	void setAmbient (	const vec3 new_ambient);
-	void setDiffuse ( 	const vec3 new_diffuse);
-	void setSpecular( 	const vec3 new_specular);
+	void setDirection( 			const vec3 new_direction);
+	void setAmbient (			const vec3 new_ambient);
+	void setDiffuse ( 			const vec3 new_diffuse);
+	void setSpecular( 			const vec3 new_specular);
 
 	void update(		const vec3 deltaDir);
 
@@ -96,7 +112,7 @@ public:
 	void sendToShader(char lightNumber, const Shader shader);
 };
 
-class SpotLight
+class SpotLight :public Light
 {
 private:
 	vec3 position;
@@ -113,6 +129,7 @@ private:
 	vec3 specular;
 
 	string shader_name;
+	static int nbLights;
 
 public:
 	SpotLight();
@@ -142,6 +159,7 @@ public:
 	vec3	getDiffuse()		const;
 	vec3	getSpecular()		const;
 	string  getShader()			const;
+	int static getNbLights()		 ;
 
 	//setter
 
