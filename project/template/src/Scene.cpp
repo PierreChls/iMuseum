@@ -311,6 +311,11 @@ void Scene::initLights(string shader_name)
   bool dirLightTurn = false;
   bool spotlightTurn = false;
 
+  //Send number of light in shader 
+  glUniform1i(glGetUniformLocation(this->shaders["shader_name"].Program, "nbPointLights"), PointLight::getNbLights() );
+  glUniform1i(glGetUniformLocation(this->shaders["shader_name"].Program, "nbDirLights"),   DirLight::getNbLights() );
+  glUniform1i(glGetUniformLocation(this->shaders["shader_name"].Program, "nbSpotLights"),  SpotLight::getNbLights() );
+
   map<string, Light*>::iterator it_lights;
 
   for(it_lights = this->lights.begin(); it_lights != this->lights.end(); it_lights++)
@@ -348,6 +353,8 @@ void Scene::initLights(string shader_name)
       numberShader++;
     } // end if shader_name
   } // end for
+
+
 
 }
 
