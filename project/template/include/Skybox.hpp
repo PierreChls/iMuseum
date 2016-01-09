@@ -21,6 +21,7 @@ class Skybox{
 
 public:
 	Skybox();
+	Skybox(string path_season);
 
 	Shader skyboxShader;
 	GLuint SkyboxTexture;
