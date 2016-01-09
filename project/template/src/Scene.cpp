@@ -56,7 +56,7 @@ void Scene::loadScene(string path_season)
   //Valeurs du txt pour les checkpoints
   string name_checkpoint, checkpoint_name_shader;
 
-  ifstream file(path_season);
+  ifstream file("assets/seasons/" + path_season + ".conf");
 
   if(file)
   {
@@ -256,7 +256,7 @@ void Scene::loadScene(string path_season)
   Camera myCamera;
   this->camera = myCamera;
 
-  Skybox mySkybox;
+  Skybox mySkybox(path_season);
   this->skybox = mySkybox;
 
   //INIT FRAMES

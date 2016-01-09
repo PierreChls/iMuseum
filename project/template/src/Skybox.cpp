@@ -3,7 +3,9 @@
 
 using namespace glimac;
 
-Skybox::Skybox()
+Skybox::Skybox(){}
+
+Skybox::Skybox(string path_season)
 {
 	Shader skyboxShader("template/shaders/skybox.vs.glsl", "template/shaders/skybox.fs.glsl");
 	this->skyboxShader = skyboxShader;
@@ -60,12 +62,48 @@ Skybox::Skybox()
 
     // Cubemap (Skybox)
     vector<const GLchar*> faces;
-    faces.push_back("assets/skybox/right.jpg");
-    faces.push_back("assets/skybox/left.jpg");
-    faces.push_back("assets/skybox/top.jpg");
-    faces.push_back("assets/skybox/bottom.jpg");
-    faces.push_back("assets/skybox/back.jpg");
-    faces.push_back("assets/skybox/front.jpg");
+
+    
+    if(path_season == "autumn")
+    {
+        faces.push_back("assets/skybox/autumn/right.jpg");
+        faces.push_back("assets/skybox/autumn/left.jpg");
+        faces.push_back("assets/skybox/autumn/top.jpg");
+        faces.push_back("assets/skybox/autumn/bottom.jpg");
+        faces.push_back("assets/skybox/autumn/back.jpg");
+        faces.push_back("assets/skybox/autumn/front.jpg");
+    }
+
+    if(path_season == "winter")
+    {
+        faces.push_back("assets/skybox/winter/right.jpg");
+        faces.push_back("assets/skybox/winter/left.jpg");
+        faces.push_back("assets/skybox/winter/top.jpg");
+        faces.push_back("assets/skybox/winter/bottom.jpg");
+        faces.push_back("assets/skybox/winter/back.jpg");
+        faces.push_back("assets/skybox/winter/front.jpg");
+    }
+
+    if(path_season == "spring")
+    {
+        faces.push_back("assets/skybox/spring/right.jpg");
+        faces.push_back("assets/skybox/spring/left.jpg");
+        faces.push_back("assets/skybox/spring/top.jpg");
+        faces.push_back("assets/skybox/spring/bottom.jpg");
+        faces.push_back("assets/skybox/spring/back.jpg");
+        faces.push_back("assets/skybox/spring/front.jpg");
+    }
+
+    if(path_season == "summer")
+    {
+        faces.push_back("assets/skybox/summer/right.jpg");
+        faces.push_back("assets/skybox/summer/left.jpg");
+        faces.push_back("assets/skybox/summer/top.jpg");
+        faces.push_back("assets/skybox/summer/bottom.jpg");
+        faces.push_back("assets/skybox/summer/back.jpg");
+        faces.push_back("assets/skybox/summer/front.jpg");
+    }
+
 
     this->faces = faces;
     
