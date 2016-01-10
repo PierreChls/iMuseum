@@ -31,6 +31,10 @@ class Scene
       Checkpoint firstCheckpoint;
       Checkpoint lastCheckpoint;
 
+      float moveCheckpoint_max, 
+            moveCheckpoint_dir,
+            moveCheckpoint_current;
+
       map<string, Shader> shaders;
       map<string, Model> models;
       map<string, Checkpoint> checkpoints;

@@ -266,6 +266,10 @@ void Scene::loadScene(string path_season)
 
   this->lastCheckpoint = this->checkpoints[name_checkpoint];
 
+  this->moveCheckpoint_max = 1.0f;
+  this->moveCheckpoint_dir = 1.0f;
+  this->moveCheckpoint_current = 0.0f;
+
   //INIT FRAMES
   this->deltaTime = 0.0f;
   this->lastFrame = 0.0f;
@@ -370,7 +374,7 @@ void Scene::drawModels(string shader_name)
     {
       matModel = glm::mat4(1.0f);
       matModel = glm::rotate(matModel, glm::radians( it_models->second.rotate_angle ), glm::vec3( it_models->second.rotate_x , it_models->second.rotate_y , it_models->second.rotate_z ));
-      matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , it_models->second.translate_y , it_models->second.translate_z ));
+      matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , it_models->second.translate_y, it_models->second.translate_z ));
       matModel = glm::scale(matModel, glm::vec3( it_models->second.scale , it_models->second.scale , it_models->second.scale ));
       glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
@@ -387,13 +391,20 @@ void Scene::drawCheckpoints(string shader_name)
   {
     if( shader_name == it_checkpoints->second.model.shader_name)
     {
-      glm::mat4 matModel;
-      matModel = glm::mat4(1.0f);
-      matModel = glm::rotate(matModel, glm::radians( it_checkpoints->second.model.rotate_angle ), glm::vec3( it_checkpoints->second.model.rotate_x , it_checkpoints->second.model.rotate_y , it_checkpoints->second.model.rotate_z ));
-      matModel = glm::translate(matModel, glm::vec3( it_checkpoints->second.model.translate_x , it_checkpoints->second.model.translate_y , it_checkpoints->second.model.translate_z));
-      matModel = glm::scale(matModel, glm::vec3( it_checkpoints->second.model.scale , it_checkpoints->second.model.scale , it_checkpoints->second.model.scale ));
-      glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
-      it_checkpoints->second.model.Draw( this->shaders[ shader_name ] );
+      //Si c'est le checkpoint en cours on ne l'affiche pas
+      if(it_checkpoints->first != currentCheckpoint.checkpoint_name)
+      {
+        glm::mat4 matModel;
+        matModel = glm::mat4(1.0f);
+        matModel = glm::rotate(matModel, glm::radians( it_checkpoints->second.model.rotate_angle ), glm::vec3( it_checkpoints->second.model.rotate_x , it_checkpoints->second.model.rotate_y , it_checkpoints->second.model.rotate_z ));
+        matModel = glm::translate(matModel, glm::vec3( it_checkpoints->second.model.translate_x , it_checkpoints->second.model.translate_y + moveCheckpoint_current, it_checkpoints->second.model.translate_z));
+        matModel = glm::scale(matModel, glm::vec3( it_checkpoints->second.model.scale , it_checkpoints->second.model.scale , it_checkpoints->second.model.scale ));
+        glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+        it_checkpoints->second.model.Draw( this->shaders[ shader_name ] );
+      }
+      moveCheckpoint_current += (moveCheckpoint_dir * 0.01);
+      if(moveCheckpoint_current > moveCheckpoint_max) moveCheckpoint_dir *= -1;
+      if(moveCheckpoint_current < -moveCheckpoint_max) moveCheckpoint_dir *= -1;
     }
   }
 
