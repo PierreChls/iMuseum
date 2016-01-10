@@ -16,6 +16,12 @@ Project realised in IMAC Engineering School, in November and December 2015
 
 ## How to use it
 
+#### Download the models
+	
+	https://drive.google.com/folderview?id=0B9RhOR0UbDtoR2VzZ19QMUY4WUU&usp=sharing
+
+	put them in iSeason/project/assets/models/
+
 #### Clone the project
 
 	git clone git@github.com:PierreChls/iSeason.git
