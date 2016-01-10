@@ -28,6 +28,14 @@ void Engine::run(SDLWindowManager* windowManager, GLuint screenWidth, GLuint scr
           {
             this->_HUD.close(windowManager);
           }
+          if(windowManager->isKeyPressed(SDLK_RIGHT))
+          {
+            this->scenes[0].changeCheckpoint(windowManager, true);
+          }
+          if(windowManager->isKeyPressed(SDLK_LEFT))
+          {
+            this->scenes[0].changeCheckpoint(windowManager, false);
+          }
         break;
       }
     }

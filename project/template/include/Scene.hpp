@@ -25,11 +25,13 @@ class Scene
       Scene(string path_season);
       void loadScene(string path_season);
       void render(SDLWindowManager* windowManager, float screenWidth, float screenHeight);
+      void changeCheckpoint(SDLWindowManager* windowManager, bool sens);
 
     private:
 
       int nbCheckpoints;
       Checkpoint currentCheckpoint;
+      Checkpoint firstCheckpoint;
       Checkpoint lastCheckpoint;
 
       map<string, Shader> shaders;
@@ -50,5 +52,4 @@ class Scene
       void drawCheckpoints(string shader_name);
       void drawSkybox(float screenWidth, float screenHeight);
       void moveCamera(SDLWindowManager* windowManager);
-      void changeCheckpoint(SDLWindowManager* windowManager);
 };

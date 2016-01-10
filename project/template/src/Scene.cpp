@@ -230,8 +230,9 @@ void Scene::loadScene(string path_season)
             istringstream iss(line);
             while(iss >> name_checkpoint >> rotate_angle >> rotate_x >> rotate_y >> rotate_z >> translate_x >> translate_y >> translate_z >> scale >> checkpoint_name_shader)
             {            
-              this->checkpoints[ name_checkpoint ] = Checkpoint(checkpoint_name_shader, rotate_angle, rotate_x, rotate_y, rotate_z, translate_x, translate_y, translate_z, scale);
+              this->checkpoints[ name_checkpoint ] = Checkpoint(name_checkpoint, checkpoint_name_shader, rotate_angle, rotate_x, rotate_y, rotate_z, translate_x, translate_y, translate_z, scale);
               cout << name_checkpoint << endl;
+              if(i == 0) this->currentCheckpoint = this->firstCheckpoint = this->checkpoints[ name_checkpoint ];
             }
 
             getline(file, line);
@@ -260,7 +261,7 @@ void Scene::loadScene(string path_season)
   Skybox mySkybox(path_season);
   this->skybox = mySkybox;
 
-  this->currentCheckpoint = this->lastCheckpoint = this->checkpoints[name_checkpoint];
+  this->lastCheckpoint = this->checkpoints[name_checkpoint];
 
   //INIT FRAMES
   this->deltaTime = 0.0f;
@@ -275,6 +276,8 @@ void Scene::loadScene(string path_season)
 void Scene::render(SDLWindowManager* windowManager, float screenWidth, float screenHeight)
 {
   moveCamera(windowManager);
+
+
 
   map<string, Shader>::iterator it_shaders;
   for(it_shaders = this->shaders.begin(); it_shaders != this->shaders.end(); it_shaders++)
@@ -451,23 +454,49 @@ void Scene::moveCamera(SDLWindowManager* windowManager)
   }
 }
 
-void Scene::changeCheckpoint(SDLWindowManager* windowManager)
+void Scene::changeCheckpoint(SDLWindowManager* windowManager, bool sens)
 {
   map<string, Checkpoint>::iterator it_checkpoints;
-  for(it_checkpoints = this->checkpoints.begin(); it_checkpoints != this->checkpoints.end(); it_checkpoints++)
-  {
-    if( it_checkpoints->first == this->currentCheckpoint.checkpoint_name)
+  //Si on appuie à droite
+  if(sens){
+    for(it_checkpoints = this->checkpoints.begin(); it_checkpoints != this->checkpoints.end(); it_checkpoints++)
     {
-      //Si le checkpoint courant est le dernier de la liste, il devient le premier
-      if( it_checkpoints->first == this->lastCheckpoint.checkpoint_name)
+      if( it_checkpoints->first == this->currentCheckpoint.checkpoint_name)
       {
-        it_checkpoints = this->checkpoints.begin();
-      }
-      else it_checkpoints++; //Sinon, on passe au suivant
+        //Si le checkpoint courant est le dernier de la liste, il devient le premier
+        if( it_checkpoints->first == this->lastCheckpoint.checkpoint_name)
+        {
+          it_checkpoints = this->checkpoints.begin();
+        }
+        else it_checkpoints++; //Sinon, on passe au suivant
 
-      this->currentCheckpoint = it_checkpoints->second;
-      this->camera.changePosition( it_checkpoints->second.position );
-      break;
+        this->currentCheckpoint = it_checkpoints->second;
+        this->camera.changePosition( it_checkpoints->second.position );
+        break;
+      }
+    }
+  }
+  //Si on appuie à gauche
+  else
+  {
+    for(it_checkpoints = this->checkpoints.begin(); it_checkpoints != this->checkpoints.end(); it_checkpoints++)
+    {
+      if( it_checkpoints->first == this->currentCheckpoint.checkpoint_name)
+      {
+        //Si le checkpoint courant est le premier de la liste, il devient le dernier
+        if( it_checkpoints->first == this->firstCheckpoint.checkpoint_name)
+        {
+          this->currentCheckpoint = this->lastCheckpoint;
+          this->camera.changePosition( this->lastCheckpoint.position );
+        }
+        else
+        {
+          it_checkpoints--; //Sinon, on passe au précédent
+          this->currentCheckpoint = it_checkpoints->second;
+          this->camera.changePosition( it_checkpoints->second.position );
+        }
+        break;
+      }
     }
   }
 }
