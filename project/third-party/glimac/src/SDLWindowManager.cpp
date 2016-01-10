@@ -4,9 +4,7 @@
 namespace glimac {
 
 SDLWindowManager::SDLWindowManager(){}
-SDLWindowManager::SDLWindowManager(uint32_t width, uint32_t height, const char* title)
-    :screenDim(glm::vec2(width,height))
-    {
+SDLWindowManager::SDLWindowManager(uint32_t width, uint32_t height, const char* title) {
     if(0 != SDL_Init(SDL_INIT_VIDEO)) {
         std::cerr << SDL_GetError() << std::endl;
         return;
@@ -60,16 +58,6 @@ glm::ivec2 SDLWindowManager::getMousePosition() const {
     glm::ivec2 mousePos;
     SDL_GetMouseState(&mousePos.x, &mousePos.y);
     return mousePos;
-}
-
-glm::mat4 SDLWindowManager::getProjectionMatrix() const{
-    float screenWidth  = (float) getScreenDimensions().x;
-    float screenHeight = (float) getScreenDimensions().y;
-    return (glm::perspective(glm::radians(45.0f), screenWidth/screenHeight, 0.1f, 100.0f));
-}
-
-glm::vec2 SDLWindowManager::getScreenDimensions() const{
-    return screenDim;
 }
 
 void SDLWindowManager::swapBuffers() {

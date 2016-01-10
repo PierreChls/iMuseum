@@ -7,8 +7,8 @@ Skybox::Skybox(){}
 
 Skybox::Skybox(string path_season)
 {
-	Shader skyboxShader("template/shaders/skybox.vs.glsl", "template/shaders/skybox.fs.glsl");
-	this->skyboxShader = skyboxShader;
+    Shader skyboxShader("template/shaders/skybox.vs.glsl", "template/shaders/skybox.fs.glsl");
+    this->skyboxShader = skyboxShader;
 
     GLfloat NewskyboxVertices[] = {
         // Positions          
@@ -56,9 +56,9 @@ Skybox::Skybox(string path_season)
     };
 
     for(unsigned int i = 0; i < 108; i++)
-	{	
-		this->skyboxVertices[i] = NewskyboxVertices[i];
-	}
+    {   
+        this->skyboxVertices[i] = NewskyboxVertices[i];
+    }
 
     // Cubemap (Skybox)
     vector<const GLchar*> faces;

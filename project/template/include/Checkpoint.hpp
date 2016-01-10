@@ -23,7 +23,7 @@ public:
 
 	string checkpoint_name;
 	glm::vec3 position;
-
+	
 private:
 
 };

@@ -18,6 +18,7 @@ public:
 	virtual void sendToShader( char lightNumber, const Shader shader);
 	virtual string getShader() const;	
 	virtual void update(Camera camera);
+	virtual vec3 getDirection() const;
 };
 
 

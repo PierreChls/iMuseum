@@ -1,5 +1,4 @@
 #include "Scene.hpp"
-#include "MousePicker.hpp"
 
 
 
@@ -14,21 +13,21 @@ Scene::Scene(string path_season)
 
 void Scene::loadScene(string path_season)
 {
-  
+
   //Booléen verifiant l'avancée de l'initialisation
   bool  firstline = true,
-        shaders_initialization = true,
-        models_initialization = true,
-        pointlights_initialization = true,
-        dirlights_initialization = true,
-        spotlights_initialization = true,
-        checkpoints_initialization = true;
+  shaders_initialization = true,
+  models_initialization = true,
+  pointlights_initialization = true,
+  dirlights_initialization = true,
+  spotlights_initialization = true,
+  checkpoints_initialization = true;
 
   //Nombre des différents éléments de la scène
   int nbShader,
-      nbModel,
-      nbPointLights, nbDirLights, nbSpotLights,
-      nbCheckpoint;
+  nbModel,
+  nbPointLights, nbDirLights, nbSpotLights,
+  nbCheckpoint;
 
 
   string line, firstword, word;
@@ -39,20 +38,20 @@ void Scene::loadScene(string path_season)
   //Valeurs du txt pour les models
   string name_model, path_model, model_shader_name;
   float rotate_angle, rotate_x, rotate_y, rotate_z, 
-        translate_x, translate_y, translate_z,
-        scale;
+  translate_x, translate_y, translate_z,
+  scale;
 
   //Valeurs du txt pour les lights
   string name_light, light_shader_name;
   float position_x,  position_y, position_z,
-        ambient_1,   ambient_2,  ambient_3, 
-        diffuse_1,   diffuse_2,  diffuse_3,
-        specular_1,  specular_2, specular_3, 
-        constant,
-        linear,
-        quadratic,
-        direction_x, direction_y, direction_z,
-        cutOff, outerCutOff;
+  ambient_1,   ambient_2,  ambient_3, 
+  diffuse_1,   diffuse_2,  diffuse_3,
+  specular_1,  specular_2, specular_3, 
+  constant,
+  linear,
+  quadratic,
+  direction_x, direction_y, direction_z,
+  cutOff, outerCutOff;
 
   //Valeurs du txt pour les checkpoints
   string name_checkpoint, checkpoint_name_shader;
@@ -63,13 +62,13 @@ void Scene::loadScene(string path_season)
   {
 
     cout << "                           " << endl
-         << "Config file informations : " << endl
-         << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ " << endl;
+    << "Config file informations : " << endl
+    << "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ " << endl;
 
     //Parcours de toutes les lignes du fichier
     while (getline( file, line ))
     {
-      
+
       istringstream iss(line);
       iss >> firstword;
 
@@ -83,13 +82,17 @@ void Scene::loadScene(string path_season)
           while(iss >> word >> nbShader >> word >> nbModel >> word >> nbPointLights >> word >> nbDirLights >> word >> nbSpotLights >> word >> nbCheckpoint)
           {
             cout << " Nb Shaders       : "     << nbShader      << endl
-                 << " Nb Models        : "     << nbModel       << endl
-                 << " Nb Lights        : "     << nbPointLights + nbDirLights + nbSpotLights << endl
-                 << "  - nbPointLights : "     << nbPointLights << endl
-                 << "  - nbDirLights   : "     << nbDirLights   << endl
-                 << "  - nbSpotLights  : "     << nbSpotLights  << endl
-                 << " Nb Checkpoints   : "     << nbCheckpoint  << endl
+            << " Nb Models        : "     << nbModel       << endl
+            << " Nb Lights        : "     << nbPointLights + nbDirLights + nbSpotLights << endl
+            << "  - nbPointLights : "     << nbPointLights << endl
+            << "  - nbDirLights   : "     << nbDirLights   << endl
+            << "  - nbSpotLights  : "     << nbSpotLights  << endl
+            << " Nb Checkpoints   : "     << nbCheckpoint  << endl
             << endl;
+            if(nbPointLights == 0) pointlights_initialization = false;
+            if(nbDirLights == 0) dirlights_initialization   = false;
+            if(nbSpotLights == 0) spotlights_initialization  = false;
+            if(nbCheckpoint == 0) checkpoints_initialization = false;
           }
           firstline = false;
           continue;
@@ -232,7 +235,7 @@ void Scene::loadScene(string path_season)
             {            
               this->checkpoints[ name_checkpoint ] = Checkpoint(name_checkpoint, checkpoint_name_shader, rotate_angle, rotate_x, rotate_y, rotate_z, translate_x, translate_y, translate_z, scale);
               cout << name_checkpoint << endl;
-              if(i == 0) this->currentCheckpoint = this->firstCheckpoint = this->checkpoints[ name_checkpoint ];
+               if(i == 0) this->currentCheckpoint = this->firstCheckpoint = this->checkpoints[ name_checkpoint ];
             }
 
             getline(file, line);
@@ -255,7 +258,7 @@ void Scene::loadScene(string path_season)
   }
 
   //INIT CAMERA
-  Camera myCamera;
+  Camera myCamera( this->firstCheckpoint.position.x , this->firstCheckpoint.position.y , this->firstCheckpoint.position.z);
   this->camera = myCamera;
 
   Skybox mySkybox(path_season);
@@ -267,30 +270,26 @@ void Scene::loadScene(string path_season)
   this->deltaTime = 0.0f;
   this->lastFrame = 0.0f;
 
-  //INIT mousePicker
-
-
 }
 
 
 void Scene::render(SDLWindowManager* windowManager, float screenWidth, float screenHeight)
 {
+
   moveCamera(windowManager);
-
-
-
+  
   map<string, Shader>::iterator it_shaders;
   for(it_shaders = this->shaders.begin(); it_shaders != this->shaders.end(); it_shaders++)
   {
-    initShaders(it_shaders->first, screenWidth, screenHeight);
-    initLights(it_shaders->first);
-    drawModels(it_shaders->first);
-    drawCheckpoints(it_shaders->first);
+    if(it_shaders->first != "SHADOW"){
+      initShaders(it_shaders->first, screenWidth, screenHeight);
+      initLights(it_shaders->first);
+      drawModels(it_shaders->first);
+      drawCheckpoints(it_shaders->first);
+    }
   }
   
   drawSkybox(screenWidth, screenHeight);
-
-
 }
 
 void Scene::initShaders(string shader_name, float screenWidth, float screenHeight)
@@ -305,8 +304,10 @@ void Scene::initShaders(string shader_name, float screenWidth, float screenHeigh
   glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
   glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
-  GLint viewPosLoc  = glGetUniformLocation(this->shaders[ shader_name ].Program, "viewPos");
-
+  // Set light uniforms
+  glUniform3f(glGetUniformLocation(this->shaders[ shader_name ].Program, "viewPos"),this->camera.getPosition().x, this->camera.getPosition().y, this->camera.getPosition().z );
+  glUniform3fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "lightPos"), 1, &lightPos[0]);;
+  glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "lightSpaceMatrix"), 1, GL_FALSE, glm::value_ptr(lightSpaceMatrix));
   // Set material properties
   glUniform1f(glGetUniformLocation(this->shaders[ shader_name ].Program, "material.shininess"), 32.0f);
   
@@ -318,11 +319,6 @@ void Scene::initLights(string shader_name)
   bool pointLightTurn = true;
   bool dirLightTurn = false;
   bool spotlightTurn = false;
-
-  //Send number of light in shader 
-  glUniform1i(glGetUniformLocation(this->shaders["shader_name"].Program, "nbPointLights"), PointLight::getNbLights() );
-  glUniform1i(glGetUniformLocation(this->shaders["shader_name"].Program, "nbDirLights"),   DirLight::getNbLights() );
-  glUniform1i(glGetUniformLocation(this->shaders["shader_name"].Program, "nbSpotLights"),  SpotLight::getNbLights() );
 
   map<string, Light*>::iterator it_lights;
 
@@ -361,57 +357,54 @@ void Scene::initLights(string shader_name)
       numberShader++;
     } // end if shader_name
   } // end for
+}
 
+void Scene::drawModels(string shader_name)
+{ 
+  glm::mat4 matModel;
+
+  map<string, Model>::iterator it_models;
+  for(it_models = this->models.begin(); it_models != this->models.end(); it_models++)
+  {
+    if( shader_name == it_models->second.shader_name )
+    {
+      matModel = glm::mat4(1.0f);
+      matModel = glm::rotate(matModel, glm::radians( it_models->second.rotate_angle ), glm::vec3( it_models->second.rotate_x , it_models->second.rotate_y , it_models->second.rotate_z ));
+      matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , it_models->second.translate_y , it_models->second.translate_z ));
+      matModel = glm::scale(matModel, glm::vec3( it_models->second.scale , it_models->second.scale , it_models->second.scale ));
+      glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+
+      this->models[ it_models->first ].Draw( this->shaders[ shader_name ] );
+    }
+  }
+}
+
+void Scene::drawCheckpoints(string shader_name)
+{ 
+
+  map<string, Checkpoint>::iterator it_checkpoints;
+  for(it_checkpoints = this->checkpoints.begin(); it_checkpoints != this->checkpoints.end(); it_checkpoints++)
+  {
+    if( shader_name == it_checkpoints->second.model.shader_name)
+    {
+      glm::mat4 matModel;
+      matModel = glm::mat4(1.0f);
+      matModel = glm::rotate(matModel, glm::radians( it_checkpoints->second.model.rotate_angle ), glm::vec3( it_checkpoints->second.model.rotate_x , it_checkpoints->second.model.rotate_y , it_checkpoints->second.model.rotate_z ));
+      matModel = glm::translate(matModel, glm::vec3( it_checkpoints->second.model.translate_x , it_checkpoints->second.model.translate_y , it_checkpoints->second.model.translate_z));
+      matModel = glm::scale(matModel, glm::vec3( it_checkpoints->second.model.scale , it_checkpoints->second.model.scale , it_checkpoints->second.model.scale ));
+      glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+      it_checkpoints->second.model.Draw( this->shaders[ shader_name ] );
+    }
+  }
 
 
 }
 
-    void Scene::drawModels(string shader_name)
-    { 
-      glm::mat4 matModel;
-
-      map<string, Model>::iterator it_models;
-      for(it_models = this->models.begin(); it_models != this->models.end(); it_models++)
-      {
-        if( shader_name == it_models->second.shader_name )
-        {
-          matModel = glm::mat4(1.0f);
-          matModel = glm::rotate(matModel, glm::radians( it_models->second.rotate_angle ), glm::vec3( it_models->second.rotate_x , it_models->second.rotate_y , it_models->second.rotate_z ));
-          matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , it_models->second.translate_y , it_models->second.translate_z ));
-          matModel = glm::scale(matModel, glm::vec3( it_models->second.scale , it_models->second.scale , it_models->second.scale ));
-          glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
-
-          this->models[ it_models->first ].Draw( this->shaders[ shader_name ] );
-        }
-      }
-    }
-
-    void Scene::drawCheckpoints(string shader_name)
-    { 
-
-      map<string, Checkpoint>::iterator it_checkpoints;
-      for(it_checkpoints = this->checkpoints.begin(); it_checkpoints != this->checkpoints.end(); it_checkpoints++)
-      {
-        if( shader_name == it_checkpoints->second.model.shader_name)
-        {
-          glm::mat4 matModel;
-          matModel = glm::mat4(1.0f);
-          matModel = glm::rotate(matModel, glm::radians( it_checkpoints->second.model.rotate_angle ), glm::vec3( it_checkpoints->second.model.rotate_x , it_checkpoints->second.model.rotate_y , it_checkpoints->second.model.rotate_z ));
-          matModel = glm::translate(matModel, glm::vec3( it_checkpoints->second.model.translate_x , it_checkpoints->second.model.translate_y , it_checkpoints->second.model.translate_z));
-          matModel = glm::scale(matModel, glm::vec3( it_checkpoints->second.model.scale , it_checkpoints->second.model.scale , it_checkpoints->second.model.scale ));
-          glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
-          it_checkpoints->second.model.Draw( this->shaders[ shader_name ] );
-        }
-      }
-
-
-    }
-
-    void Scene::drawSkybox(float screenWidth, float screenHeight)
-    { 
+void Scene::drawSkybox(float screenWidth, float screenHeight)
+{ 
 
   // Transformation matrices
-      glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth/(float)screenHeight, 0.1f, 100.0f);
+  glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth/(float)screenHeight, 0.1f, 100.0f);
 
 
   glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
@@ -440,10 +433,8 @@ void Scene::moveCamera(SDLWindowManager* windowManager)
   if(windowManager->isKeyPressed(SDLK_d)) this->camera.moveLeft(-0.1);
   if(windowManager->isKeyPressed(SDLK_i)) this->camera.rotateLeft(5.0);
   if(windowManager->isKeyPressed(SDLK_k)) this->camera.rotateUp(5.0);
-  
-  glm::vec2 screenDim = windowManager->getScreenDimensions();
-  glm::vec2 mousePos = glm::ivec2(0.0);
-  
+
+  glm::ivec2 mousePos = glm::ivec2(0.0);
   if(windowManager->isMouseButtonPressed(SDL_BUTTON_LEFT)){
     mousePos = windowManager->getMousePosition();
     float mousePosX = mousePos.x/800.0f - 0.5;

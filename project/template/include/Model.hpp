@@ -18,10 +18,9 @@ class Model
         float rotate_angle, rotate_x, rotate_y, rotate_z;
         float translate_x, translate_y, translate_z;
         float scale;
-        vector <GLfloat> calculBoudingbox();
-        vector<Mesh> meshes;
 
     private:
+        vector<Mesh> meshes;
         vector<Texture> textures_loaded;
         string directory;
 
@@ -31,5 +30,4 @@ class Model
         Mesh processMesh(aiMesh* mesh, const aiScene* scene);
         GLint TextureFromFile(const char* path, string directory);
         vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);
-
 };

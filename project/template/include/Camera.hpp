@@ -7,6 +7,7 @@ class Camera{
 
 public:
 	Camera();
+	Camera( float x, float y, float z);
 	void computeDirectionVectors();
 	void moveLeft(float t);
 	void moveFront(float t);

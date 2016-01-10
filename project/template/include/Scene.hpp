@@ -1,20 +1,18 @@
 #pragma once
 #include <glimac/SDLWindowManager.hpp>
+#include "glimac/glm.hpp"
 #include "Model.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
 #include "Skybox.hpp"
 #include "Light.hpp"
 #include "Checkpoint.hpp"
-#include "MousePicker.hpp"
-#include "ModelPicker.hpp"
 #include <map>
 #include <string>
 #include <fstream>
 #include <iostream>
 #include <cstdio>
 #include <GL/glew.h>
-
 using namespace std;
 using namespace glimac;
 
@@ -26,7 +24,6 @@ class Scene
       void loadScene(string path_season);
       void render(SDLWindowManager* windowManager, float screenWidth, float screenHeight);
       void changeCheckpoint(SDLWindowManager* windowManager, bool sens);
-
     private:
 
       int nbCheckpoints;
@@ -45,6 +42,9 @@ class Scene
 
       GLfloat deltaTime;
       GLfloat lastFrame;
+
+      glm::vec3 lightPos;
+      glm::mat4 lightSpaceMatrix;
       
       void initShaders(string shader_name, float screenWidth, float screenHeight);
       void initLights(string shader_name);
@@ -52,4 +52,5 @@ class Scene
       void drawCheckpoints(string shader_name);
       void drawSkybox(float screenWidth, float screenHeight);
       void moveCamera(SDLWindowManager* windowManager);
+
 };

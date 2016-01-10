@@ -35,9 +35,7 @@ int main(int argc, char** argv) {
     bool done = false;
 
     while(!done) {
-
         iSeason.run(&windowManager, screenWidth, screenHeight, &done);
-
     }
 
     return EXIT_SUCCESS;
