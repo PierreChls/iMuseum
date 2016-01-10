@@ -1,4 +1,5 @@
 #include "Scene.hpp"
+#include "MousePicker.hpp"
 
 
 
@@ -259,16 +260,20 @@ void Scene::loadScene(string path_season)
   Skybox mySkybox(path_season);
   this->skybox = mySkybox;
 
+  this->currentCheckpoint = this->lastCheckpoint = this->checkpoints[name_checkpoint];
+
   //INIT FRAMES
   this->deltaTime = 0.0f;
   this->lastFrame = 0.0f;
+
+  //INIT mousePicker
+
 
 }
 
 
 void Scene::render(SDLWindowManager* windowManager, float screenWidth, float screenHeight)
 {
-
   moveCamera(windowManager);
 
   map<string, Shader>::iterator it_shaders;
@@ -432,8 +437,10 @@ void Scene::moveCamera(SDLWindowManager* windowManager)
   if(windowManager->isKeyPressed(SDLK_d)) this->camera.moveLeft(-0.1);
   if(windowManager->isKeyPressed(SDLK_i)) this->camera.rotateLeft(5.0);
   if(windowManager->isKeyPressed(SDLK_k)) this->camera.rotateUp(5.0);
-
-  glm::ivec2 mousePos = glm::ivec2(0.0);
+  
+  glm::vec2 screenDim = windowManager->getScreenDimensions();
+  glm::vec2 mousePos = glm::ivec2(0.0);
+  
   if(windowManager->isMouseButtonPressed(SDL_BUTTON_LEFT)){
     mousePos = windowManager->getMousePosition();
     float mousePosX = mousePos.x/800.0f - 0.5;
@@ -441,5 +448,26 @@ void Scene::moveCamera(SDLWindowManager* windowManager)
 
     this->camera.rotateLeft(-2*mousePosX);
     this->camera.rotateUp(-2*mousePosY);
+  }
+}
+
+void Scene::changeCheckpoint(SDLWindowManager* windowManager)
+{
+  map<string, Checkpoint>::iterator it_checkpoints;
+  for(it_checkpoints = this->checkpoints.begin(); it_checkpoints != this->checkpoints.end(); it_checkpoints++)
+  {
+    if( it_checkpoints->first == this->currentCheckpoint.checkpoint_name)
+    {
+      //Si le checkpoint courant est le dernier de la liste, il devient le premier
+      if( it_checkpoints->first == this->lastCheckpoint.checkpoint_name)
+      {
+        it_checkpoints = this->checkpoints.begin();
+      }
+      else it_checkpoints++; //Sinon, on passe au suivant
+
+      this->currentCheckpoint = it_checkpoints->second;
+      this->camera.changePosition( it_checkpoints->second.position );
+      break;
+    }
   }
 }

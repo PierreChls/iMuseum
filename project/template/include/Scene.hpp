@@ -6,6 +6,8 @@
 #include "Skybox.hpp"
 #include "Light.hpp"
 #include "Checkpoint.hpp"
+#include "MousePicker.hpp"
+#include "ModelPicker.hpp"
 #include <map>
 #include <string>
 #include <fstream>
@@ -27,6 +29,8 @@ class Scene
     private:
 
       int nbCheckpoints;
+      Checkpoint currentCheckpoint;
+      Checkpoint lastCheckpoint;
 
       map<string, Shader> shaders;
       map<string, Model> models;
@@ -46,4 +50,5 @@ class Scene
       void drawCheckpoints(string shader_name);
       void drawSkybox(float screenWidth, float screenHeight);
       void moveCamera(SDLWindowManager* windowManager);
+      void changeCheckpoint(SDLWindowManager* windowManager);
 };
