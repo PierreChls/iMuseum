@@ -42,3 +42,8 @@ glm::mat4 Camera::getViewMatrix() const{
 	glm::mat4 MV = glm::lookAt(m_Position, m_Position + m_FrontVector, m_UpVector);
 	return MV;
 }
+
+void Camera::changePosition( glm::vec3 position){
+	m_Position = position;
+	computeDirectionVectors();
+}

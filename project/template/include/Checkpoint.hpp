@@ -19,7 +19,10 @@ class Checkpoint{
 public:
 	Model model;
 	Checkpoint();
-	Checkpoint(string shader_name, float rotate_angle, float rotate_x, float rotate_y, float rotate_z, float translate_x, float translate_y, float translate_z, float scale);
+	Checkpoint(string checkpoint_name, string shader_name, float rotate_angle, float rotate_x, float rotate_y, float rotate_z, float translate_x, float translate_y, float translate_z, float scale);
+
+	string checkpoint_name;
+	glm::vec3 position;
 
 private:
 

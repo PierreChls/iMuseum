@@ -184,3 +184,39 @@ GLint Model::TextureFromFile(const char* path, string directory)
     return textureID;
 
 }
+
+vector <GLfloat> Model::calculBoudingbox()
+{
+
+    GLfloat min_x, max_x,
+            min_y, max_y,
+            min_z, max_z;
+
+    min_x = max_x = this->meshes[0].vertices[0].Position.x;
+    min_y = max_y = this->meshes[0].vertices[0].Position.y;
+    min_z = max_z = this->meshes[0].vertices[0].Position.z;
+
+    for(int i = 0; i < this->meshes.size(); i++)
+    {
+        if (this->meshes[i].vertices.size() != 0)
+        {
+            for (int j = 0; j < this->meshes[j].vertices.size(); j++)
+            {
+                if (this->meshes[i].vertices[j].Position.x < min_x) min_x = this->meshes[i].vertices[j].Position.x;
+                if (this->meshes[i].vertices[j].Position.x > max_x) max_x = this->meshes[i].vertices[j].Position.x;
+                if (this->meshes[i].vertices[j].Position.y < min_y) min_y = this->meshes[i].vertices[j].Position.y;
+                if (this->meshes[i].vertices[j].Position.y > max_y) max_y = this->meshes[i].vertices[j].Position.y;
+                if (this->meshes[i].vertices[j].Position.z < min_z) min_z = this->meshes[i].vertices[j].Position.z;
+                if (this->meshes[i].vertices[j].Position.z > max_z) max_z = this->meshes[i].vertices[j].Position.z;
+            }
+        }
+    }
+
+    vector <GLfloat> bbox = {
+        min_x, max_x,
+        min_y, max_y,
+        min_z, max_z
+    };
+
+    return bbox;
+}

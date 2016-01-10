@@ -104,7 +104,7 @@ void Scene::loadScene(string path_season)
       while(iss >> name_checkpoint >> rotate_angle >> rotate_x >> rotate_y >> rotate_z >> translate_x >> translate_y >> translate_z >> scale >> checkpoint_name_shader)
       {
         cout << name_checkpoint << endl;             
-        this->checkpoints[ name_checkpoint ] = Checkpoint(checkpoint_name_shader, rotate_angle, rotate_x, rotate_y, rotate_z, translate_x, translate_y, translate_z, scale);
+        this->checkpoints[ name_checkpoint ] = Checkpoint(name_checkpoint, checkpoint_name_shader, rotate_angle, rotate_x, rotate_y, rotate_z, translate_x, translate_y, translate_z, scale);
       }
     }
     cout << "" << endl;
@@ -121,6 +121,8 @@ void Scene::loadScene(string path_season)
 
   Skybox mySkybox;
   this->skybox = mySkybox;
+
+  this->currentCheckpoint = this->lastCheckpoint = this->checkpoints[name_checkpoint];
 
   //INIT FRAMES
   this->deltaTime = 0.0f;
@@ -272,9 +274,8 @@ void Scene::moveCamera(SDLWindowManager* windowManager)
   if(windowManager->isKeyPressed(SDLK_d)) this->camera.moveLeft(-0.1);
   if(windowManager->isKeyPressed(SDLK_i)) this->camera.rotateLeft(5.0);
   if(windowManager->isKeyPressed(SDLK_k)) this->camera.rotateUp(5.0);
-
+  
   glm::vec2 screenDim = windowManager->getScreenDimensions();
-  MousePicker mousepicker(screenDim, this->camera, windowManager->getProjectionMatrix() );
   glm::vec2 mousePos = glm::ivec2(0.0);
   
   if(windowManager->isMouseButtonPressed(SDL_BUTTON_LEFT)){
@@ -282,37 +283,28 @@ void Scene::moveCamera(SDLWindowManager* windowManager)
     float mousePosX = mousePos.x/800.0f - 0.5;
     float mousePosY = mousePos.y/600.0f - 0.5;
 
-
-    // //1. 3d Normalised Device Coordinates
-    // float x = (2.0f * mousePos.x) / 800.0f - 1.0f;
-    // float y =  1.0f - (2.0f * mousePos.y) / 600.0f;
-    // float z = 1.0f;
-    // vec3 ray_nds = vec3 (x, y, z);
-
-    // //2. 4d Homogeneous Clip Coordinates
-    // vec4 ray_clip = vec4 (ray_nds.x, ray_nds.y, -1.0, 1.0);
-
-    // //3. 4d Eye (Camera) Coordinates
-    // glm::mat4 projection_matrix = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.1f, 100.0f);
-    // vec4 ray_eye = inverse (projection_matrix) * ray_clip;
-    // ray_eye = vec4 (ray_eye.x, ray_eye.y, -1.0, 0.0);
-    
-    // //4. 4d World Coordinates
-    // glm::mat4 view_matrix = this->camera.getViewMatrix();
-    // vec3 ray_wor;
-    // ray_wor.x = (inverse (view_matrix) * ray_eye).x;
-    // ray_wor.y = (inverse (view_matrix) * ray_eye).y;
-    // ray_wor.z = (inverse (view_matrix) * ray_eye).z;
-    // ray_wor = normalize (ray_wor);
-
-    // cout << "PETER : " << ray_wor.x << " " << ray_wor.y << " " << ray_wor.z << endl;
-
-    mousepicker.update(mousePos);
-    glm::vec3 currentRay = mousepicker.getCurrentRay();
-    cout << "mousepicker : " << currentRay << endl;
-
-
     this->camera.rotateLeft(-2*mousePosX);
     this->camera.rotateUp(-2*mousePosY);
+  }
+}
+
+void Scene::changeCheckpoint(SDLWindowManager* windowManager)
+{
+  map<string, Checkpoint>::iterator it_checkpoints;
+  for(it_checkpoints = this->checkpoints.begin(); it_checkpoints != this->checkpoints.end(); it_checkpoints++)
+  {
+    if( it_checkpoints->first == this->currentCheckpoint.checkpoint_name)
+    {
+      //Si le checkpoint courant est le dernier de la liste, il devient le premier
+      if( it_checkpoints->first == this->lastCheckpoint.checkpoint_name)
+      {
+        it_checkpoints = this->checkpoints.begin();
+      }
+      else it_checkpoints++; //Sinon, on passe au suivant
+
+      this->currentCheckpoint = it_checkpoints->second;
+      this->camera.changePosition( it_checkpoints->second.position );
+      break;
+    }
   }
 }
