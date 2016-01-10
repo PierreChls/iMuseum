@@ -14,11 +14,12 @@ class Mesh {
         vector<Vertex> vertices;
         vector<GLuint> indices;
         vector<Texture> textures;
+        GLuint VAO;
         
         Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures);
         void Draw(Shader shader);
     private:
-        GLuint VAO, VBO, EBO;
+        GLuint VBO, EBO;
         
         void setupMesh();
 };  

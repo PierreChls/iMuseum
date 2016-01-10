@@ -35,6 +35,16 @@ class Scene
             moveCheckpoint_dir,
             moveCheckpoint_current;
 
+      float startSnowPos;
+      float endSnowPos;
+      float currentSnowPos;
+      float currentSnowPos2;
+
+      float startRainPos;
+      float endRainPos;
+      float currentRainPos;
+      float currentRainPos2;
+
       map<string, Shader> shaders;
       map<string, Model> models;
       map<string, Checkpoint> checkpoints;
@@ -52,7 +62,7 @@ class Scene
       
       void initShaders(string shader_name, float screenWidth, float screenHeight);
       void initLights(string shader_name);
-      void drawModels(string shader_name);
+      void drawModels(string shader_name, SDLWindowManager* windowManager);
       void drawCheckpoints(string shader_name);
       void drawSkybox(float screenWidth, float screenHeight);
       void moveCamera(SDLWindowManager* windowManager);

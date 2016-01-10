@@ -18,13 +18,12 @@ class Model
         float rotate_angle, rotate_x, rotate_y, rotate_z;
         float translate_x, translate_y, translate_z;
         float scale;
-
-    private:
         vector<Mesh> meshes;
         vector<Texture> textures_loaded;
+
+    private:
+        
         string directory;
-
-
         void loadModel(string path);
         void processNode(aiNode* node, const aiScene* scene);
         Mesh processMesh(aiMesh* mesh, const aiScene* scene);

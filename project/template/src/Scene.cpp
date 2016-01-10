@@ -264,11 +264,155 @@ void Scene::loadScene(string path_season)
   Skybox mySkybox(path_season);
   this->skybox = mySkybox;
 
+  //INIT CHECKPOINT VALUES
   this->lastCheckpoint = this->checkpoints[name_checkpoint];
-
   this->moveCheckpoint_max = 1.0f;
   this->moveCheckpoint_dir = 1.0f;
   this->moveCheckpoint_current = 0.0f;
+
+  //INIT WEATHER VALUES (SNOW)
+  this->startSnowPos = 20.0;
+  this->endSnowPos = -20.0;
+  this->currentSnowPos = this->startSnowPos;
+  this->currentSnowPos2 = this->startSnowPos - 2*this->endSnowPos;
+
+  //INIT WEATHER VALUES (RAIN)
+  this->startRainPos = 20.0;
+  this->endRainPos = -20.0;
+  this->currentRainPos = this->startRainPos;
+  this->currentRainPos2 = this->startRainPos - 1.1*this->endRainPos;
+
+  if(path_season == "winter"){
+    /////////////////////// SNOW ////////////////////////
+    // Generate a large list of semi-random model transformation matrices
+     GLuint amount = 10000;
+     glm::mat4* modelMatrices;
+     modelMatrices = new glm::mat4[amount];
+     srand(time(NULL)); // initialize random seed
+     GLfloat radius = 1000.0f;
+     GLfloat offset = 500.0f;
+     for(GLuint i = 0; i < amount; i++)
+     {
+         glm::mat4 model;
+         // 1. Translation: Randomly displace along circle with radius 'radius' in range [-offset, offset]
+         GLfloat angle = (GLfloat)i / (GLfloat)amount * 360.0f;
+         GLfloat displacement = (rand() % (GLint)(2 * offset * 100)) / 100.0f - offset;
+         GLfloat x = sin(angle) * radius + displacement;
+         displacement = (rand() % (GLint)(2 * offset * 100)) / 100.0f - offset;
+         GLfloat y = -2.5f + displacement * 4.0f; // Keep height of asteroid field smaller compared to width of x and z
+         displacement = (rand() % (GLint)(2 * offset * 100)) / 100.0f - offset;
+         GLfloat z = cos(angle) * radius + displacement;
+         model = glm::translate(model, glm::vec3(x, y, z));
+
+         // 2. Scale: Scale between 0.05 and 0.25f
+         GLfloat scale = (rand() % 20) / 100.0f + 0.05;
+         model = glm::scale(model, glm::vec3(scale));
+
+         // 3. Rotation: add random rotation around a (semi)randomly picked rotation axis vector
+         GLfloat rotAngle = (rand() % 360);
+         model = glm::rotate(model, rotAngle, glm::vec3(0.4f, 0.6f, 0.8f));
+
+         // 4. Now add to list of matrices
+         modelMatrices[i] = model;
+     }
+
+     // Set transformation matrices as an instance vertex attribute (with divisor 1)
+      // NOTE: We're cheating a little by taking the, now publicly declared, VAO of the model's mesh(es) and adding new vertexAttribPointers
+      // Normally you'd want to do this in a more organized fashion, but for learning purposes this will do.
+      for(GLuint i = 0; i < this->models["SNOW"].meshes.size(); i++)
+      {
+          GLuint VAO = this->models["SNOW"].meshes[i].VAO;
+          GLuint buffer;
+          glBindVertexArray(VAO);
+          glGenBuffers(1, &buffer);
+          glBindBuffer(GL_ARRAY_BUFFER, buffer);
+          glBufferData(GL_ARRAY_BUFFER, amount * sizeof(glm::mat4), &modelMatrices[0], GL_STATIC_DRAW);
+          // Set attribute pointers for matrix (4 times vec4)
+          glEnableVertexAttribArray(3);
+          glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)0);
+          glEnableVertexAttribArray(4);
+          glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(sizeof(glm::vec4)));
+          glEnableVertexAttribArray(5);
+          glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(2 * sizeof(glm::vec4)));
+          glEnableVertexAttribArray(6);
+          glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(3 * sizeof(glm::vec4)));
+
+          glVertexAttribDivisor(3, 1);
+          glVertexAttribDivisor(4, 1);
+          glVertexAttribDivisor(5, 1);
+          glVertexAttribDivisor(6, 1);
+
+          glBindVertexArray(0);
+      }
+    }
+   /////////////////////// SNOW FIN ////////////////////////
+
+
+
+   /////////////////////// RAIN ////////////////////////
+   if(path_season == "autumn"){
+     // Generate a large list of semi-random model transformation matrices
+      GLuint amountRain = 50000;
+      glm::mat4* modelMatrices2;
+      modelMatrices2 = new glm::mat4[amountRain];
+      srand(time(NULL)); // initialize random seed
+      GLfloat radiusRain = 1000.0f;
+      GLfloat offsetRain = 500.0f;
+      for(GLuint i = 0; i < amountRain; i++)
+      {
+          glm::mat4 modelRain;
+          // 1. Translation: Randomly displace along circle with radius 'radius' in range [-offset, offset]
+          GLfloat angle = (GLfloat)i / (GLfloat)amountRain * 360.0f;
+          GLfloat displacement = (rand() % (GLint)(2 * offsetRain * 100)) / 100.0f - offsetRain;
+          GLfloat x = sin(angle) * radiusRain + displacement;
+          displacement = (rand() % (GLint)(2 * offsetRain * 100)) / 100.0f - offsetRain;
+          GLfloat y = -2.5f + displacement * 5.0f; // Keep height of asteroid field smaller compared to width of x and z
+          displacement = (rand() % (GLint)(2 * offsetRain * 100)) / 100.0f - offsetRain;
+          GLfloat z = cos(angle) * radiusRain + displacement;
+          modelRain = glm::translate(modelRain, glm::vec3(x, y, z));
+
+          // 2. Scale: Scale between 0.05 and 0.25f
+          GLfloat scale = (rand() % 20) / 100.0f + 0.05;
+          modelRain = glm::scale(modelRain, glm::vec3(scale));
+
+          // 3. Rotation: add random rotation around a (semi)randomly picked rotation axis vector
+          GLfloat rotAngle = 180;
+          modelRain = glm::rotate(modelRain, rotAngle, glm::vec3(0.4f, 0.6f, 0.8f));
+
+          // 4. Now add to list of matrices
+          modelMatrices2[i] = modelRain;
+      }
+
+      // Set transformation matrices as an instance vertex attribute (with divisor 1)
+       // NOTE: We're cheating a little by taking the, now publicly declared, VAO of the model's mesh(es) and adding new vertexAttribPointers
+       // Normally you'd want to do this in a more organized fashion, but for learning purposes this will do.
+       for(GLuint i = 0; i < this->models["RAIN"].meshes.size(); i++)
+       {
+           GLuint VAORain = this->models["RAIN"].meshes[i].VAO;
+           GLuint buffer2;
+           glBindVertexArray(VAORain);
+           glGenBuffers(1, &buffer2);
+           glBindBuffer(GL_ARRAY_BUFFER, buffer2);
+           glBufferData(GL_ARRAY_BUFFER, amountRain * sizeof(glm::mat4), &modelMatrices2[0], GL_STATIC_DRAW);
+           // Set attribute pointers for matrix (4 times vec4)
+           glEnableVertexAttribArray(7);
+           glVertexAttribPointer(7, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)0);
+           glEnableVertexAttribArray(8);
+           glVertexAttribPointer(8, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(sizeof(glm::vec4)));
+           glEnableVertexAttribArray(9);
+           glVertexAttribPointer(9, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(2 * sizeof(glm::vec4)));
+           glEnableVertexAttribArray(10);
+           glVertexAttribPointer(10, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(3 * sizeof(glm::vec4)));
+
+           glVertexAttribDivisor(7, 1);
+           glVertexAttribDivisor(8, 1);
+           glVertexAttribDivisor(9, 1);
+           glVertexAttribDivisor(10, 1);
+
+           glBindVertexArray(0);
+       }
+    }
+    /////////////////////// RAIN FIN ////////////////////////
 
   //INIT FRAMES
   this->deltaTime = 0.0f;
@@ -288,7 +432,7 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
     if(it_shaders->first != "SHADOW"){
       initShaders(it_shaders->first, screenWidth, screenHeight);
       initLights(it_shaders->first);
-      drawModels(it_shaders->first);
+      drawModels(it_shaders->first, windowManager);
       drawCheckpoints(it_shaders->first);
     }
   }
@@ -363,25 +507,107 @@ void Scene::initLights(string shader_name)
   } // end for
 }
 
-void Scene::drawModels(string shader_name)
-{ 
-  glm::mat4 matModel;
-
-  map<string, Model>::iterator it_models;
-  for(it_models = this->models.begin(); it_models != this->models.end(); it_models++)
-  {
-    if( shader_name == it_models->second.shader_name )
+void Scene::drawModels(string shader_name, SDLWindowManager* windowManager)
     {
-      matModel = glm::mat4(1.0f);
-      matModel = glm::rotate(matModel, glm::radians( it_models->second.rotate_angle ), glm::vec3( it_models->second.rotate_x , it_models->second.rotate_y , it_models->second.rotate_z ));
-      matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , it_models->second.translate_y, it_models->second.translate_z ));
-      matModel = glm::scale(matModel, glm::vec3( it_models->second.scale , it_models->second.scale , it_models->second.scale ));
-      glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+      glm::mat4 matModel;
 
-      this->models[ it_models->first ].Draw( this->shaders[ shader_name ] );
+      map<string, Model>::iterator it_models;
+      for(it_models = this->models.begin(); it_models != this->models.end(); it_models++)
+      {
+        if( shader_name == it_models->second.shader_name )
+        {
+          //glBindTexture(GL_TEXTURE_2D, this->models["SNOW"].textures_loaded[0].id); // Note we also made the textures_loaded vector public (instead of private) from the model class.
+          if(shader_name == "SNOW"){
+            matModel = glm::mat4(1.0f);
+            matModel = glm::rotate(matModel, glm::radians( it_models->second.rotate_angle ), glm::vec3( it_models->second.rotate_x , it_models->second.rotate_y , it_models->second.rotate_z ));
+            matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , currentSnowPos , it_models->second.translate_z ));
+            matModel = glm::scale(matModel, glm::vec3( it_models->second.scale , it_models->second.scale , it_models->second.scale ));
+            glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+
+            for(GLuint i = 0; i < this->models["SNOW"].meshes.size(); i++)
+            {
+              glBindVertexArray(this->models["SNOW"].meshes[i].VAO);
+              glDrawElementsInstanced(GL_TRIANGLES, this->models["SNOW"].meshes[i].vertices.size(), GL_UNSIGNED_INT, 0, 10000);
+              glBindVertexArray(0);
+            }
+
+            matModel = glm::mat4(1.0f);
+            matModel = glm::rotate(matModel, glm::radians( it_models->second.rotate_angle ), glm::vec3( it_models->second.rotate_x , it_models->second.rotate_y , it_models->second.rotate_z ));
+            matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , currentSnowPos2 , it_models->second.translate_z ));
+            matModel = glm::scale(matModel, glm::vec3( it_models->second.scale , it_models->second.scale , it_models->second.scale ));
+            glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+
+            for(GLuint i = 0; i < this->models["SNOW"].meshes.size(); i++)
+            {
+              glBindVertexArray(this->models["SNOW"].meshes[i].VAO);
+              glDrawElementsInstanced(GL_TRIANGLES, this->models["SNOW"].meshes[i].vertices.size(), GL_UNSIGNED_INT, 0, 10000);
+              glBindVertexArray(0);
+            }
+
+            currentSnowPos -= 0.01;
+            currentSnowPos2 -= 0.01;
+            if(currentSnowPos < endSnowPos){
+              currentSnowPos = startSnowPos;
+            }
+            if(currentSnowPos2 < endSnowPos){
+              currentSnowPos2 = startSnowPos;
+            }
+          }
+
+          ///////////////////
+
+          if(shader_name == "RAIN"){
+            matModel = glm::mat4(1.0f);
+            matModel = glm::rotate(matModel, glm::radians( it_models->second.rotate_angle ), glm::vec3( it_models->second.rotate_x , it_models->second.rotate_y , it_models->second.rotate_z ));
+            matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , currentRainPos, it_models->second.translate_z ));
+            matModel = glm::scale(matModel, glm::vec3( it_models->second.scale , it_models->second.scale , it_models->second.scale ));
+            glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+
+            for(GLuint i = 0; i < this->models["RAIN"].meshes.size(); i++)
+            {
+              glBindVertexArray(this->models["RAIN"].meshes[i].VAO);
+              glDrawElementsInstanced(GL_TRIANGLES, this->models["RAIN"].meshes[i].vertices.size(), GL_UNSIGNED_INT, 0, 50000);
+              glBindVertexArray(0);
+            }
+
+            matModel = glm::mat4(1.0f);
+            matModel = glm::rotate(matModel, glm::radians( it_models->second.rotate_angle ), glm::vec3( it_models->second.rotate_x , it_models->second.rotate_y , it_models->second.rotate_z ));
+            matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , currentRainPos2 , it_models->second.translate_z ));
+            matModel = glm::scale(matModel, glm::vec3( it_models->second.scale , it_models->second.scale , it_models->second.scale ));
+            glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+
+            for(GLuint i = 0; i < this->models["RAIN"].meshes.size(); i++)
+            {
+              glBindVertexArray(this->models["RAIN"].meshes[i].VAO);
+              glDrawElementsInstanced(GL_TRIANGLES, this->models["RAIN"].meshes[i].vertices.size(), GL_UNSIGNED_INT, 0, 10000);
+              glBindVertexArray(0);
+            }
+            currentRainPos -= 0.1;
+            currentRainPos2 -= 0.1;
+            if(currentRainPos < endRainPos){
+              currentRainPos = startRainPos;
+            }
+            if(currentRainPos2 < endRainPos){
+              currentRainPos2 = startRainPos;
+            }
+          }
+
+            ////////////
+
+
+          else
+          {
+            matModel = glm::mat4(1.0f);
+            matModel = glm::rotate(matModel, glm::radians( it_models->second.rotate_angle ), glm::vec3( it_models->second.rotate_x , it_models->second.rotate_y , it_models->second.rotate_z ));
+            matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , it_models->second.translate_y , it_models->second.translate_z ));
+            matModel = glm::scale(matModel, glm::vec3( it_models->second.scale , it_models->second.scale , it_models->second.scale ));
+            glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
+
+            this->models[ it_models->first ].Draw( this->shaders[ shader_name ] );
+          }
+        }
+      }
     }
-  }
-}
 
 void Scene::drawCheckpoints(string shader_name)
 { 
