@@ -476,8 +476,8 @@ void Scene::renderShadows(SDLWindowManager* windowManager, float screenWidth, fl
 // 1. Render depth of scene to texture (from light's perspective)
 
   glm::mat4 lightProjection, lightView;
-  GLfloat near_plane = 1.0f, far_plane = 7.5f;
-  lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+  GLfloat near_plane = 1.0f, far_plane = 20.0f;
+  lightProjection = glm::ortho(400.0f, -400.0f, 300.0f, -300.0f, near_plane, far_plane);
   // Note that if you use a perspective projection matrix you'll have to change the light position as the current light position isn't enough to reflect the whole scene.
   //lightProjection = glm::perspective(45.0f, (GLfloat)SHADOW_WIDTH / (GLfloat)SHADOW_HEIGHT, near_plane, far_plane);
   lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(1.0));

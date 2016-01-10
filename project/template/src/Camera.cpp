@@ -3,8 +3,8 @@
 
 Camera::Camera(){
 	m_Position = glm::vec3(0.0f);
-	m_fPhi = M_PI;
-	m_fTheta = 0.0;
+	m_fPhi = glm::radians(M_PI);
+	m_fTheta = glm::radians(0.0);
 	computeDirectionVectors();
 }
 
