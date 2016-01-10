@@ -3,7 +3,9 @@
 
 using namespace glimac;
 
-Skybox::Skybox()
+Skybox::Skybox(){}
+
+Skybox::Skybox(string path_season)
 {
 	Shader skyboxShader("template/shaders/skybox.vs.glsl", "template/shaders/skybox.fs.glsl");
 	this->skyboxShader = skyboxShader;
@@ -60,12 +62,48 @@ Skybox::Skybox()
 
     // Cubemap (Skybox)
     vector<const GLchar*> faces;
-    faces.push_back("assets/skybox/right.jpg");
-    faces.push_back("assets/skybox/left.jpg");
-    faces.push_back("assets/skybox/top.jpg");
-    faces.push_back("assets/skybox/bottom.jpg");
-    faces.push_back("assets/skybox/back.jpg");
-    faces.push_back("assets/skybox/front.jpg");
+
+    
+    if(path_season == "autumn")
+    {
+        faces.push_back("assets/skybox/autumn/right.jpg");
+        faces.push_back("assets/skybox/autumn/left.jpg");
+        faces.push_back("assets/skybox/autumn/top.jpg");
+        faces.push_back("assets/skybox/autumn/bottom.jpg");
+        faces.push_back("assets/skybox/autumn/back.jpg");
+        faces.push_back("assets/skybox/autumn/front.jpg");
+    }
+
+    if(path_season == "winter")
+    {
+        faces.push_back("assets/skybox/winter/right.jpg");
+        faces.push_back("assets/skybox/winter/left.jpg");
+        faces.push_back("assets/skybox/winter/top.jpg");
+        faces.push_back("assets/skybox/winter/bottom.jpg");
+        faces.push_back("assets/skybox/winter/back.jpg");
+        faces.push_back("assets/skybox/winter/front.jpg");
+    }
+
+    if(path_season == "spring")
+    {
+        faces.push_back("assets/skybox/spring/right.jpg");
+        faces.push_back("assets/skybox/spring/left.jpg");
+        faces.push_back("assets/skybox/spring/top.jpg");
+        faces.push_back("assets/skybox/spring/bottom.jpg");
+        faces.push_back("assets/skybox/spring/back.jpg");
+        faces.push_back("assets/skybox/spring/front.jpg");
+    }
+
+    if(path_season == "summer")
+    {
+        faces.push_back("assets/skybox/summer/right.jpg");
+        faces.push_back("assets/skybox/summer/left.jpg");
+        faces.push_back("assets/skybox/summer/top.jpg");
+        faces.push_back("assets/skybox/summer/bottom.jpg");
+        faces.push_back("assets/skybox/summer/back.jpg");
+        faces.push_back("assets/skybox/summer/front.jpg");
+    }
+
 
     this->faces = faces;
     
@@ -93,12 +131,8 @@ GLuint Skybox::loadCubemap(vector<const GLchar*> faces)
     glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
     for(GLuint i = 0; i < faces.size(); i++)
     {
-        //image = SOIL_load_image(faces[i], &width, &height, 0, SOIL_LOAD_RGB);
         image = loadImage(faces[i]);
-        //width = image->getWidth();
-        //height = image->getHeight();
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,0,GL_RGBA,image->getWidth(),image->getHeight(),0,GL_RGBA,GL_FLOAT,image->getPixels());
-        //glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
     }
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -119,16 +153,10 @@ GLuint Skybox::loadTexture(GLchar* path)
     //Generate texture ID and load texture data 
     GLuint textureID;
     glGenTextures(1, &textureID);
-    int width,height;
-    //unsigned char* image = SOIL_load_image(path, &width, &height, 0, SOIL_LOAD_RGB);
     std::unique_ptr<Image> image; image = loadImage(path);
-    width = image->getWidth();
-    height = image->getHeight();
-
 
     // Assign texture to ID
     glBindTexture(GL_TEXTURE_2D, textureID);
-    //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
     glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,image->getWidth(),image->getHeight(),0,GL_RGBA,GL_FLOAT,image->getPixels());
     glGenerateMipmap(GL_TEXTURE_2D);    
 

@@ -47,3 +47,11 @@ void Camera::changePosition( glm::vec3 position){
 	m_Position = position;
 	computeDirectionVectors();
 }
+
+glm::vec3 Camera::getPosition() const {
+	return m_Position;
+}
+
+glm::vec3 Camera::getDirection() const{
+	return (m_Position + m_FrontVector);
+}
