@@ -1,5 +1,6 @@
 #pragma once
 #include <glimac/SDLWindowManager.hpp>
+#include "glimac/glm.hpp"
 #include "Model.hpp"
 #include "Shader.hpp"
 #include "Camera.hpp"
@@ -12,7 +13,6 @@
 #include <iostream>
 #include <cstdio>
 #include <GL/glew.h>
-
 using namespace std;
 using namespace glimac;
 
@@ -23,7 +23,7 @@ class Scene
       Scene(string path_season);
       void loadScene(string path_season);
       void render(SDLWindowManager* windowManager, float screenWidth, float screenHeight);
-
+      GLboolean shadows;
     private:
 
       int nbCheckpoints;
@@ -39,6 +39,15 @@ class Scene
 
       GLfloat deltaTime;
       GLfloat lastFrame;
+
+      //Shadows attributes
+
+      const GLuint SHADOW_WIDTH  = 2048, 
+                   SHADOW_HEIGHT = 2048;
+      GLuint depthMapFBO;
+      GLuint depthMap;
+      glm::vec3 lightPos;
+      glm::mat4 lightSpaceMatrix;
       
       void initShaders(string shader_name, float screenWidth, float screenHeight);
       void initLights(string shader_name);
@@ -46,4 +55,9 @@ class Scene
       void drawCheckpoints(string shader_name);
       void drawSkybox(float screenWidth, float screenHeight);
       void moveCamera(SDLWindowManager* windowManager);
+
+      //shadows
+      void initShadows();
+      void renderShadows(SDLWindowManager* windowManager, float screenWidth, float screenHeight);
+
 };

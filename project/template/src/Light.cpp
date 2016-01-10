@@ -7,11 +7,12 @@ int SpotLight::nbLights = 0;
 
 Light::Light(){}
 Light::~Light(){}
-void Light::sendToShader(char lightNumber, const Shader shader){
-	std::cout << "TEST A" << std::endl;
-}
+void Light::sendToShader(char lightNumber, const Shader shader){}
 string Light::getShader() const{}
 void Light::update(Camera camera){}
+vec3 Light::getDirection() const{
+	return glm::vec3(0.0, 0.0, 0.0);
+}
 
 /***** POINT LIGHT *****/
 

@@ -28,6 +28,9 @@ void Engine::run(SDLWindowManager* windowManager, GLuint screenWidth, GLuint scr
           {
             this->_HUD.close(windowManager);
           }
+          if(windowManager->isKeyPressed(SDLK_SPACE)){
+            this->scenes[0].shadows = !(this->scenes[0].shadows);
+          }
         break;
       }
     }
