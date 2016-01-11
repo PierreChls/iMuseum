@@ -1,0 +1,90 @@
+# Blender MTL File: 'None'
+# Material Count: 8
+
+newmtl bench
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.588235 0.588235 0.588235
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump bench_bump.jpg
+map_Kd bench_color.jpg
+
+newmtl brackets
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.588235 0.588235 0.588235
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump bracket_bump.jpg
+map_Kd bracket_color.jpg
+
+newmtl corner_braces
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.588235 0.588235 0.588235
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump brace_bump.jpg
+map_Kd brace_color.jpg
+
+newmtl frame
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.588235 0.588235 0.588235
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump frame_bump.jpg
+map_Kd frame_color.jpg
+
+newmtl lattice
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.588235 0.588235 0.588235
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump lattice_bump.jpg
+map_Kd lattice_color.jpg
+
+newmtl post
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.588235 0.588235 0.588235
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump post_bump.jpg
+map_Kd post_color.jpg
+
+newmtl struts
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.588235 0.588235 0.588235
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump strut_bump.jpg
+map_Kd strut_color.jpg
+
+newmtl swirl
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.588235 0.588235 0.588235
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump swirl_bump.jpg
+map_Kd swirl_color.jpg

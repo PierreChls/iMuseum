@@ -93,30 +93,30 @@ void PointLight::sendToShader( char lightNumber, const Shader shader){
 	std::string temp = "pointLights[" + std::to_string(lightNumber) + "].position";
 	const char* temp2 = temp.c_str();
 	glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getPosition().x, 	getPosition().y, 	getPosition().z);
-	//ambient			
+	//ambient
 				temp = "pointLights[" + std::to_string(lightNumber) + "].ambient";
 				temp2 = temp.c_str();
     glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getAmbient().x, 	getAmbient().y, 	getAmbient().z);
-    //diffuse			
+    //diffuse
     			temp = "pointLights[" + std::to_string(lightNumber) + "].diffuse";
-				temp2 = temp.c_str();       
-    glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getDiffuse().x,		getDiffuse().y,		getDiffuse().z); 
-    //specular			
+				temp2 = temp.c_str();
+    glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getDiffuse().x,		getDiffuse().y,		getDiffuse().z);
+    //specular
     			temp = "pointLights[" + std::to_string(lightNumber) + "].specular";
 				temp2 = temp.c_str();
     glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getSpecular().x,	getSpecular().y,	getSpecular().z);
-    //constant			
+    //constant
     			temp = "pointLights[" + std::to_string(lightNumber) + "].constant";
 				temp2 = temp.c_str();
     glUniform1f(glGetUniformLocation(shader.Program, temp2), 		getConstant()	);
     //linear
     			temp = "pointLights[" + std::to_string(lightNumber) + "].linear";
-				temp2 = temp.c_str();				
+				temp2 = temp.c_str();
 	glUniform1f(glGetUniformLocation(shader.Program, temp2),		getLinear() 	);
-    //quadratic			
+    //quadratic
     			temp = "pointLights[" + std::to_string(lightNumber) + "].quadratic";
 				temp2 = temp.c_str();
-    glUniform1f(glGetUniformLocation(shader.Program, temp2),		getQuadratic()	);  
+    glUniform1f(glGetUniformLocation(shader.Program, temp2),		getQuadratic()	);
 }
 
 /***** DIRECTION LIGHT *****/
@@ -184,15 +184,15 @@ void DirLight::sendToShader(char lightNumber, const Shader shader){
 	std::string temp = "dirLights[" + std::to_string(lightNumber) + "].direction";
 	const char* temp2 = temp.c_str();
 	glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getDirection().x, 	getDirection().y, 	getDirection().z);
-	//ambient			
+	//ambient
 				temp = "dirLights[" + std::to_string(lightNumber) + "].ambient";
 				temp2 = temp.c_str();
     glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getAmbient().x, 	getAmbient().y, 	getAmbient().z);
-    //diffuse			
+    //diffuse
     			temp = "dirLights[" + std::to_string(lightNumber) + "].diffuse";
-				temp2 = temp.c_str();       
-    glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getDiffuse().x,	getDiffuse().y,		getDiffuse().z); 
-    //specular			
+				temp2 = temp.c_str();
+    glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getDiffuse().x,	getDiffuse().y,		getDiffuse().z);
+    //specular
     			temp = "dirLights[" + std::to_string(lightNumber) + "].specular";
 				temp2 = temp.c_str();
     glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getSpecular().x,	getSpecular().y,	getSpecular().z);
@@ -296,7 +296,7 @@ void SpotLight::setSpecular(		const glm::vec3 new_specular){
 
 //if flashlight
 void SpotLight::update(Camera camera){
-	position = camera.getPosition();
+	this->setPosition(camera.getPosition());
 	direction = camera.getDirection();
 }
 
@@ -310,47 +310,47 @@ void SpotLight::sendToShader( char lightNumber, const Shader shader){
 	const char* temp2 = temp.c_str();
 	glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getPosition().x, 	getPosition().y, 	getPosition().z);
 
-	//direction			
+	//direction
 				temp = "spotLights[" + std::to_string(lightNumber) + "].direction";
-				temp2 = temp.c_str();			
+				temp2 = temp.c_str();
     glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getDirection().x, 	getDirection().y, 	getDirection().z);
 
-    //cutOff			
+    //cutOff
     			temp = "spotLights[" + std::to_string(lightNumber) + "].cutOff";
 				temp2 = temp.c_str();
     glUniform1f(glGetUniformLocation(shader.Program, temp2), 		getCutOff()	);
 
-    //outerCutOff			
+    //outerCutOff
     			temp = "spotLights[" + std::to_string(lightNumber) + "].outerCutOff";
 				temp2 = temp.c_str();
     glUniform1f(glGetUniformLocation(shader.Program, temp2), 		getOuterCutOff()	);
 
-    //constant			
+    //constant
     			temp = "spotLights[" + std::to_string(lightNumber) + "].constant";
 				temp2 = temp.c_str();
     glUniform1f(glGetUniformLocation(shader.Program, temp2), 		getConstant()	);
 
     //linear
     			temp = "spotLights[" + std::to_string(lightNumber) + "].linear";
-				temp2 = temp.c_str();				
+				temp2 = temp.c_str();
 	glUniform1f(glGetUniformLocation(shader.Program, temp2),		getLinear() 	);
 
-    //quadratic			
+    //quadratic
     			temp = "spotLights[" + std::to_string(lightNumber) + "].quadratic";
 				temp2 = temp.c_str();
-    glUniform1f(glGetUniformLocation(shader.Program, temp2),		getQuadratic()	);  
+    glUniform1f(glGetUniformLocation(shader.Program, temp2),		getQuadratic()	);
 
-    //diffuse			
+    //diffuse
     			temp = "spotLights[" + std::to_string(lightNumber) + "].diffuse";
-				temp2 = temp.c_str();       
-    glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getDiffuse().x,		getDiffuse().y,		getDiffuse().z); 
+				temp2 = temp.c_str();
+    glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getDiffuse().x,		getDiffuse().y,		getDiffuse().z);
 
-	//ambient			
+	//ambient
 				temp = "spotLights[" + std::to_string(lightNumber) + "].ambient";
 				temp2 = temp.c_str();
 	glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getAmbient().x, 	getAmbient().y, 	getAmbient().z);
-    
-    //specular			
+
+    //specular
     			temp = "spotLights[" + std::to_string(lightNumber) + "].specular";
 				temp2 = temp.c_str();
     glUniform3f(glGetUniformLocation(shader.Program, temp2), 		getSpecular().x,	getSpecular().y,	getSpecular().z);
