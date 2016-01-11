@@ -1,10 +1,12 @@
 #include "Camera.hpp"
 #include <iostream>
 
-Camera::Camera(){
-	m_Position = glm::vec3(0.0f);
-	m_fPhi = M_PI;
-	m_fTheta = 0.0;
+Camera::Camera(){}
+
+Camera::Camera( float x, float y, float z){
+	m_Position = m_Position = glm::vec3(x, y, z);;
+	m_fPhi = glm::radians(M_PI);
+	m_fTheta = glm::radians(0.0);
 	computeDirectionVectors();
 }
 
@@ -36,9 +38,21 @@ void Camera::rotateUp(float degrees){
 	computeDirectionVectors();
 }
 
+void Camera::changePosition( glm::vec3 position){
+	m_Position = position;
+	computeDirectionVectors();
+}
+
 glm::mat4 Camera::getViewMatrix() const{
 	//Point
 	glm::vec3 Point = m_Position + m_FrontVector;
 	glm::mat4 MV = glm::lookAt(m_Position, m_Position + m_FrontVector, m_UpVector);
 	return MV;
+}
+
+glm::vec3 Camera::getPosition() const {
+	return m_Position;
+}
+glm::vec3 Camera::getDirection() const{
+	return (m_Position + m_FrontVector);
 }

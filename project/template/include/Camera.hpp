@@ -7,13 +7,18 @@ class Camera{
 
 public:
 	Camera();
+	Camera( float x, float y, float z);
 	void computeDirectionVectors();
 	void moveLeft(float t);
 	void moveFront(float t);
 	void rotateLeft(float degrees);
 	void rotateUp(float degrees);
+	void changePosition( glm::vec3 position);
 
 	glm::mat4 getViewMatrix() const;
+
+	glm::vec3 getPosition() const;
+	glm::vec3 getDirection() const;
 
 private:
 	glm::vec3 m_Position;

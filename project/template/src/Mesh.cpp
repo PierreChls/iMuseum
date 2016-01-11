@@ -42,7 +42,7 @@ void Mesh::Draw(Shader shader){
 
     for(GLuint i = 0; i < this->textures.size(); i++)
     {
-        glActiveTexture(GL_TEXTURE0 + i);
+        glActiveTexture(GL_TEXTURE0 +i);
         // Get texture number (texture_diffuseN or texture_specularN)
         stringstream ss;
         string number;
