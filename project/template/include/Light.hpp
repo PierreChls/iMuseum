@@ -16,8 +16,8 @@ public:
 	~Light();
 
 	virtual void sendToShader( char lightNumber, const Shader shader);
-	virtual string getShader() const;	
-	virtual void update(Camera camera);
+	virtual string getShader() const;
+	virtual void update(Camera camera, vec3 directionPicker);
 	virtual vec3 getDirection() const;
 };
 
@@ -91,7 +91,7 @@ public:
 			  vec3 specular,
 			  string shader_name);
 	~DirLight();
-	
+
 	//getter
 	vec3 	getDirection()			const;
 	vec3 	getAmbient()			const;
@@ -146,7 +146,7 @@ public:
 			   vec3 specular,
 			   string shader_name);
 	~SpotLight();
-	
+
 	//getter
 
 	vec3	getPosition()		const;
@@ -175,6 +175,6 @@ public:
 	void 	setDiffuse(			const 	vec3 new_diffuse);
 	void	setSpecular(		const 	vec3 new_specular);
 
-	void 	update(Camera camera);
+	void 	update(Camera camera, vec3 directionPicker);
 	void	sendToShader(char lightNumber, Shader shader);
-};	
+};

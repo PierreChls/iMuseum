@@ -7,6 +7,7 @@
 #include "Skybox.hpp"
 #include "Light.hpp"
 #include "Checkpoint.hpp"
+#include "MousePicker.hpp"
 #include <map>
 #include <string>
 #include <fstream>
@@ -31,7 +32,7 @@ class Scene
       Checkpoint firstCheckpoint;
       Checkpoint lastCheckpoint;
 
-      float moveCheckpoint_max, 
+      float moveCheckpoint_max,
             moveCheckpoint_dir,
             moveCheckpoint_current;
 
@@ -59,9 +60,9 @@ class Scene
 
       glm::vec3 lightPos;
       glm::mat4 lightSpaceMatrix;
-      
+
       void initShaders(string shader_name, float screenWidth, float screenHeight);
-      void initLights(string shader_name);
+      void initLights(string shader_name, SDLWindowManager* windowManager);
       void drawModels(string shader_name, SDLWindowManager* windowManager);
       void drawCheckpoints(string shader_name);
       void drawSkybox(float screenWidth, float screenHeight);

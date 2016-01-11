@@ -426,14 +426,12 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
 
   moveCamera(windowManager);
 
-  cout << this->camera.getPosition() << endl;
-
   map<string, Shader>::iterator it_shaders;
   for(it_shaders = this->shaders.begin(); it_shaders != this->shaders.end(); it_shaders++)
   {
     if(it_shaders->first != "SHADOW"){
       initShaders(it_shaders->first, screenWidth, screenHeight);
-      initLights(it_shaders->first);
+      initLights(it_shaders->first, windowManager);
       drawModels(it_shaders->first, windowManager);
       drawCheckpoints(it_shaders->first);
     }
@@ -463,7 +461,7 @@ void Scene::initShaders(string shader_name, float screenWidth, float screenHeigh
 
 }
 
-void Scene::initLights(string shader_name)
+void Scene::initLights(string shader_name, SDLWindowManager* windowManager)
 {
   int numberShader = 0;
   bool pointLightTurn = true;
@@ -500,7 +498,18 @@ void Scene::initLights(string shader_name)
           spotlightTurn = false;
         }
         else{
-          this->lights[ it_lights->first ]->update(this->camera);
+          glm::vec2 screenDim = windowManager->getScreenDimensions();
+          MousePicker mousepicker(screenDim, this->camera, windowManager->getProjectionMatrix() );
+          glm::vec2 mousePos = glm::ivec2(0.0);
+
+          mousePos = windowManager->getMousePosition();
+            float mousePosX = mousePos.x/800.0f - 0.5;
+            float mousePosY = mousePos.y/600.0f - 0.5;
+
+            mousepicker.update(mousePos);
+            glm::vec3 currentRay = mousepicker.getCurrentRay();
+
+          this->lights[ it_lights->first ]->update(this->camera, currentRay);
           this->lights[ it_lights->first ]->sendToShader(numberShader, this->shaders[ shader_name ]);
         }
       }
@@ -666,22 +675,20 @@ void Scene::drawSkybox(float screenWidth, float screenHeight)
 
 void Scene::moveCamera(SDLWindowManager* windowManager)
 {
-  if(windowManager->isKeyPressed(SDLK_s)) this->camera.moveFront(-0.1);
-  if(windowManager->isKeyPressed(SDLK_z)) this->camera.moveFront(0.1);
-  if(windowManager->isKeyPressed(SDLK_q)) this->camera.moveLeft(0.1);
-  if(windowManager->isKeyPressed(SDLK_d)) this->camera.moveLeft(-0.1);
-  if(windowManager->isKeyPressed(SDLK_i)) this->camera.rotateLeft(5.0);
-  if(windowManager->isKeyPressed(SDLK_k)) this->camera.rotateUp(5.0);
+  //if(windowManager->isKeyPressed(SDLK_s)) this->camera.moveFront(-0.1);
+  //if(windowManager->isKeyPressed(SDLK_z)) this->camera.moveFront(0.1);
+  //if(windowManager->isKeyPressed(SDLK_q)) this->camera.moveLeft(0.1);
+  //if(windowManager->isKeyPressed(SDLK_d)) this->camera.moveLeft(-0.1);
+  //if(windowManager->isKeyPressed(SDLK_i)) this->camera.rotateLeft(5.0);
+  //if(windowManager->isKeyPressed(SDLK_k)) this->camera.rotateUp(5.0);
 
-  glm::ivec2 mousePos = glm::ivec2(0.0);
-  if(windowManager->isMouseButtonPressed(SDL_BUTTON_LEFT)){
-    mousePos = windowManager->getMousePosition();
-    float mousePosX = mousePos.x/800.0f - 0.5;
-    float mousePosY = mousePos.y/600.0f - 0.5;
+  glm::vec2 mousePos = glm::ivec2(0.0);
+  mousePos = windowManager->getMousePosition();
+  float mousePosX = mousePos.x/800.0f - 0.5;
+  float mousePosY = mousePos.y/600.0f - 0.5;
 
-    this->camera.rotateLeft(-2*mousePosX);
-    this->camera.rotateUp(-2*mousePosY);
-  }
+  this->camera.rotateLeft(-2*mousePosX);
+  this->camera.rotateUp(-2*mousePosY);
 }
 
 void Scene::changeCheckpoint(SDLWindowManager* windowManager, bool sens)

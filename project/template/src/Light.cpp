@@ -9,7 +9,7 @@ Light::Light(){}
 Light::~Light(){}
 void Light::sendToShader(char lightNumber, const Shader shader){}
 string Light::getShader() const{}
-void Light::update(Camera camera){}
+void Light::update(Camera camera, vec3 directionPicker){}
 vec3 Light::getDirection() const{
 	return glm::vec3(0.0, 0.0, 0.0);
 }
@@ -295,9 +295,9 @@ void SpotLight::setSpecular(		const glm::vec3 new_specular){
 }
 
 //if flashlight
-void SpotLight::update(Camera camera){
-	this->setPosition(camera.getPosition());
-	direction = camera.getDirection();
+void SpotLight::update(Camera camera, glm::vec3 directionPicker){
+	position = camera.getPosition();
+	direction = directionPicker;
 }
 
 
