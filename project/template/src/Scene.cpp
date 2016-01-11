@@ -37,16 +37,16 @@ void Scene::loadScene(string path_season)
 
   //Valeurs du txt pour les models
   string name_model, path_model, model_shader_name;
-  float rotate_angle, rotate_x, rotate_y, rotate_z, 
+  float rotate_angle, rotate_x, rotate_y, rotate_z,
   translate_x, translate_y, translate_z,
   scale;
 
   //Valeurs du txt pour les lights
   string name_light, light_shader_name;
   float position_x,  position_y, position_z,
-  ambient_1,   ambient_2,  ambient_3, 
+  ambient_1,   ambient_2,  ambient_3,
   diffuse_1,   diffuse_2,  diffuse_3,
-  specular_1,  specular_2, specular_3, 
+  specular_1,  specular_2, specular_3,
   constant,
   linear,
   quadratic,
@@ -78,7 +78,7 @@ void Scene::loadScene(string path_season)
         //INIT : First line
         if(firstline)
         {
-          istringstream iss(line); 
+          istringstream iss(line);
           while(iss >> word >> nbShader >> word >> nbModel >> word >> nbPointLights >> word >> nbDirLights >> word >> nbSpotLights >> word >> nbCheckpoint)
           {
             cout << " Nb Shaders       : "     << nbShader      << endl
@@ -125,7 +125,7 @@ void Scene::loadScene(string path_season)
             istringstream iss(line);
             while(iss >> name_model >> path_model >> model_shader_name >> rotate_angle >> rotate_x >> rotate_y >> rotate_z >> translate_x >> translate_y >> translate_z >> scale)
             {
-              cout << name_model << " " << path_model << " " << model_shader_name << endl; 
+              cout << name_model << " " << path_model << " " << model_shader_name << endl;
               this->models[name_model] = Model( (char*)path_model.c_str(), (char*)model_shader_name.c_str(), rotate_angle, rotate_x, rotate_y, rotate_z, translate_x, translate_y, translate_z, scale);
             }
 
@@ -144,11 +144,11 @@ void Scene::loadScene(string path_season)
             istringstream iss(line);
             while(iss >> name_light >> position_x >> position_y >> position_z >> ambient_1 >> ambient_2 >> ambient_3 >> diffuse_1 >> diffuse_2 >> diffuse_3 >> specular_1 >> specular_2 >> specular_3 >> constant >> linear >> quadratic >> light_shader_name )
             {
-              PointLight* pointLight = new PointLight(  
-                glm::vec3( (float)position_x , (float)position_y, (float)position_z),             
-                glm::vec3( (float)ambient_1, (float)ambient_2, (float)ambient_3),                 
-                glm::vec3( (float)diffuse_1 , (float)diffuse_2 , (float)diffuse_3),               
-                glm::vec3( (float)specular_1, (float)specular_2, (float)specular_3),              
+              PointLight* pointLight = new PointLight(
+                glm::vec3( (float)position_x , (float)position_y, (float)position_z),
+                glm::vec3( (float)ambient_1, (float)ambient_2, (float)ambient_3),
+                glm::vec3( (float)diffuse_1 , (float)diffuse_2 , (float)diffuse_3),
+                glm::vec3( (float)specular_1, (float)specular_2, (float)specular_3),
                 (float)constant,
                 (float)linear,
                 (float)quadratic,
@@ -174,12 +174,12 @@ void Scene::loadScene(string path_season)
             while(iss >> name_light >> direction_x >> direction_y >> direction_z >> ambient_1 >> ambient_2 >> ambient_3 >> diffuse_1 >> diffuse_2 >> diffuse_3 >> specular_1 >> specular_2 >> specular_3 >> light_shader_name)
             {
               DirLight* dirLight = new DirLight(
-                glm::vec3( (float)direction_x,  (float)direction_y, (float)direction_z),            
-                glm::vec3( (float)ambient_1,    (float)ambient_2,   (float)ambient_3),                
-                glm::vec3( (float)diffuse_1,    (float)diffuse_2,   (float)diffuse_3),               
+                glm::vec3( (float)direction_x,  (float)direction_y, (float)direction_z),
+                glm::vec3( (float)ambient_1,    (float)ambient_2,   (float)ambient_3),
+                glm::vec3( (float)diffuse_1,    (float)diffuse_2,   (float)diffuse_3),
                 glm::vec3( (float)specular_1,   (float)specular_2,   (float)specular_3),
                 (string)light_shader_name
-                );              
+                );
 
               this->lights[name_light] = dirLight;
               cout << name_light << endl;
@@ -200,7 +200,7 @@ void Scene::loadScene(string path_season)
             istringstream iss(line);
             while(iss >> name_light >> position_x >> position_y >> position_z >> direction_x >> direction_y >> direction_z >> cutOff >> outerCutOff >> constant >> linear >> quadratic >> ambient_1 >> ambient_2 >> ambient_3 >> diffuse_1 >> diffuse_2 >> diffuse_3 >> specular_1 >> specular_2 >> specular_3 >> light_shader_name)
             {
-              SpotLight* spotLight = new SpotLight(  
+              SpotLight* spotLight = new SpotLight(
                 glm::vec3( (float)position_x,   (float)position_y,  (float)position_z),
                 glm::vec3( (float)direction_x,  (float)direction_y, (float)direction_z),
                 (float) glm::cos(glm::radians(cutOff)),
@@ -232,7 +232,7 @@ void Scene::loadScene(string path_season)
           {
             istringstream iss(line);
             while(iss >> name_checkpoint >> rotate_angle >> rotate_x >> rotate_y >> rotate_z >> translate_x >> translate_y >> translate_z >> scale >> checkpoint_name_shader)
-            {            
+            {
               this->checkpoints[ name_checkpoint ] = Checkpoint(name_checkpoint, checkpoint_name_shader, rotate_angle, rotate_x, rotate_y, rotate_z, translate_x, translate_y, translate_z, scale);
               cout << name_checkpoint << endl;
                if(i == 0) this->currentCheckpoint = this->firstCheckpoint = this->checkpoints[ name_checkpoint ];
@@ -252,7 +252,7 @@ void Scene::loadScene(string path_season)
   }
 
   //Si le fichier n'existe pas
-  else 
+  else
   {
     cerr << "Problème ouverture fichier de configuration" << endl;
   }
@@ -352,11 +352,11 @@ void Scene::loadScene(string path_season)
    /////////////////////// RAIN ////////////////////////
    if(path_season == "autumn"){
      // Generate a large list of semi-random model transformation matrices
-      GLuint amountRain = 50000;
+      GLuint amountRain = 30000;
       glm::mat4* modelMatrices2;
       modelMatrices2 = new glm::mat4[amountRain];
       srand(time(NULL)); // initialize random seed
-      GLfloat radiusRain = 1000.0f;
+      GLfloat radiusRain = 800.0f;
       GLfloat offsetRain = 500.0f;
       for(GLuint i = 0; i < amountRain; i++)
       {
@@ -425,7 +425,9 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
 {
 
   moveCamera(windowManager);
-  
+
+  cout << this->camera.getPosition() << endl;
+
   map<string, Shader>::iterator it_shaders;
   for(it_shaders = this->shaders.begin(); it_shaders != this->shaders.end(); it_shaders++)
   {
@@ -436,7 +438,7 @@ void Scene::render(SDLWindowManager* windowManager, float screenWidth, float scr
       drawCheckpoints(it_shaders->first);
     }
   }
-  
+
   drawSkybox(screenWidth, screenHeight);
 }
 
@@ -458,7 +460,7 @@ void Scene::initShaders(string shader_name, float screenWidth, float screenHeigh
   glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "lightSpaceMatrix"), 1, GL_FALSE, glm::value_ptr(lightSpaceMatrix));
   // Set material properties
   glUniform1f(glGetUniformLocation(this->shaders[ shader_name ].Program, "material.shininess"), 32.0f);
-  
+
 }
 
 void Scene::initLights(string shader_name)
@@ -520,7 +522,7 @@ void Scene::drawModels(string shader_name, SDLWindowManager* windowManager)
           if(shader_name == "SNOW"){
             matModel = glm::mat4(1.0f);
             matModel = glm::rotate(matModel, glm::radians( it_models->second.rotate_angle ), glm::vec3( it_models->second.rotate_x , it_models->second.rotate_y , it_models->second.rotate_z ));
-            matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , currentSnowPos , it_models->second.translate_z ));
+            matModel = glm::translate(matModel, glm::vec3( this->camera.getPosition().x , currentSnowPos , this->camera.getPosition().z ));
             matModel = glm::scale(matModel, glm::vec3( it_models->second.scale , it_models->second.scale , it_models->second.scale ));
             glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
@@ -533,7 +535,7 @@ void Scene::drawModels(string shader_name, SDLWindowManager* windowManager)
 
             matModel = glm::mat4(1.0f);
             matModel = glm::rotate(matModel, glm::radians( it_models->second.rotate_angle ), glm::vec3( it_models->second.rotate_x , it_models->second.rotate_y , it_models->second.rotate_z ));
-            matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , currentSnowPos2 , it_models->second.translate_z ));
+            matModel = glm::translate(matModel, glm::vec3( this->camera.getPosition().x , currentSnowPos2 , this->camera.getPosition().z ));
             matModel = glm::scale(matModel, glm::vec3( it_models->second.scale , it_models->second.scale , it_models->second.scale ));
             glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
@@ -559,27 +561,27 @@ void Scene::drawModels(string shader_name, SDLWindowManager* windowManager)
           if(shader_name == "RAIN"){
             matModel = glm::mat4(1.0f);
             matModel = glm::rotate(matModel, glm::radians( it_models->second.rotate_angle ), glm::vec3( it_models->second.rotate_x , it_models->second.rotate_y , it_models->second.rotate_z ));
-            matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , currentRainPos, it_models->second.translate_z ));
+            matModel = glm::translate(matModel, glm::vec3( this->camera.getPosition().x , currentRainPos, this->camera.getPosition().z ));
             matModel = glm::scale(matModel, glm::vec3( it_models->second.scale , it_models->second.scale , it_models->second.scale ));
             glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
             for(GLuint i = 0; i < this->models["RAIN"].meshes.size(); i++)
             {
               glBindVertexArray(this->models["RAIN"].meshes[i].VAO);
-              glDrawElementsInstanced(GL_TRIANGLES, this->models["RAIN"].meshes[i].vertices.size(), GL_UNSIGNED_INT, 0, 50000);
+              glDrawElementsInstanced(GL_TRIANGLES, this->models["RAIN"].meshes[i].vertices.size(), GL_UNSIGNED_INT, 0, 30000);
               glBindVertexArray(0);
             }
 
             matModel = glm::mat4(1.0f);
             matModel = glm::rotate(matModel, glm::radians( it_models->second.rotate_angle ), glm::vec3( it_models->second.rotate_x , it_models->second.rotate_y , it_models->second.rotate_z ));
-            matModel = glm::translate(matModel, glm::vec3( it_models->second.translate_x , currentRainPos2 , it_models->second.translate_z ));
+            matModel = glm::translate(matModel, glm::vec3( this->camera.getPosition().x , currentRainPos2 , this->camera.getPosition().z ));
             matModel = glm::scale(matModel, glm::vec3( it_models->second.scale , it_models->second.scale , it_models->second.scale ));
             glUniformMatrix4fv(glGetUniformLocation(this->shaders[ shader_name ].Program, "model"), 1, GL_FALSE, glm::value_ptr(matModel));
 
             for(GLuint i = 0; i < this->models["RAIN"].meshes.size(); i++)
             {
               glBindVertexArray(this->models["RAIN"].meshes[i].VAO);
-              glDrawElementsInstanced(GL_TRIANGLES, this->models["RAIN"].meshes[i].vertices.size(), GL_UNSIGNED_INT, 0, 10000);
+              glDrawElementsInstanced(GL_TRIANGLES, this->models["RAIN"].meshes[i].vertices.size(), GL_UNSIGNED_INT, 0, 30000);
               glBindVertexArray(0);
             }
             currentRainPos -= 0.1;
@@ -610,7 +612,7 @@ void Scene::drawModels(string shader_name, SDLWindowManager* windowManager)
     }
 
 void Scene::drawCheckpoints(string shader_name)
-{ 
+{
 
   map<string, Checkpoint>::iterator it_checkpoints;
   for(it_checkpoints = this->checkpoints.begin(); it_checkpoints != this->checkpoints.end(); it_checkpoints++)
@@ -638,15 +640,15 @@ void Scene::drawCheckpoints(string shader_name)
 }
 
 void Scene::drawSkybox(float screenWidth, float screenHeight)
-{ 
+{
 
   // Transformation matrices
   glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth/(float)screenHeight, 0.1f, 100.0f);
 
 
   glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
-  this->skybox.skyboxShader.Use();  
-  glm::mat4 view = this->camera.getViewMatrix(); 
+  this->skybox.skyboxShader.Use();
+  glm::mat4 view = this->camera.getViewMatrix();
   glm::mat4 matModel;
   // Translate model to the center of the scene
   matModel = glm::scale(matModel, glm::vec3(40.0f, 40.0f, 40.0f));
